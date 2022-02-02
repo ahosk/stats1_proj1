@@ -1,0 +1,415 @@
+---
+title: "Project1_EDA"
+author: "Braden Anderson"
+date: "1/31/2022"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+
+
+```{r}
+
+source("Applied_Stats_Project_Functions.R")
+
+df <- read.csv("./data1.csv", check.names=FALSE, na.strings=c(""))
+names(df) <- gsub(" ", "_", names(df))
+
+clean_df <- clean_data(df=df)
+
+```
+
+
+
+# Investigate missing values
+```{r, fig.width=10, fig.height=4}
+
+# naniar::miss_case_table(df)
+
+p1 <- plot_missings(df, 
+                    omit_complete_columns = FALSE, 
+                    plot_percent_missing = TRUE)
+
+p2 <- plot_missings(df, 
+                    omit_complete_columns = TRUE, 
+                    plot_percent_missing = TRUE)
+
+
+
+# PERCENTAGE of Missings before data cleaning
+gridExtra::grid.arrange(p1, p2, ncol=2)
+```
+
+```{r, fig.width=10, fig.height=4}
+
+p1 <- plot_missings(df, 
+                    omit_complete_columns = FALSE, 
+                    plot_percent_missing = FALSE)
+
+p2 <- plot_missings(df, 
+                    omit_complete_columns = TRUE, 
+                    plot_percent_missing = FALSE)
+
+
+# COUNT of Missings before data cleaning
+gridExtra::grid.arrange(p1, p2, ncol=2)
+```
+
+# Missings after cleaning (currently rows with additional missings are being dropped, need to revisit this approach)
+```{r, fig.width=10, fig.height=4}
+
+p1 <- plot_missings(clean_df, 
+                    omit_complete_columns = FALSE, 
+                    plot_percent_missing = FALSE)
+
+p1
+```
+
+
+
+# Investigate Correlations
+```{r, fig.height=8, fight.width=8}
+
+pearson_orig <- plot_correlation(df=df, 
+                                 remove_columns=NULL, 
+                                 corr_type="pearson", 
+                                 title = paste("Pearson Correlation Matrix\nBefore Data Cleaning"), 
+                                 hc_order=FALSE)
+
+
+
+spearman_orig <- plot_correlation(df=df, 
+                                  remove_columns=NULL, 
+                                  corr_type="spearman", 
+                                  title = paste("Spearman Correlation Matrix\nBefore Data Cleaning"), 
+                                  hc_order=FALSE)
+
+
+gridExtra::grid.arrange(pearson_orig, spearman_orig, ncol=2, newpage = TRUE)
+```
+
+
+```{r, fig.height=8, fight.width=8}
+
+pearson_clean <- plot_correlation(df=clean_df, 
+                                  col_names=NULL, 
+                                  remove_columns=NULL, 
+                                  corr_type="pearson", 
+                                  title = paste("Pearson Correlation Matrix\nAfter Data Cleaning"),
+                                  hc_order=FALSE  # Turning off smart ordering so all maps are ordered the same, for easier comparisons
+                                  )
+
+
+spearman_clean <- plot_correlation(df=clean_df, 
+                                   col_names=NULL, 
+                                   remove_columns=NULL, 
+                                   corr_type="spearman", 
+                                   title = paste("Spearman Correlation Matrix\nAfter Data Cleaning"), 
+                                   hc_order=FALSE)
+
+gridExtra::grid.arrange(pearson_clean, spearman_clean, ncol=2, newpage = TRUE)
+```
+
+# Attribute Data Types
+```{r}
+
+# Data types after data cleaning function
+sapply(clean_df, class)
+
+```
+
+
+# Univariate Distributions
+```{r}
+source("Applied_Stats_Project_Functions.R")
+
+plot_histogram(df=clean_df, 
+               continuous_variable="MSRP", 
+               title="Distribution of MSRP", 
+               binwidth=15000, 
+               num_bins=NULL, 
+               add_table=TRUE, 
+               table_loc="upper_right")
+```
+
+```{r, fig.height=4, fig.width=12}
+
+engine_hp_p <- plot_histogram(df=clean_df, 
+                              continuous_variable="Engine_HP", 
+                              binwidth=NULL, 
+                              num_bins=NULL, 
+                              add_table=TRUE, 
+                              table_loc="upper_right", 
+                              fill_color = "#FF69B4")
+
+engine_cyl_p <- plot_histogram(df=clean_df, 
+                               continuous_variable="Engine_Cylinders", 
+                               binwidth=1, 
+                               num_bins=NULL, 
+                               add_table=TRUE, 
+                               table_loc="upper_right")
+
+gridExtra::grid.arrange(engine_hp_p, engine_cyl_p, nrow=1, ncol=2)
+```
+
+
+
+```{r, fig.height=4, fig.width=12}
+
+highway_mpg_p <- plot_histogram(df=clean_df, 
+                                continuous_variable="highway_MPG", 
+                                binwidth=NULL, 
+                                num_bins=NULL, 
+                                table_loc="upper_right", 
+                                fill_color="#00FFFF")
+
+city_mpg_p <- plot_histogram(df=clean_df, 
+                             continuous_variable="city_mpg", 
+                             binwidth=NULL, 
+                             num_bins=NULL, 
+                             add_table=TRUE, 
+                             table_loc="upper_right")
+
+gridExtra::grid.arrange(highway_mpg_p, city_mpg_p, nrow=1, ncol=2)
+
+```
+
+
+
+```{r, fig.height=4, fig.width=12}
+
+year_p <- plot_histogram(df=clean_df, 
+                         continuous_variable="Year", 
+                         binwidth=NULL, 
+                         num_bins=NULL, 
+                         table_loc="upper_left", 
+                         fill_color="#39FF14")
+
+doors_p <- plot_histogram(df=clean_df, 
+                          continuous_variable="Number_of_Doors", 
+                          binwidth=NULL, 
+                          num_bins=NULL, 
+                          add_table=TRUE, 
+                          table_loc="upper_left")
+
+gridExtra::grid.arrange(year_p, doors_p, nrow=1, ncol=2)
+```
+
+
+# Explore Log Transformations on right skewed features
+```{r, fig.height=4, fig.width=12}
+
+trans_msrp <- plot_transform_comparison_hist(df=clean_df, 
+                                             continuous_variable="MSRP", 
+                                             fill_color_orig="#bc5090", 
+                                             outline_color_orig="#003f5c", 
+                                             fill_color_trans="#bc5090", 
+                                             outline_color_trans="#003f5c", 
+                                             num_bins_orig=NULL, 
+                                             binwidth_orig=NULL, 
+                                             num_bins_trans=NULL, 
+                                             binwidth_trans=NULL, 
+                                             title_orig=NULL, 
+                                             title_trans=NULL, 
+                                             table_loc_orig="upper_right", 
+                                             table_loc_trans="upper_right", 
+                                             add_table_orig=TRUE, 
+                                             add_table_trans=TRUE)
+```
+
+
+```{r, fig.height=4, fig.width=12}
+
+trans_engine_hp <- plot_transform_comparison_hist(df=clean_df, 
+                                             continuous_variable="Engine_HP")
+
+```
+
+
+```{r, fig.height=4, fig.width=12}
+
+trans_highway_p <- plot_transform_comparison_hist(df=clean_df, 
+                                                  continuous_variable="highway_MPG")
+
+```
+
+
+```{r, fig.height=4, fig.width=12}
+
+trans_city_p <- plot_transform_comparison_hist(df=clean_df, 
+                                               continuous_variable="city_mpg")
+
+```
+
+
+
+
+
+```{r}
+
+# Create the training, validation and test sets
+split_datasets <- create_train_val_test_sets(df=clean_df, train_pct = 0.8, val_pct = 0.1)
+
+train_df <- split_datasets$train
+val_df <- split_datasets$val
+test_df <- split_datasets$test
+
+
+```
+
+```{r}
+names(clean_df)
+```
+
+
+
+```{r, fig.height=4, fig.width=10}
+
+source("Applied_Stats_Project_Functions.R")
+
+p1 <- plot_scatter(data=clean_df, 
+                   x_var="Engine_HP", 
+                   y_var="MSRP", 
+                   shade_var="Engine_Cylinders",   # Lets you shade points by a column in the dataframe
+                   shape_var = NULL,               # Lets you change point shape by a column in the dataframe
+                   size_var = NULL,                # Lets you change point size by a column in the dataframe
+                   identify_obs = c(6288, 6289),   # Observation numbers to identify. Useful when investigating influential points across multiple plots
+                   alpha = 0.8,                    # Transparency of the markers
+                   show_regression = FALSE,        # Should a regression be fit to these data?
+                   reg_table = TRUE,               # If plotting a regression line, this lets you add a table with the regression coefs, test stat and p-value
+                   filter_column="MSRP",           # Lets you specify a column to filter on prior to plotting, works in conjunction with the two params below
+                   remove_less_than = NULL,        # Remove points in filter_column less than this value before potting
+                   remove_greater_than = NULL,     # Remove points in filter_column greater than this value before plotting
+                   remove_obs_numbers = NULL       # Allows you to remove points by observation number. You can get the observation numbers by setting identify_obs=TRUE
+                   )
+p1
+
+```
+
+
+```{r}
+
+p1 <- plot_scatter(data=clean_df, 
+                   x_var="city_mpg", 
+                   y_var="MSRP", 
+                   shade_var="Engine_Cylinders",   
+                   shape_var = NULL,               
+                   size_var = NULL )
+p1
+```
+
+
+```{r}
+names(clean_df)
+```
+
+
+
+
+```{r}
+
+
+# train_pct <-- Percentage of observations in df that should be allocated for training
+# val_pct   <-- percentage of observations in df that should be allocated for validation
+# test_pct  <-- contains the rest of the observations not allocated to train or val.
+create_train_val_test_sets <- function(df, random_seed=42, train_pct, val_pct){
+  
+  total_observations <- nrow(df)
+  
+  # Get the number of training samples as train_percentage % of the total samples
+  num_train_samples <- floor(total_observations * train_pct)
+  
+  # Number of samples in the validation set
+  num_val_samples <- floor(total_observations * val_pct)
+  
+  # Anything that isn't train or val becomes test
+  num_test_samples <- 
+    
+  
+}
+
+
+train_percentage <- 0.8
+val_percentage <- 0.1
+test_percentage <- 0.1
+
+
+
+sample()
+
+```
+
+
+```{r}
+
+install.packages("splitTools")
+
+```
+
+
+
+```{r}
+
+str_flatten(levels(clean_df[,"Transmission_Type"]), sep=", ")
+
+stringr::str_flatten(as.character(levels(clean_df[,"Transmission_Type"])), ", ")
+
+```
+
+
+
+```{r}
+
+
+
+```
+
+
+```{r}
+
+
+```
+
+
+```{r}
+
+
+
+```
+
+
+
+```{r}
+
+
+```
+
+
+
+```{r}
+
+
+```
+
+
+
+```{r}
+
+
+
+```
+
+
+```{r}
+
+
+```
+
+
+```{r}
+
+
+```

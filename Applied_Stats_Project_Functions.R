@@ -1,6 +1,10 @@
 source("./Applied_Stats_Project_Function_Helpers.R")
 
 
+
+############################################# PLOTTING FUNCTIONS #################################################
+
+
 # Function to display a correlation matrix
 # corr_type --> one of "pearson", "kendall" or "spearman"
 plot_correlation <- function(df, col_names=NULL, remove_columns=NULL, round_digits=2,
@@ -183,6 +187,57 @@ add_table_to_plot <- function(p, df, x_var, table_loc){
 }
 
 
+plot_scatter <- function(data, x_var, y_var, shade_var=NULL, shape_var=NULL, 
+                         size_var=NULL, max_size=8, size_guide=FALSE, alpha=0.8,
+                         show_regression=FALSE, conf_level=0.95, pred_band=TRUE, conf_band=TRUE, 
+                         reg_linecolor="#ffa600", conf_linecolor="#bc5090", pred_linecolor="#003f5c",
+                         conf_linetype="solid", pred_linetype="dashed", round_digits=5, reg_table=TRUE,
+                         table_loc="upper_left", filter_column=NULL, keep_values=NULL, 
+                         remove_less_than=NULL, remove_greater_than=NULL, identify_obs=FALSE, 
+                         obs_txt_color="red", obs_txt_size=3, obs_txt_vjust=-0.4, obs_txt_hjust=0,
+                         remove_obs_numbers=NULL){
+  
+  df <- data
+  
+  df <- add_obs_number_column(df)
+  
+  df <- filter_by_observation_numbers(df, observation_numbers=remove_obs_numbers)
+  
+  data_list <- get_plotting_data(df=df, 
+                                 x_var=x_var, y_var=y_var, 
+                                 shade_var=shade_var, shape_var=shape_var,
+                                 size_var=size_var, filter_column=filter_column, 
+                                 keep_values=keep_values, remove_less_than=remove_less_than, 
+                                 remove_greater_than=remove_greater_than)
+  
+  df <- data_list[["data_frame"]]
+  shading_variable <- data_list[["shading_var"]]
+  shape_variable <- data_list[["shape_var"]]
+  size_variable <- data_list[["size_var"]]
+  
+  p <- ggplot(data=df, mapping=aes(x=Explanatory, y=Response)) + 
+    geom_point(aes(color=shading_variable, shape=shape_variable, size=size_variable), alpha=alpha) +
+    scale_shape_manual(values=1:nlevels(shape_variable)) + 
+    scale_size_area(max_size=max_size, guide=size_guide)
+  
+  # If we want points to point their observation number, for investigative purposes
+  p <- add_obs_numbers(p=p, df=df, obs_txt_color=obs_txt_color, obs_txt_size=obs_txt_size, obs_txt_vjust=obs_txt_vjust, 
+                       obs_txt_hjust=obs_txt_hjust, identify_obs=identify_obs, x_var=x_var, y_var=y_var, 
+                       called_from="scatter")
+  
+  p <- add_legend_data(p, shade_var, shape_var)
+  
+  p <- add_regression_and_title(df=df, show_regression=show_regression, p=p, conf_level=conf_level, 
+                                pred_band=pred_band, conf_band=conf_band, reg_linecolor=reg_linecolor, 
+                                conf_linecolor=conf_linecolor, pred_linecolor=pred_linecolor, 
+                                conf_linetype=conf_linetype, pred_linetype=pred_linetype, x_var=x_var, 
+                                y_var=y_var, round_digits=round_digits, reg_table=reg_table, 
+                                table_loc=table_loc)
+  
+  return(p)
+  
+}
+
 
 ############################################# DATA CLEANING REPORT #################################################
 
@@ -209,7 +264,7 @@ add_missing_counts_to_file <- function(df, filepath){
 }
 
 
-build_data_cleaning_report <- function(df_orig, df_missing, df_duplicate, filepath){
+build_data_cleaning_report <- function(df_orig, df_missing, df_duplicate, df_final, filepath){
   
   # BEFORE ANY CLEANING
   # Calculate the total number of duplicates
@@ -261,6 +316,25 @@ build_data_cleaning_report <- function(df_orig, df_missing, df_duplicate, filepa
   add_missing_counts_to_file(df=df_duplicate, filepath=filepath)
   cat("\n", "=======================================================", "\n\n\n", file=filepath, append=TRUE)
   
+  
+  cat(">>>>> FACTOR COLUMN LEVELS <<<<<\n\n", file=filepath, append=TRUE)
+  column_names <- colnames(df_final)
+  for(column_index in 1:length(column_names)){
+    
+    column_name <- column_names[column_index]
+    
+    if(class(df_final[,column_name]) == "factor"){
+      factor_levels <- stringr::str_flatten(as.character(levels(df_final[,column_name])), ", ")
+      
+      cat("~~~~~~~~~~~~~~~~~~~~\n\n", file=filepath, append=TRUE)
+      cat("Factor Column Name: ", column_name, "\n", "Factor Levels: ", factor_levels, "\n",  file=filepath, append=TRUE)
+      cat("~~~~~~~~~~~~~~~~~~~~\n\n\n", file=filepath, append=TRUE)
+    }
+    
+  }
+  
+  cat("\n", "=======================================================", "\n\n\n", file=filepath, append=TRUE)
+  
 }
 
 
@@ -293,13 +367,18 @@ clean_data <- function(df, duplicate_handling=TRUE, build_cleaning_report=TRUE, 
   
   #### ONLY TO GENERATE DATA CLEANING REPORT
   df_dup <- df
-
+  
+  ### Ensure datatypes match the assignments data dictionary
+  df <- set_datatypes(df)
+  
   if(build_cleaning_report){
     build_data_cleaning_report(df_orig=df_orig, 
                                df_missing=df_missing, 
                                df_duplicate=df_dup, 
+                               df_final=df,
                                filepath=report_filepath)  
   }
+  
   
   
   return(df)
@@ -327,6 +406,52 @@ fill_in_missings <- function(df){
   
   # Lazily dropping NA's for now
   df <- tidyr::drop_na(df)
+  
+  return(df)
+  
+}
+
+# SETTING DATA TYPES
+set_datatypes <- function(df){
+  
+  
+  ##### Columns with Factor Data Type #####
+  
+  factor_columns <- c("Make", "Model", "Engine_Fuel_Type", "Transmission_Type", "Market_Category",
+                      "Vehicle_Size", "Vehicle_Style", "Driven_Wheels")
+  
+  
+  # For each column that needs to be a factor
+  for(column_index in 1:length(factor_columns)){
+    
+    # Grab the name of this column
+    column_name <- factor_columns[column_index]
+    
+    # If this column doesn't have a factor data type.
+    if(class(df[,column_name]) != "factor"){
+      
+      df[,column_name] <- factor(df[,column_name])
+    
+    }
+  }
+  
+  ##### Columns with Numeric Data Type #####
+  
+  numeric_columns <- c("MSRP", "Year", "Engine_HP", "Engine_Cylinders", "Number_of_Doors",
+                       "highway_MPG", "city_mpg", "Popularity")
+  
+  # For each column that needs to be a factor
+  for(column_index in 1:length(numeric_columns)){
+    
+    # Grab the name of this column
+    column_name <- numeric_columns[column_index]
+    
+    # If this column doesn't have a factor data type.
+    if(class(df[,column_name]) != "numeric"){
+      
+      df[,column_name] <- as.numeric(df[,column_name])
+    }
+  }
   
   return(df)
   
@@ -449,3 +574,54 @@ filter_all_columns <- function(df, make, model, yr, Engine_fuel_type, Engine_HP,
 }
 
 ############################################# END DATA CLEANING #################################################
+
+
+############################################# MODELING FUNCTIONS #################################################
+
+create_train_val_test_sets <- function(df, train_pct=0.8, val_pct=0.1, random_seed=42){
+  
+  # Set a random seed for repeat-ability
+  set.seed(random_seed)
+  
+  # Get the total number of observations
+  total_observations <- nrow(df)
+  
+  # Get the number of training samples as train_percentage % of the total samples
+  num_train_samples <- floor(total_observations * train_pct)
+  
+  # Number of samples in the validation set
+  num_val_samples <- floor(total_observations * val_pct)
+  
+  # Anything that isn't train or val becomes test
+  num_test_samples <- total_observations - num_train_samples - num_val_samples
+  
+  # Get the indicies for the test set
+  test_indicies <- sample(x=total_observations, 
+                          size=num_test_samples, 
+                          replace=FALSE)
+  
+  # Create the test set
+  test_data <- df[test_indicies,]
+  
+  # Create the NOT test set (will be split in train and val next)
+  not_test_data <- df[-test_indicies,]
+  
+  # Size of the combined training and validation sets
+  combined_train_val_set_size <- num_train_samples + num_val_samples
+  
+  # Get the validation set indices
+  val_indicies <- sample(x=combined_train_val_set_size, size=num_val_samples, replace=FALSE)
+  
+  # Create the validation set
+  val_data <- not_test_data[val_indicies,]
+  
+  # Create the train set
+  train_data <- not_test_data[-val_indicies,]
+  
+  all_datasets <- list(train=train_data, 
+                       val=val_data, 
+                       test=test_data)
+  
+  return(all_datasets)
+  
+}
