@@ -391,6 +391,8 @@ clean_data <- function(df, duplicate_handling=TRUE, build_cleaning_report=TRUE, 
 
 fill_in_missings <- function(df){
   
+  df[,"obs_number"] <- seq(1, as.numeric(nrow(df)))
+  
   # Read in the file that contains the filled-in missing information
   fillin_file <- read.csv("./car_dataset_missing_fillins.csv", check.names=FALSE, na.strings=c(""))
   
