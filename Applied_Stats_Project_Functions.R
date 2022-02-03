@@ -381,35 +381,80 @@ clean_data <- function(df, duplicate_handling=TRUE, build_cleaning_report=TRUE, 
   
   
   
+  # Leave this at the end! 
+  # Add an observation number column, it is helpful for plotting and investigating points.
+  df[,"obs_number"] <- seq(1, as.numeric(nrow(df)))
+  
   return(df)
 }
 
 
 fill_in_missings <- function(df){
   
-  # FILL IN MISSINGS IN Engine_Fuel_Type
-  # Suzuki Verona 2004 manual says regular unleaded
-  # Three records here but they are actually all the same... two duplicates
-  df[is.na(df[,"Engine_Fuel_Type"]),"Engine_Fuel_Type"] <- "regular unleaded"
+  # Read in the file that contains the filled-in missing information
+  fillin_file <- read.csv("./car_dataset_missing_fillins.csv", check.names=FALSE, na.strings=c(""))
   
-  #FILL IN MISSINGS IN THE Number_of_Doors column
-  df[(is.na(df[,"Number_of_Doors"]) & df[,"Make"] == "Ferrari"), "Number_of_Doors"] <- 2
-  df[(is.na(df[,"Number_of_Doors"]) & df[,"Model"] == "Model S"), "Number_of_Doors"] <- 4
+  # Get the rows that are missing at least one item
+  missing_rows <- df[!complete.cases(df),]
   
+  # Remove the rows missing at least one field
+  complete_df <- df[complete.cases(df),]
   
-  # Engine_HP column
-  df[(is.na(df[,"Engine_HP"]) & df[,"Make"] == "FIAT" & df[,"Model"] == "500e"), "Engine_HP"] <- 111
-  df[(is.na(df[,"Engine_HP"]) & df[,"Make"] == "Lincoln" & df[,"Model"] == "Continental" & df[,"Year"] == 2017), "Engine_HP"] <- 350
-  df[(is.na(df[,"Engine_HP"]) & df[,"Make"] == "Ford" & df[,"Model"] == "Escape" & df[,"Year"] == 2017), "Engine_HP"] <- 200
-  df[(is.na(df[,"Engine_HP"]) & df[,"Make"] == "Ford" & df[,"Model"] == "Focus"), "Engine_HP"] <- 236
-  df[(is.na(df[,"Engine_HP"]) & df[,"Make"] == "Ford" & df[,"Model"] == "Freestar" & df[,"Year"] == 2005), "Engine_HP"] <- 200
+  # Grab the names of the dataframe columns
+  column_names <- names(df)
   
-  # Lazily dropping NA's for now
-  df <- tidyr::drop_na(df)
+  # Go down the rows in the dataset containing the missings
+  for(row_num in 1:nrow(missing_rows)){
+    
+    # Grab the row
+    this_row <- missing_rows[row_num, ]
+    
+    # Grab the row_id which we can use to get the corresponding row from fillin_file
+    row_id <- missing_rows[row_num, "obs_number"]
+    
+    # Loop across the columns of this row to find the missings
+    for(column_index in 1:length(column_names)){
+      
+      # Grab the name of this column
+      column_name <- column_names[column_index]
+      
+      # Can be deleted, only for showing how the function is operating.
+      # print(paste("Processing Row: ", row_num, " Column: ", column_name))
+      
+      # Check if this column has missing info, if it does, grab the replacement from fillin_file
+      if(is.na(this_row[,column_name])){
+        
+        # Grab the replacement value
+        replacement_value <- fillin_file[fillin_file[,"obs_number"]==row_id, column_name]
+        
+        # These lines can be deleted, they are only here in case of troubleshooting, or to display how the function is operating.
+        # car_name <- fillin_file[fillin_file[,"obs_number"]==row_id, "Make"]
+        # model <- fillin_file[fillin_file[,"obs_number"]==row_id, "Model"]
+        # going_to <- missing_rows[row_num, "Make"]
+        # print(paste0("Row: ", row_num, " Column: ", column_name, " Replacing with: ", replacement_value, " <-- ", car_name, " ", model, "... (", going_to, ")"))
+        
+        
+        # If we had the right answer in our look-up file, fill it in! 
+        if(length(replacement_value) != 0){
+          
+          # Fill in the missing information
+          missing_rows[row_num, column_name] <- replacement_value          
+        }
+      }
+    }
+  }
   
-  return(df)
+  complete_df <- rbind(complete_df, missing_rows)
   
+  # Lazily dropping any other rows NA's for now (should just be RX-7 and RX-8 left at this stage, so only these are dropped).
+  complete_df <- tidyr::drop_na(complete_df)
+  
+  # Remove the obs_number column for now. The data will get their final obs_numbers at the end of data cleaning
+  complete_df <- complete_df[,!(names(complete_df) %in% "obs_number")]
+  
+  return(complete_df)  
 }
+
 
 # SETTING DATA TYPES
 set_datatypes <- function(df){
@@ -456,7 +501,6 @@ set_datatypes <- function(df){
   return(df)
   
 }
-
 
 
 #### DUPLICATE VALUE HANDLING 
