@@ -1,0 +1,83 @@
+Make,Model,Year,Engine_Fuel_Type,Engine_HP,Engine_Cylinders,Transmission_Type,Driven_Wheels,Number_of_Doors,Market_Category,Vehicle_Size,Vehicle_Style,highway_MPG,city_mpg,Popularity,MSRP,obs_number
+FIAT,500e,2015,electric,111,0,DIRECT_DRIVE,front wheel drive,2,Hatchback,Compact,2dr Hatchback,108,122,819,31800,540
+FIAT,500e,2016,electric,111,0,DIRECT_DRIVE,front wheel drive,2,Hatchback,Compact,2dr Hatchback,103,121,819,31800,541
+FIAT,500e,2017,electric,111,0,DIRECT_DRIVE,front wheel drive,2,Hatchback,Compact,2dr Hatchback,103,121,819,31800,542
+Chevrolet,Bolt EV,2017,electric,200,0,DIRECT_DRIVE,front wheel drive,4,Hatchback,Compact,4dr Hatchback,110,128,1385,40905,1984
+Chevrolet,Bolt EV,2017,electric,200,0,DIRECT_DRIVE,front wheel drive,4,Hatchback,Compact,4dr Hatchback,110,128,1385,36620,1985
+Lincoln,Continental,2017,premium unleaded (recommended),335,6,AUTOMATIC,all wheel drive,4,Luxury,Large,Sedan,25,17,61,55915,2906
+Lincoln,Continental,2017,premium unleaded (recommended),335,6,AUTOMATIC,front wheel drive,4,Luxury,Large,Sedan,27,18,61,62915,2907
+Lincoln,Continental,2017,premium unleaded (recommended),335,6,AUTOMATIC,front wheel drive,4,Luxury,Large,Sedan,27,18,61,53915,2908
+Lincoln,Continental,2017,premium unleaded (recommended),335,6,AUTOMATIC,all wheel drive,4,Luxury,Large,Sedan,25,17,61,64915,2909
+Volkswagen,e-Golf,2015,electric,115,0,DIRECT_DRIVE,front wheel drive,4,Hatchback,Compact,4dr Hatchback,105,126,873,33450,3717
+Volkswagen,e-Golf,2015,electric,115,0,DIRECT_DRIVE,front wheel drive,4,Hatchback,Compact,4dr Hatchback,105,126,873,35445,3718
+Volkswagen,e-Golf,2016,electric,115,0,DIRECT_DRIVE,front wheel drive,4,Hatchback,Compact,4dr Hatchback,105,126,873,28995,3719
+Volkswagen,e-Golf,2016,electric,115,0,DIRECT_DRIVE,front wheel drive,4,Hatchback,Compact,4dr Hatchback,105,126,873,35595,3720
+Ford,Escape,2017,regular unleaded,245,4,AUTOMATIC,front wheel drive,4,Crossover,Compact,4dr SUV,30,23,5657,29100,4204
+Ford,Escape,2017,regular unleaded,245,4,AUTOMATIC,all wheel drive,4,Crossover,Compact,4dr SUV,28,22,5657,30850,4205
+Ford,Escape,2017,regular unleaded,245,4,AUTOMATIC,all wheel drive,4,Crossover,Compact,4dr SUV,28,22,5657,26850,4206
+Ford,Escape,2017,regular unleaded,245,4,AUTOMATIC,front wheel drive,4,Crossover,Compact,4dr SUV,30,23,5657,25100,4207
+Ferrari,FF,2013,premium unleaded (required),651,12,AUTOMATED_MANUAL,all wheel drive,2,"Exotic,High-Performance",Large,Coupe,16,11,2774,295000,4667
+Honda,Fit EV,2013,electric,123,0,DIRECT_DRIVE,front wheel drive,4,Hatchback,Compact,4dr Hatchback,105,132,2202,36625,4706
+Honda,Fit EV,2014,electric,123,0,DIRECT_DRIVE,front wheel drive,4,Hatchback,Compact,4dr Hatchback,105,132,2202,36625,4707
+Ford,Focus,2015,electric,143,0,DIRECT_DRIVE,front wheel drive,4,Hatchback,Compact,4dr Hatchback,99,110,5657,29170,4786
+Ford,Focus,2016,electric,143,0,DIRECT_DRIVE,front wheel drive,4,Hatchback,Compact,4dr Hatchback,99,110,5657,29170,4790
+Ford,Focus,2017,electric,143,0,DIRECT_DRIVE,front wheel drive,4,Hatchback,Compact,4dr Hatchback,99,110,5657,29120,4799
+Ford,Freestar,2005,regular unleaded,198,6,AUTOMATIC,front wheel drive,4,N/A,Midsize,Passenger Minivan,22,16,5657,28030,4915
+Ford,Freestar,2005,regular unleaded,198,6,AUTOMATIC,front wheel drive,4,N/A,Midsize,Passenger Minivan,22,16,5657,23930,4916
+Ford,Freestar,2005,regular unleaded,198,6,AUTOMATIC,front wheel drive,4,N/A,Midsize,Cargo Minivan,22,16,5657,21630,4917
+Ford,Freestar,2005,regular unleaded,198,6,AUTOMATIC,front wheel drive,4,N/A,Midsize,Passenger Minivan,22,16,5657,26530,4918
+Ford,Freestar,2005,regular unleaded,198,6,AUTOMATIC,front wheel drive,4,N/A,Midsize,Passenger Minivan,21,16,5657,29030,4919
+Ford,Freestar,2005,regular unleaded,198,6,AUTOMATIC,front wheel drive,4,N/A,Midsize,Passenger Minivan,21,16,5657,32755,4920
+Mitsubishi,i-MiEV,2014,electric,66,0,DIRECT_DRIVE,rear wheel drive,4,Hatchback,Compact,4dr Hatchback,99,126,436,22995,5779
+Mitsubishi,i-MiEV,2016,electric,66,0,DIRECT_DRIVE,rear wheel drive,4,Hatchback,Compact,4dr Hatchback,99,126,436,22995,5780
+Mitsubishi,i-MiEV,2017,electric,66,0,DIRECT_DRIVE,rear wheel drive,4,Hatchback,Compact,4dr Hatchback,102,121,436,22995,5781
+Chevrolet,Impala,2015,flex-fuel (unleaded/natural gas),305,6,AUTOMATIC,front wheel drive,4,"Flex Fuel,Performance",Large,Sedan,25,17,1385,40660,5826
+Chevrolet,Impala,2015,flex-fuel (unleaded/natural gas),305,6,AUTOMATIC,front wheel drive,4,"Flex Fuel,Performance",Large,Sedan,25,17,1385,37535,5831
+Chevrolet,Impala,2016,flex-fuel (unleaded/natural gas),305,6,AUTOMATIC,front wheel drive,4,"Flex Fuel,Performance",Large,Sedan,25,17,1385,40810,5832
+Chevrolet,Impala,2016,flex-fuel (unleaded/natural gas),305,6,AUTOMATIC,front wheel drive,4,"Flex Fuel,Performance",Large,Sedan,25,17,1385,37570,5834
+Chevrolet,Impala,2017,flex-fuel (unleaded/natural gas),305,6,AUTOMATIC,front wheel drive,4,"Flex Fuel,Performance",Large,Sedan,25,17,1385,37675,5840
+Chevrolet,Impala,2017,flex-fuel (unleaded/natural gas),305,6,AUTOMATIC,front wheel drive,4,"Flex Fuel,Performance",Large,Sedan,25,17,1385,40915,5841
+Nissan,Leaf,2014,electric,107,0,DIRECT_DRIVE,front wheel drive,4,Hatchback,Compact,4dr Hatchback,101,126,2009,35020,6386
+Nissan,Leaf,2014,electric,107,0,DIRECT_DRIVE,front wheel drive,4,Hatchback,Compact,4dr Hatchback,101,126,2009,32000,6387
+Nissan,Leaf,2014,electric,107,0,DIRECT_DRIVE,front wheel drive,4,Hatchback,Compact,4dr Hatchback,101,126,2009,28980,6388
+Nissan,Leaf,2015,electric,107,0,DIRECT_DRIVE,front wheel drive,4,Hatchback,Compact,4dr Hatchback,101,126,2009,32100,6389
+Nissan,Leaf,2015,electric,107,0,DIRECT_DRIVE,front wheel drive,4,Hatchback,Compact,4dr Hatchback,101,126,2009,35120,6390
+Nissan,Leaf,2015,electric,107,0,DIRECT_DRIVE,front wheel drive,4,Hatchback,Compact,4dr Hatchback,101,126,2009,29010,6391
+Nissan,Leaf,2015,electric,107,0,DIRECT_DRIVE,front wheel drive,4,Hatchback,Compact,4dr Hatchback,101,126,2009,32000,6392
+Nissan,Leaf,2016,electric,107,0,DIRECT_DRIVE,front wheel drive,4,Hatchback,Compact,4dr Hatchback,101,126,2009,29010,6393
+Nissan,Leaf,2016,electric,107,0,DIRECT_DRIVE,front wheel drive,4,Hatchback,Compact,4dr Hatchback,101,124,2009,34200,6394
+Nissan,Leaf,2016,electric,107,0,DIRECT_DRIVE,front wheel drive,4,Hatchback,Compact,4dr Hatchback,101,124,2009,36790,6395
+Mercedes-Benz,M-Class,2015,diesel,200,4,AUTOMATIC,all wheel drive,4,"Crossover,Luxury,Diesel",Midsize,4dr SUV,29,22,617,49800,6579
+Lincoln,MKZ,2017,regular unleaded,350,4,AUTOMATIC,front wheel drive,4,"Luxury,Hybrid",Midsize,Sedan,38,41,61,35010,6909
+Lincoln,MKZ,2017,regular unleaded,350,4,AUTOMATIC,front wheel drive,4,"Luxury,Hybrid",Midsize,Sedan,38,41,61,39510,6911
+Lincoln,MKZ,2017,regular unleaded,350,4,AUTOMATIC,front wheel drive,4,"Luxury,Hybrid",Midsize,Sedan,38,41,61,36760,6917
+Lincoln,MKZ,2017,regular unleaded,350,4,AUTOMATIC,front wheel drive,4,"Luxury,Hybrid",Midsize,Sedan,38,41,61,47670,6919
+Tesla,Model S,2014,electric,362,0,DIRECT_DRIVE,rear wheel drive,4,"Exotic,High-Performance",Large,Sedan,90,88,1391,79900,6922
+Tesla,Model S,2014,electric,362,0,DIRECT_DRIVE,rear wheel drive,4,"Exotic,Performance",Large,Sedan,97,94,1391,69900,6923
+Tesla,Model S,2014,electric,362,0,DIRECT_DRIVE,all wheel drive,4,"Exotic,High-Performance",Large,Sedan,94,86,1391,104500,6924
+Tesla,Model S,2014,electric,362,0,DIRECT_DRIVE,rear wheel drive,4,"Exotic,High-Performance",Large,Sedan,90,88,1391,93400,6925
+Tesla,Model S,2015,electric,362,0,DIRECT_DRIVE,rear wheel drive,4,"Exotic,Performance",Large,Sedan,97,94,1391,69900,6926
+Tesla,Model S,2015,electric,422,0,DIRECT_DRIVE,all wheel drive,4,"Exotic,Performance",Large,Sedan,102,101,1391,75000,6927
+Tesla,Model S,2015,electric,422,0,DIRECT_DRIVE,all wheel drive,4,"Exotic,High-Performance",Large,Sedan,106,95,1391,85000,6928
+Tesla,Model S,2015,electric,422,0,DIRECT_DRIVE,all wheel drive,4,"Exotic,High-Performance",Large,Sedan,98,89,1391,105000,6929
+Tesla,Model S,2015,electric,362,0,DIRECT_DRIVE,rear wheel drive,4,"Exotic,Performance",Large,Sedan,90,88,1391,80000,6930
+Tesla,Model S,2016,electric,422,0,DIRECT_DRIVE,all wheel drive,4,"Exotic,Performance",Large,Sedan,105,102,1391,79500,6931
+Tesla,Model S,2016,electric,422,0,DIRECT_DRIVE,all wheel drive,4,"Exotic,Performance",Large,Sedan,101,98,1391,66000,6932
+Tesla,Model S,2016,electric,422,0,DIRECT_DRIVE,all wheel drive,4,"Exotic,High-Performance",Large,Sedan,105,92,1391,134500,6933
+Tesla,Model S,2016,electric,362,0,DIRECT_DRIVE,rear wheel drive,4,"Exotic,Performance",Large,Sedan,100,97,1391,74500,6934
+Tesla,Model S,2016,electric,422,0,DIRECT_DRIVE,all wheel drive,4,"Exotic,Performance",Large,Sedan,107,101,1391,71000,6935
+Tesla,Model S,2016,electric,422,0,DIRECT_DRIVE,all wheel drive,4,"Exotic,Performance",Large,Sedan,102,101,1391,75000,6936
+Tesla,Model S,2016,electric,422,0,DIRECT_DRIVE,all wheel drive,4,"Exotic,High-Performance",Large,Sedan,107,101,1391,89500,6937
+Tesla,Model S,2016,electric,422,0,DIRECT_DRIVE,all wheel drive,4,"Exotic,High-Performance",Large,Sedan,100,91,1391,112000,6938
+Tesla,Model S,2016,electric,362,0,DIRECT_DRIVE,rear wheel drive,4,"Exotic,Performance",Large,Sedan,90,88,1391,70000,6939
+Toyota,RAV4 EV,2012,electric,154,0,DIRECT_DRIVE,front wheel drive,4,Crossover,Midsize,4dr SUV,74,78,2031,49800,8374
+Toyota,RAV4 EV,2013,electric,154,0,DIRECT_DRIVE,front wheel drive,4,Crossover,Midsize,4dr SUV,74,78,2031,49800,8375
+Toyota,RAV4 EV,2014,electric,154,0,DIRECT_DRIVE,front wheel drive,4,Crossover,Midsize,4dr SUV,74,78,2031,49800,8376
+Kia,Soul EV,2015,electric,109,0,DIRECT_DRIVE,front wheel drive,4,N/A,Compact,Wagon,92,120,1720,35700,9851
+Kia,Soul EV,2015,electric,109,0,DIRECT_DRIVE,front wheel drive,4,N/A,Compact,Wagon,92,120,1720,33700,9852
+Kia,Soul EV,2016,electric,109,0,DIRECT_DRIVE,front wheel drive,4,N/A,Compact,Wagon,92,120,1720,33950,9853
+Kia,Soul EV,2016,electric,109,0,DIRECT_DRIVE,front wheel drive,4,N/A,Compact,Wagon,92,120,1720,31950,9854
+Kia,Soul EV,2016,electric,109,0,DIRECT_DRIVE,front wheel drive,4,N/A,Compact,Wagon,92,120,1720,35950,9855
+Suzuki,Verona,2004,NA,155,6,AUTOMATIC,front wheel drive,4,N/A,Midsize,Sedan,25,17,481,17199,11322
+Suzuki,Verona,2004,NA,155,6,AUTOMATIC,front wheel drive,4,N/A,Midsize,Sedan,25,17,481,20199,11323
+Suzuki,Verona,2004,NA,155,6,AUTOMATIC,front wheel drive,4,N/A,Midsize,Sedan,25,17,481,18499,11324
