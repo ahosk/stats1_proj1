@@ -6,6 +6,7 @@ library(grid)
 library(stringr)
 library(ggplot2)
 library(ggpmisc)
+library(scales)
 
 ########################################### PLOTTING HELPERS #######################################################
 
@@ -113,6 +114,21 @@ get_plot_labels <- function(plot_kind, plot_type_info, extra_info=NULL){
     plot_xlabel <- "Observation Number"
     return_list <- list(title=plot_title, xlabel=plot_xlabel, ylabel=full_name)
   }
+  else if(plot_kind == "means_plot"){
+    continuous_variable_name <- full_name_to_title(plot_type_info)
+    categorical_variable_name <- full_name_to_title(extra_info)
+    plot_title <- paste0("Mean ", continuous_variable_name, " for each level of ", categorical_variable_name)
+    plot_xlabel <- categorical_variable_name
+    plot_ylabel <- paste0("Mean ", continuous_variable_name)
+    return_list <- list(title=plot_title, xlabel=plot_xlabel, ylabel=plot_ylabel)
+  }
+  else if(plot_kind == "factor_level_counts"){
+    variable_name <- full_name_to_title(plot_type_info)
+    plot_title <- paste0("Frequency of Levels in Variable ", variable_name)
+    plot_xlabel <- paste0("Levels in ", variable_name)
+    plot_ylabel <- paste0("Count of level occurences")
+    return_list <- list(title=plot_title, xlabel=plot_xlabel, ylabel=plot_ylabel)
+  }
   else if(plot_kind =="partial_residual"){
     variable_name <- full_name_to_title(plot_type_info)
     plot_title <- paste0("Partial Residual Plot for Explanatory Variable ", variable_name)
@@ -134,7 +150,20 @@ get_plot_labels <- function(plot_kind, plot_type_info, extra_info=NULL){
 }
 
 
+# Convert a full name to a title by removing underscores and adding capitolization
+full_name_to_title <- function(case_stat){
+  full_name_split <- str_replace_all(case_stat, pattern="_", replacement=" ")
+  title <- str_to_title(full_name_split)
+  return(title)
+}
+
+
 add_obs_number_column <- function(df){
+  
+  
+  if("obs_number" %in% names(df)){
+    return(df)
+  }
   
   # If the dataframe already has an "Id" column for observation identifiers,
   # then use that, otherwise create 1 by number the rows of the dataframe.

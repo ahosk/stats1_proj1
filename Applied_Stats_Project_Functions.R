@@ -195,7 +195,7 @@ plot_scatter <- function(data, x_var, y_var, shade_var=NULL, shape_var=NULL,
                          table_loc="upper_left", filter_column=NULL, keep_values=NULL, 
                          remove_less_than=NULL, remove_greater_than=NULL, identify_obs=FALSE, 
                          obs_txt_color="red", obs_txt_size=3, obs_txt_vjust=-0.4, obs_txt_hjust=0,
-                         remove_obs_numbers=NULL){
+                         remove_obs_numbers=NULL, remove_legend=FALSE){
   
   df <- data
   
@@ -225,7 +225,11 @@ plot_scatter <- function(data, x_var, y_var, shade_var=NULL, shape_var=NULL,
                        obs_txt_hjust=obs_txt_hjust, identify_obs=identify_obs, x_var=x_var, y_var=y_var, 
                        called_from="scatter")
   
-  p <- add_legend_data(p, shade_var, shape_var)
+  if(!remove_legend){
+    p <- add_legend_data(p, shade_var, shape_var) 
+  }else{
+    p <- p + theme(legend.position = "none")
+  }
   
   p <- add_regression_and_title(df=df, show_regression=show_regression, p=p, conf_level=conf_level, 
                                 pred_band=pred_band, conf_band=conf_band, reg_linecolor=reg_linecolor, 
@@ -233,6 +237,82 @@ plot_scatter <- function(data, x_var, y_var, shade_var=NULL, shape_var=NULL,
                                 conf_linetype=conf_linetype, pred_linetype=pred_linetype, x_var=x_var, 
                                 y_var=y_var, round_digits=round_digits, reg_table=reg_table, 
                                 table_loc=table_loc)
+  
+  return(p)
+  
+}
+
+
+plot_means_by_category <- function(df, continuous_variable, categorical_variable, errorbar_width=0.1, xtick_rotation=45,
+                                   remove_legend=FALSE){
+  
+  df[,"x_variable"] <- df[,categorical_variable]
+  df[,"y_variable"] <- df[,continuous_variable]
+  
+  plot_labels <- get_plot_labels(plot_kind="means_plot", 
+                                 plot_type_info=continuous_variable, 
+                                 extra_info=categorical_variable)
+  
+  
+  summary_data <- df %>% group_by(x_variable) %>% summarize_at(vars(y_variable), list(Mean=mean, SD=sd))
+  
+  summary_data <- summary_data[order(summary_data$Mean),]
+  
+  p <- ggplot(data=summary_data, aes(x=x_variable,y=Mean, colour=x_variable))+
+    geom_point()+
+    geom_errorbar(aes(ymin=Mean-SD,ymax=Mean+SD),width=errorbar_width) +
+    scale_x_discrete(limits=summary_data$x_variable) +
+    geom_line(mapping=aes(x=x_variable, y=Mean))+
+    ggtitle(plot_labels$title) +
+    ylab(plot_labels$ylabel)+ 
+    xlab(plot_labels$xlabel) +
+    labs(color=categorical_variable) +
+    scale_y_continuous(labels=scales::comma_format(big.mark=",", decimal.mark=".")) +
+    theme(axis.text.x=element_text(angle=xtick_rotation))
+  
+  
+  if(remove_legend){
+    p <- p + theme(legend.position="none")
+  }
+  
+  
+  return(p)
+  
+}
+
+plot_factor_level_counts <- function(df, factor_variable, xtick_rotation=0, outline_color="black", 
+                                     add_freq_txt=TRUE, txt_vjust=-0.5, txt_hjust=NULL, text_rotation=0,
+                                     remove_legend=FALSE){
+  
+  freq_df <- data.frame(table(df[,factor_variable]))
+  
+  
+  plot_labels <- get_plot_labels(plot_kind="factor_level_counts", 
+                                 plot_type_info=factor_variable, 
+                                 extra_info=NULL)
+  
+  # Reorder and reset the levels so bars plot smallest to largest in frequency
+  freq_df <- freq_df[order(freq_df[,"Freq"]),]
+  freq_df[,"Var1"] <- factor(freq_df$Var1, levels=freq_df$Var1)
+  
+  p <- ggplot(data=freq_df, mapping=aes(x=Var1, y=Freq, fill=Var1)) +
+    geom_col(colour=outline_color) +
+    xlab(plot_labels$xlabel) +
+    ylab(plot_labels$ylabel) +
+    ggtitle(plot_labels$title) +
+    theme(axis.text.x=element_text(angle=xtick_rotation)) +
+    labs(fill=factor_variable) 
+  
+  
+  if(add_freq_txt){
+    p <- p + geom_text(mapping = aes(x=Var1, y=Freq, label=Freq, vjust=txt_vjust, 
+                                     hjust=txt_hjust, angle=text_rotation))
+    
+  }  
+  
+  if(remove_legend){
+    p <- p + theme(legend.position="none")
+  }
   
   return(p)
   
@@ -264,22 +344,36 @@ add_missing_counts_to_file <- function(df, filepath){
 }
 
 
-build_data_cleaning_report <- function(df_orig, df_missing, df_duplicate, df_final, filepath){
+build_data_cleaning_report <- function(df_orig, df_missing, df_duplicate, df_final, df_filtering, filepath){
   
   # BEFORE ANY CLEANING
+  # calculate total number of rows in the data set
+  df_total_rows <- nrow(df_orig)
   # Calculate the total number of duplicates
   df_complete_duplicates <- sum(duplicated(df_orig))
   # Calculate the number of rows that are exactly the same, only different prices
   df_dup_only_diff_prices <- sum((duplicated(df_orig[,names(df_orig) != "MSRP"]) & !duplicated(df_orig)))
   
   # AFTER THE MISSING VALUES FUNCTION RUNS
+  # calculate total number of rows in the data set
+  after_missings_total_rows <- nrow(df_missing)
   # Calculate the total number of duplicates
   after_missings_complete_duplicates <- sum(duplicated(df_missing))
   # Calculate the number of rows that are exactly the same, only different prices
   after_missings_dup_only_diff_prices <- sum((duplicated(df_missing[,names(df_missing) != "MSRP"]) & !duplicated(df_missing)))
   
+  # AFTER THE EXTRA FILTERING FUNCTION RUNS
+  # calculate total number of rows in the data set
+  after_filtering_total_rows <- nrow(df_filtering)
+  # Calculate the total number of duplicates
+  after_filtering_complete_duplicates <- sum(duplicated(df_filtering))
+  # Calculate the number of rows that are exactly the same, only different prices
+  after_filtering_dup_only_diff_prices <- sum((duplicated(df_filtering[,names(df_filtering) != "MSRP"]) & !duplicated(df_filtering)))
+  
   
   # AFTER THE HANDLE DUPLICATE FUNCTION RUNS
+  # calculate total number of rows in the data set
+  ad_total_rows <- nrow(df_duplicate)
   # Calculate the total number of duplicates
   ad_complete_duplicates <- sum(duplicated(df_duplicate))
   # Calculate the number of rows that are exactly the same, only different prices
@@ -294,6 +388,7 @@ build_data_cleaning_report <- function(df_orig, df_missing, df_duplicate, df_fin
   
   
   cat(">>>>> Prior To Any Cleaning <<<<<\n\n", file=filepath, append=TRUE)
+  cat("Total number of rows: ", df_total_rows, "\n", file=filepath, append=TRUE)
   cat("Number of fully duplicate rows: ", df_complete_duplicates, "\n", file=filepath, append=TRUE)
   cat("Number of rows duplicate other than different MSRP's: ",df_dup_only_diff_prices, "\n\n", file=filepath, append=TRUE)
   cat("MISSING VALUES\n", file=filepath, append=TRUE)
@@ -302,6 +397,7 @@ build_data_cleaning_report <- function(df_orig, df_missing, df_duplicate, df_fin
   
   
   cat(">>>>> After Running the Clean Missing Values Function <<<<<\n\n", file=filepath, append=TRUE)
+  cat("Total number of rows: ", after_missings_total_rows, "\n", file=filepath, append=TRUE)
   cat("Number of fully duplicate rows: ", after_missings_complete_duplicates, "\n", file=filepath, append=TRUE)
   cat("Number of rows duplicate other than different MSRP's: ",after_missings_dup_only_diff_prices, "\n\n", file=filepath, append=TRUE)
   cat("MISSING VALUES\n", file=filepath, append=TRUE)
@@ -309,7 +405,17 @@ build_data_cleaning_report <- function(df_orig, df_missing, df_duplicate, df_fin
   cat("\n", "=======================================================", "\n\n\n", file=filepath, append=TRUE)
   
   
+  cat(">>>>> After Applying Additional Filters (e.g. Electric Cars, Expensive Cars) <<<<<\n\n", file=filepath, append=TRUE)
+  cat("Total number of rows: ", after_filtering_total_rows, "\n", file=filepath, append=TRUE)
+  cat("Number of fully duplicate rows: ", after_filtering_complete_duplicates, "\n", file=filepath, append=TRUE)
+  cat("Number of rows duplicate other than different MSRP's: ",after_filtering_dup_only_diff_prices, "\n\n", file=filepath, append=TRUE)
+  cat("MISSING VALUES\n", file=filepath, append=TRUE)
+  add_missing_counts_to_file(df=df_filtering, filepath=filepath)
+  cat("\n", "=======================================================", "\n\n\n", file=filepath, append=TRUE)
+  
+  
   cat(">>>>> At Conclusion of Data Cleaning Script <<<<<\n\n", file=filepath, append=TRUE)
+  cat("Total number of rows: ", ad_total_rows, "\n", file=filepath, append=TRUE)
   cat("Number of fully duplicate rows: ", ad_complete_duplicates, " <-- should be zero ", "\n", file=filepath, append=TRUE)
   cat("Number of rows duplicate other than different MSRP's: ",ad_dup_only_diff_prices, "<-- should be zero", "\n\n", file=filepath, append=TRUE)
   cat("MISSING VALUES\n", file=filepath, append=TRUE)
@@ -327,7 +433,7 @@ build_data_cleaning_report <- function(df_orig, df_missing, df_duplicate, df_fin
       factor_levels <- stringr::str_flatten(as.character(levels(df_final[,column_name])), ", ")
       
       cat("~~~~~~~~~~~~~~~~~~~~\n\n", file=filepath, append=TRUE)
-      cat("Factor Column Name: ", column_name, "\n", "Factor Levels: ", factor_levels, "\n",  file=filepath, append=TRUE)
+      cat("Factor Column Name: ", column_name, "\nNumber of levels: ", length(levels(df_final[,column_name])), "\n\nFactor Levels: ", factor_levels, "\n",  file=filepath, append=TRUE)
       cat("~~~~~~~~~~~~~~~~~~~~\n\n\n", file=filepath, append=TRUE)
     }
     
@@ -341,7 +447,8 @@ build_data_cleaning_report <- function(df_orig, df_missing, df_duplicate, df_fin
 ############################################# DATA CLEANING #################################################
 
 
-clean_data <- function(df, duplicate_handling=TRUE, build_cleaning_report=TRUE, report_filepath="Data_Cleaning_Report.txt"){
+clean_data <- function(df, duplicate_handling=TRUE, build_cleaning_report=TRUE, remove_electric_cars=TRUE,
+                       expensive_threshold=500000, report_filepath="Data_Cleaning_Report.txt"){
   
   # replace spaces in column names with underscores
   names(df) <- gsub(" ", "_", names(df))
@@ -358,6 +465,23 @@ clean_data <- function(df, duplicate_handling=TRUE, build_cleaning_report=TRUE, 
   
   #### ONLY TO GENERATE DATA CLEANING REPORT
   df_missing <- df
+  
+  ### Additional one off adjustments found during eda
+  #
+  # Fix the Audi with crazy high MPG
+  df[(df[,"Make"]=="Audi") & (df[,"Model"]=="A6") & (df[,"Year"]==2017) & (df[,"highway_MPG"] > 300), "highway_MPG"] <- 35
+  
+  
+  
+  # Does things such as removing electric vehicles and filtering based on
+  # car price, if desired.
+  df <- cleaning_filters(df=df, 
+                         expensive_threshold=expensive_threshold, 
+                         remove_electric_cars=remove_electric_cars)
+  
+  
+  #### ONLY TO GENERATE DATA CLEANING REPORT
+  df_filtering <- df
   
   
   # >>>> ACTUAL DATA CLEANING FUNCTION <<<<
@@ -376,6 +500,7 @@ clean_data <- function(df, duplicate_handling=TRUE, build_cleaning_report=TRUE, 
                                df_missing=df_missing, 
                                df_duplicate=df_dup, 
                                df_final=df,
+                               df_filtering=df_filtering,
                                filepath=report_filepath)  
   }
   
@@ -383,9 +508,38 @@ clean_data <- function(df, duplicate_handling=TRUE, build_cleaning_report=TRUE, 
   
   # Leave this at the end! 
   # Add an observation number column, it is helpful for plotting and investigating points.
-  df[,"obs_number"] <- seq(1, as.numeric(nrow(df)))
+  df[,"obs_number"] <- seq(1, as.numeric(nrow(df))) 
   
   return(df)
+}
+
+
+cleaning_filters <- function(df, remove_electric_cars, expensive_threshold){
+  
+  # If we decided not to do any additional filters, just leave this function
+  if(!expensive_threshold & !remove_electric_cars){
+    return(df)
+  }
+  
+  # If we decided to filter based on car price
+  if(expensive_threshold != FALSE){
+    
+    # Only keep the cars with price less than or equal to expensive_threshold
+    df <- df[df[,"MSRP"] <= expensive_threshold,]
+    
+  }
+  
+  # If we decided to remove electric cars
+  if(remove_electric_cars != FALSE){
+    
+    # Only keep the rows where the cars engine_fuel_type isn't electric
+    df <- df[df[,"Engine_Fuel_Type"] != "electric",]
+    
+  }
+  
+  
+  return(df)
+  
 }
 
 

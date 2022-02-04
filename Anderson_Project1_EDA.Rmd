@@ -7,6 +7,7 @@ output: html_document
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
+
 ```
 
 
@@ -15,13 +16,27 @@ knitr::opts_chunk$set(echo = TRUE)
 
 source("Applied_Stats_Project_Functions.R")
 
-df <- read.csv("./data1.csv", check.names=FALSE, na.strings=c(""))
+df <- read.csv("./data1.csv", check.names=FALSE, na.strings=c("", "NA"))
 names(df) <- gsub(" ", "_", names(df))
 
 clean_df <- clean_data(df=df)
-
 ```
 
+
+```{r}
+head(clean_df)
+```
+
+
+
+
+```{r}
+
+#fullmodel = lm(logMSRP~Year+city.mpg+Popularity*Market.Category,auto)
+#summary(fullmodel)
+#plot(fullmodel)
+
+```
 
 
 # Investigate missing values
@@ -96,7 +111,7 @@ gridExtra::grid.arrange(pearson_orig, spearman_orig, ncol=2, newpage = TRUE)
 
 pearson_clean <- plot_correlation(df=clean_df, 
                                   col_names=NULL, 
-                                  remove_columns=NULL, 
+                                  remove_columns=c("obs_number"), 
                                   corr_type="pearson", 
                                   title = paste("Pearson Correlation Matrix\nAfter Data Cleaning"),
                                   hc_order=FALSE  # Turning off smart ordering so all maps are ordered the same, for easier comparisons
@@ -105,7 +120,7 @@ pearson_clean <- plot_correlation(df=clean_df,
 
 spearman_clean <- plot_correlation(df=clean_df, 
                                    col_names=NULL, 
-                                   remove_columns=NULL, 
+                                   remove_columns=c("obs_number"), 
                                    corr_type="spearman", 
                                    title = paste("Spearman Correlation Matrix\nAfter Data Cleaning"), 
                                    hc_order=FALSE)
@@ -124,8 +139,8 @@ sapply(clean_df, class)
 
 # Univariate Distributions
 ```{r}
-source("Applied_Stats_Project_Functions.R")
 
+# Target is right skewed
 plot_histogram(df=clean_df, 
                continuous_variable="MSRP", 
                title="Distribution of MSRP", 
@@ -190,7 +205,7 @@ year_p <- plot_histogram(df=clean_df,
 
 doors_p <- plot_histogram(df=clean_df, 
                           continuous_variable="Number_of_Doors", 
-                          binwidth=NULL, 
+                          binwidth=1, 
                           num_bins=NULL, 
                           add_table=TRUE, 
                           table_loc="upper_left")
@@ -202,6 +217,7 @@ gridExtra::grid.arrange(year_p, doors_p, nrow=1, ncol=2)
 # Explore Log Transformations on right skewed features
 ```{r, fig.height=4, fig.width=12}
 
+# Log transform seems to help some with the skew, but almost creats a bimodal distribution with a spike at 0.
 trans_msrp <- plot_transform_comparison_hist(df=clean_df, 
                                              continuous_variable="MSRP", 
                                              fill_color_orig="#bc5090", 
@@ -209,9 +225,9 @@ trans_msrp <- plot_transform_comparison_hist(df=clean_df,
                                              fill_color_trans="#bc5090", 
                                              outline_color_trans="#003f5c", 
                                              num_bins_orig=NULL, 
-                                             binwidth_orig=NULL, 
+                                             binwidth_orig=10000, 
                                              num_bins_trans=NULL, 
-                                             binwidth_trans=NULL, 
+                                             binwidth_trans=0.2, 
                                              title_orig=NULL, 
                                              title_trans=NULL, 
                                              table_loc_orig="upper_right", 
@@ -219,6 +235,7 @@ trans_msrp <- plot_transform_comparison_hist(df=clean_df,
                                              add_table_orig=TRUE, 
                                              add_table_trans=TRUE)
 ```
+
 
 
 ```{r, fig.height=4, fig.width=12}
@@ -245,30 +262,8 @@ trans_city_p <- plot_transform_comparison_hist(df=clean_df,
 ```
 
 
-
-
-
-```{r}
-
-# Create the training, validation and test sets
-split_datasets <- create_train_val_test_sets(df=clean_df, train_pct = 0.8, val_pct = 0.1)
-
-train_df <- split_datasets$train
-val_df <- split_datasets$val
-test_df <- split_datasets$test
-
-
-```
-
-```{r}
-names(clean_df)
-```
-
-
-
+# Scatterplots of Continuous variables with Response (MSRP)
 ```{r, fig.height=4, fig.width=10}
-
-source("Applied_Stats_Project_Functions.R")
 
 p1 <- plot_scatter(data=clean_df, 
                    x_var="Engine_HP", 
@@ -276,7 +271,7 @@ p1 <- plot_scatter(data=clean_df,
                    shade_var="Engine_Cylinders",   # Lets you shade points by a column in the dataframe
                    shape_var = NULL,               # Lets you change point shape by a column in the dataframe
                    size_var = NULL,                # Lets you change point size by a column in the dataframe
-                   identify_obs = c(6288, 6289),   # Observation numbers to identify. Useful when investigating influential points across multiple plots
+                   identify_obs = NULL,   # Observation numbers to identify. Useful when investigating influential points across multiple plots
                    alpha = 0.8,                    # Transparency of the markers
                    show_regression = FALSE,        # Should a regression be fit to these data?
                    reg_table = TRUE,               # If plotting a regression line, this lets you add a table with the regression coefs, test stat and p-value
@@ -290,100 +285,388 @@ p1
 ```
 
 
+```{r, fig.height=4, fig.width=15}
+
+p1 <- plot_scatter(data=clean_df, 
+                   x_var="MSRP", 
+                   y_var="Popularity", 
+                   shade_var="Engine_Cylinders",   
+                   shape_var = NULL,               
+                   size_var = NULL)
+
+p2 <- plot_scatter(data=clean_df, 
+                   x_var="Popularity", 
+                   y_var="MSRP", 
+                   shade_var="Engine_Cylinders",   
+                   shape_var = NULL,               
+                   size_var = NULL, 
+                   remove_legend=FALSE)
+
+gridExtra::grid.arrange(p1, p2, nrow=1, ncol=2)
+```
+
+
+```{r, fig.height=4, fig.width=15}
+
+p1 <- plot_scatter(data=clean_df, 
+                   x_var="MSRP", 
+                   y_var="Popularity", 
+                   shade_var="Year",   
+                   shape_var = NULL,               
+                   size_var = NULL)
+
+p2 <- plot_scatter(data=clean_df, 
+                   x_var="Popularity", 
+                   y_var="MSRP", 
+                   shade_var="Year",   
+                   shape_var = NULL,               
+                   size_var = NULL, 
+                   remove_legend=FALSE)
+
+gridExtra::grid.arrange(p1, p2, nrow=1, ncol=2)
+```
+
+
+```{r, fig.height=4, fig.width=10}
+
+p1 <- plot_scatter(data=clean_df, 
+                   x_var="Year", 
+                   y_var="MSRP", 
+                   shade_var="Engine_Cylinders",   # Lets you shade points by a column in the dataframe
+                   shape_var = NULL,               # Lets you change point shape by a column in the dataframe
+                   size_var = NULL,                # Lets you change point size by a column in the dataframe
+                   identify_obs = NULL,   # Observation numbers to identify. Useful when investigating influential points across multiple plots
+                   alpha = 0.8,                    # Transparency of the markers
+                   show_regression = FALSE,        # Should a regression be fit to these data?
+                   reg_table = TRUE,               # If plotting a regression line, this lets you add a table with the regression coefs, test stat and p-value
+                   filter_column="MSRP",           # Lets you specify a column to filter on prior to plotting, works in conjunction with the two params below
+                   remove_less_than = NULL,        # Remove points in filter_column less than this value before potting
+                   remove_greater_than = NULL,     # Remove points in filter_column greater than this value before plotting
+                   remove_obs_numbers = NULL       # Allows you to remove points by observation number. You can get the observation numbers by setting identify_obs=TRUE
+                   )
+p1
+
+```
+
 ```{r}
+
+clean_df[clean_df[,"Engine_Cylinders"] %in% c(8, 10, 12),]
+
+```
+
+
+```{r, fig.height=4, fig.width=10}
+
+p1 <- plot_scatter(data=clean_df, 
+                   x_var="Engine_Cylinders", 
+                   y_var="MSRP", 
+                   shade_var="Year",   # Lets you shade points by a column in the dataframe
+                   shape_var = NULL,               # Lets you change point shape by a column in the dataframe
+                   size_var = NULL,                # Lets you change point size by a column in the dataframe
+                   identify_obs = NULL,   # Observation numbers to identify. Useful when investigating influential points across multiple plots
+                   alpha = 0.8,                    # Transparency of the markers
+                   show_regression = FALSE,        # Should a regression be fit to these data?
+                   reg_table = TRUE,               # If plotting a regression line, this lets you add a table with the regression coefs, test stat and p-value
+                   filter_column="MSRP",           # Lets you specify a column to filter on prior to plotting, works in conjunction with the two params below
+                   remove_less_than = NULL,        # Remove points in filter_column less than this value before potting
+                   remove_greater_than = NULL,     # Remove points in filter_column greater than this value before plotting
+                   remove_obs_numbers = NULL       # Allows you to remove points by observation number. You can get the observation numbers by setting identify_obs=TRUE
+                   )
+p1
+
+```
+
+
+```{r, fig.height=4, fig.width=10}
 
 p1 <- plot_scatter(data=clean_df, 
                    x_var="city_mpg", 
                    y_var="MSRP", 
-                   shade_var="Engine_Cylinders",   
-                   shape_var = NULL,               
-                   size_var = NULL )
+                   shade_var="Engine_Cylinders",   # Lets you shade points by a column in the dataframe
+                   shape_var = NULL,               # Lets you change point shape by a column in the dataframe
+                   size_var = NULL,                # Lets you change point size by a column in the dataframe
+                   identify_obs = NULL,   # Observation numbers to identify. Useful when investigating influential points across multiple plots
+                   alpha = 0.8,                    # Transparency of the markers
+                   show_regression = FALSE,        # Should a regression be fit to these data?
+                   reg_table = TRUE,               # If plotting a regression line, this lets you add a table with the regression coefs, test stat and p-value
+                   filter_column="MSRP",           # Lets you specify a column to filter on prior to plotting, works in conjunction with the two params below
+                   remove_less_than = NULL,        # Remove points in filter_column less than this value before potting
+                   remove_greater_than = NULL,     # Remove points in filter_column greater than this value before plotting
+                   remove_obs_numbers = NULL       # Allows you to remove points by observation number. You can get the observation numbers by setting identify_obs=TRUE
+                   )
 p1
+
 ```
 
+```{r, fig.height=4, fig.width=10}
 
-```{r}
-names(clean_df)
-```
-
-
-
-
-```{r}
-
-
-# train_pct <-- Percentage of observations in df that should be allocated for training
-# val_pct   <-- percentage of observations in df that should be allocated for validation
-# test_pct  <-- contains the rest of the observations not allocated to train or val.
-create_train_val_test_sets <- function(df, random_seed=42, train_pct, val_pct){
-  
-  total_observations <- nrow(df)
-  
-  # Get the number of training samples as train_percentage % of the total samples
-  num_train_samples <- floor(total_observations * train_pct)
-  
-  # Number of samples in the validation set
-  num_val_samples <- floor(total_observations * val_pct)
-  
-  # Anything that isn't train or val becomes test
-  num_test_samples <- 
-    
-  
-}
-
-
-train_percentage <- 0.8
-val_percentage <- 0.1
-test_percentage <- 0.1
-
-
-
-sample()
+p1 <- plot_scatter(data=clean_df, 
+                   x_var="highway_MPG", 
+                   y_var="MSRP", 
+                   shade_var="Engine_Cylinders",   # Lets you shade points by a column in the dataframe
+                   shape_var = NULL,               # Lets you change point shape by a column in the dataframe
+                   size_var = NULL,                # Lets you change point size by a column in the dataframe
+                   identify_obs = NULL,   # Observation numbers to identify. Useful when investigating influential points across multiple plots
+                   alpha = 0.8,                    # Transparency of the markers
+                   show_regression = FALSE,        # Should a regression be fit to these data?
+                   reg_table = TRUE,               # If plotting a regression line, this lets you add a table with the regression coefs, test stat and p-value
+                   filter_column="MSRP",           # Lets you specify a column to filter on prior to plotting, works in conjunction with the two params below
+                   remove_less_than = NULL,        # Remove points in filter_column less than this value before potting
+                   remove_greater_than = NULL,     # Remove points in filter_column greater than this value before plotting
+                   remove_obs_numbers = NULL       # Allows you to remove points by observation number. You can get the observation numbers by setting identify_obs=TRUE
+                   )
+p1
 
 ```
 
 
-```{r}
+# Factor Level Frequency Plots
+```{r, fig.width=10, fight.height=5}
 
-install.packages("splitTools")
+plot_factor_level_counts(df=clean_df,
+                         factor_variable="Driven_Wheels")
 
 ```
 
 
 
-```{r}
+```{r, fight.width=15}
 
-str_flatten(levels(clean_df[,"Transmission_Type"]), sep=", ")
 
-stringr::str_flatten(as.character(levels(clean_df[,"Transmission_Type"])), ", ")
+plot_factor_level_counts(df=clean_df,
+                         factor_variable="Year", 
+                         xtick_rotation = 90, 
+                         text_rotation=90,
+                         txt_vjust=NULL, 
+                         txt_hjust=1)
+```
+
+```{r, fig.width=12}
+
+# TALK ABOUT THIS ONE
+
+# Make
+plot_factor_level_counts(df=clean_df,
+                         factor_variable="Make", 
+                         xtick_rotation = 90, 
+                         text_rotation=90,
+                         txt_vjust=NULL, 
+                         txt_hjust=2)
 
 ```
 
 
 
-```{r}
+```{r, fig.width=8}
 
+# Vehicle Size
+plot_factor_level_counts(df=clean_df,
+                         factor_variable="Vehicle_Size")
+
+```
+
+```{r, fig.width=8}
+
+plot_factor_level_counts(df=clean_df,
+                         factor_variable="Engine_Cylinders")
+
+```
+
+
+```{r, fig.width=8}
+
+# Number of doors
+plot_factor_level_counts(df=clean_df,
+                         factor_variable="Number_of_Doors")
+
+```
+
+
+```{r, fig.width=12}
+
+# Vehicle Size
+plot_factor_level_counts(df=clean_df,
+                         factor_variable="Vehicle_Style", 
+                         xtick_rotation = 90)
+
+```
+
+
+```{r, fig.width=12}
+
+# TALK ABOUT THIS ONE
+
+# Vehicle Size
+plot_factor_level_counts(df=clean_df,
+                         factor_variable="Transmission_Type", 
+                         xtick_rotation = 90)
+
+```
+
+
+```{r, fig.width=12}
+
+
+# Market Category
+plot_factor_level_counts(df=clean_df,
+                         factor_variable="Engine_Fuel_Type", 
+                         xtick_rotation = 90, 
+                         remove_legend=TRUE)
 
 
 ```
 
 
 ```{r}
-
-
-```
-
-
-```{r}
-
-
-
+clean_df[clean_df[,"Engine_Fuel_Type"] == "natural gas",]
 ```
 
 
 
+```{r, fig.width=12}
+
+# TALK ABOUT THIS ONE
+
+# Market Category
+plot_factor_level_counts(df=clean_df,
+                         factor_variable="Market_Category", 
+                         xtick_rotation = 90, 
+                         remove_legend=TRUE)
+
+```
+
+
+```{r, fig.width=20}
+
+# Model cannot be plotted due to the fact that there is 897 categories
+# We can view the frequencies manually though (shown below)
+#
+# This column seems pretty much unusable. First because using this as categorical would be 897 regression 
+# coefs to be fit, which is way to many coefs for this size of a data set. Second, because many of the 
+# models only have a single instance, which would cause us issues when splitting into train and test sets... 
+# If a car model shows up in the test set that was never seen during training, there will not be a regression coef 
+# fit for that category, so the prediction will throw an error.
+model_freqs <- data.frame(table(clean_df[,"Model"]))
+model_freqs <- model_freqs[order(model_freqs[,"Freq"]),]
+model_freqs <- model_freqs %>% rename(Model=Var1) 
+
+# Run these for insight into why the Model column is pretty much unusable
+head(model_freqs, n=10)
+print(paste("Total Unique Models: ", nrow(model_freqs), " Total Models Only Represented Once: ", nrow(model_freqs[model_freqs[,"Freq"]==1,])))
+```
+
+
+# Categorical Mean Plots
+```{r, fig.height=5, fight.width=15}
+
+plot_means_by_category(df=clean_df, 
+                       continuous_variable="MSRP", 
+                       categorical_variable="Driven_Wheels")
+
+```
+
+```{r, fig.height=4, fight.width=15}
+
+plot_means_by_category(df=clean_df, 
+                       continuous_variable="MSRP", 
+                       categorical_variable="Engine_Cylinders")
+
+```
+
+
+```{r, fig.height=5, fight.width=15}
+
+plot_means_by_category(df=clean_df, 
+                       continuous_variable="MSRP", 
+                       categorical_variable="Transmission_Type")
+
+```
+
+
+```{r, fig.height=5, fight.width=15}
+
+plot_means_by_category(df=clean_df, 
+                       continuous_variable="MSRP", 
+                       categorical_variable="Vehicle_Style")
+
+```
+
+```{r, fig.height=5, fight.width=15}
+
+plot_means_by_category(df=clean_df, 
+                       continuous_variable="MSRP", 
+                       categorical_variable="Vehicle_Size")
+
+```
+
+
+
+```{r, fig.height=5, fight.width=20}
+
+plot_means_by_category(df=clean_df, 
+                       continuous_variable="MSRP", 
+                       categorical_variable="Engine_Fuel_Type", 
+                       xtick_rotation=90)
+
+```
+
+```{r, fig.height=4.5, fight.width=15}
+
+
+# Make
+plot_means_by_category(df=clean_df, 
+                       continuous_variable="MSRP", 
+                       categorical_variable="Make", 
+                       xtick_rotation=90, 
+                       remove_legend=TRUE)
+
+```
+
+
+```{r, fig.height=4.5, fig.width=15}
+
+plot_means_by_category(df=clean_df, 
+                       continuous_variable="MSRP", 
+                       categorical_variable="Market_Category", 
+                       remove_legend=TRUE,
+                       xtick_rotation = 90)
+
+```
+
+
+```{r, fig.height=5, fight.width=17}
+
+plot_means_by_category(df=clean_df, 
+                       continuous_variable="MSRP", 
+                       categorical_variable="Year")
+
+```
+
+```{r, fig.height=4, fight.width=17}
+
+plot_means_by_category(df=clean_df, 
+                       continuous_variable="MSRP", 
+                       categorical_variable="Number_of_Doors")
+
+```
+
+
+
+# Splitting data into training, testing and validation sets
 ```{r}
 
+# Create the training, validation and test sets
+split_datasets <- create_train_val_test_sets(df=clean_df, train_pct = 0.8, val_pct = 0.1)
+
+train_df <- split_datasets$train
+val_df <- split_datasets$val
+test_df <- split_datasets$test
+
+
+# Save the datasets to .csv for easy repeatability and sharing
+write.csv(train_df, "./training_dataset.csv", row.names=FALSE)
+write.csv(val_df, "./validation_dataset.csv", row.names=FALSE)
+write.csv(test_df, "./testing_dataset.csv", row.names=FALSE)
 
 ```
 
