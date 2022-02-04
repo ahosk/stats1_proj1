@@ -473,6 +473,7 @@ clean_data <- function(df, duplicate_handling=TRUE, build_cleaning_report=TRUE, 
   
   
   
+  
   # Does things such as removing electric vehicles and filtering based on
   # car price, if desired.
   df <- cleaning_filters(df=df, 
@@ -823,5 +824,222 @@ create_train_val_test_sets <- function(df, train_pct=0.8, val_pct=0.1, random_se
                        test=test_data)
   
   return(all_datasets)
+  
+}
+
+get_predictor_combos_manual <- function(features){
+  
+  # CREATES A LIST OF LISTS, WHERE EACH SUBLIST CONTAINS A COMBINATION OF FEATURES
+  for(num_features in 1:length(features)){
+    
+    new_combos <- utils::combn(x=features,
+                               m=num_features,
+                               simplify=FALSE)
+    
+    if(num_features == 1){
+      combined_combos <- new_combos
+    }else{
+      #combined_combos <- c(combined_combos, new_combos)
+      combined_combos <- append(combined_combos, new_combos)
+    }
+  }
+  
+  return(combined_combos)
+}
+
+
+filter_predictor_squared_terms <- function(candidate_combinations){
+  
+  # Get the indicies of the candidate predictors that are squared terms
+  squared_pred_indicies <- grep("_Squared$", candidate_combinations)
+  
+  # Get the actual names of the squared candidate predictors
+  squared_preds <- test_predictors[squared_pred_indicies]
+  
+  for(squared_index in 1:length(squared_preds)){
+    
+    # Get the name of the squared predictor
+    squared_predictor <- squared_preds[squared_index]
+    
+    # Get the name of the standard (non-squared version) of the predictor
+    standard_predictor <- gsub(pattern="_Squared",
+                               x=squared_predictor,
+                               replacement="")
+    
+    # Remove all candidate predictor sets where the squared term is included, but the standard term is not
+    candidate_combinations <- Filter(function(x){!((squared_predictor %in% x) & !(standard_predictor %in% x))}, candidate_combinations)
+    
+  }
+  
+  return(candidate_combinations)
+  
+}
+
+
+run_best_subset_selection <- function(train_data, val_data, candidate_predictors, response_variable="MSRP",
+                                      save_every=1000, save_path="./model_checkpoints/", base_save_name="project1_models",
+                                      order_column="val_rmse", filter_combinations=TRUE){
+  
+  # Generate all possible predictor combinations
+  predictor_combinations <- get_predictor_combos_manual(features=candidate_predictors)
+  
+  # Filter the combinations to remove any that include a squared term without including the 
+  # non-squared version of that same term... usually that is a good rule of thumb.
+  if(filter_combinations){
+    predictor_combinations <- filter_predictor_squared_terms(candidate_combinations = predictor_combinations)  
+  }
+  
+  for(combo_index in 1:length(predictor_combinations)){
+    
+    # Get the set of predictors for this model
+    predictor_set <- predictor_combinations[[combo_index]]
+    
+    # Generate a formula using this set of predictors
+    lm_formula <- as.formula(paste0(response_variable, "~", stringr::str_c(predictor_set, 
+                                                                           collapse=" + ")))
+    
+    
+    # Fit a regression using these predictors and the training data
+    fit <- lm(formula=lm_formula, 
+              data=train_data)
+    
+    
+    # Generate the internal and validation metrics for this model
+    model_metrics <- generate_model_metrics(model=fit, 
+                                            val_data=val_data, 
+                                            predictor_set=predictor_set)
+    
+    
+    # If this is the first model processed, then the result of this
+    # model is the start of the final result, otherwise, append the result 
+    # of this model to the final result
+    if(combo_index == 1){
+      final_metrics <- model_metrics
+    }else{
+      final_metrics <- rbind(final_metrics, model_metrics)
+    }
+    
+    # If it is time to save a checkpoint
+    if(combo_index %% save_every == 0){
+      
+      # Sort the lowest dataframe so the model with the best order_by metric is
+      # on top. This makes it easy to see if the best model has improved when checking on progress.
+      # save_file <- final_metrics[order(final_metrics[,order_by]),]
+      
+      final_metrics <- final_metrics[order(final_metrics[,order_column]),]
+      save_file_name <- paste(base_save_name, "_iteration_", combo_index, ".csv")
+      full_save_path <- gsub(x=paste(save_path, save_file_name),
+                             pattern=" ",
+                             replacement="",
+                             fixed = TRUE)
+      
+      write.csv(x=final_metrics, file=full_save_path, row.names=FALSE)
+    }
+  }
+  
+  # Final Save 
+  final_metrics <- final_metrics[order(final_metrics[,order_column]),]
+  save_file_name <- paste(base_save_name, "_FINAL.csv")
+  full_save_path <- gsub(x=paste(save_path, save_file_name),
+                         pattern=" ",
+                         replacement="",
+                         fixed=TRUE)
+  
+  write.csv(x=final_metrics, file=full_save_path, row.names=FALSE)
+  
+  return(final_metrics)
+}
+
+
+generate_model_metrics <- function(model, val_data, predictor_set){
+  
+  # Akaike Information Criterion
+  aic <- olsrr::ols_aic(model=model)
+  
+  # Amemiyas Prediction Criterion
+  apc <- olsrr::ols_apc(model=model)
+  
+  # Estimated Mean Squared Error of Prediction
+  fpe <- olsrr::ols_fpe(model=model)
+  
+  # Hockings Sp -- Average prediction mean squared error
+  hsp <- olsrr::ols_hsp(model)
+  
+  # Estimated error of prediction, assuming multivariate normality
+  msep <- olsrr::ols_msep(model)
+  
+  # Prediction R-squared --> used to determine how well the model predicts
+  # response s for new observations (larger is better)
+  pred_rsq <- olsrr::ols_pred_rsq(model)
+  
+  # Prediction sum of squares (PRESS)
+  press <- olsrr::ols_press(model)
+  
+  # Bayesian Information Criterion (SAS method uses residual sum of squares to compute SBC)
+  sbc_SAS <- olsrr::ols_sbc(model, method="SAS")
+  
+  # Bayesian Information Criterion (R method uses loglikelihood to compute SBC)
+  sbc_R <- olsrr::ols_sbc(model, method="R")
+  
+  # Root mean squared error
+  rmse <- summary(model)$sigma
+  
+  # R-squared
+  r_squared <- summary(model)$r.squared
+  
+  # Adjusted R-squared
+  adjusted_r_squared <- summary(model)$adj.r.squared
+  
+  # Overall F-statistic
+  f_statistic_value <- summary(model)$fstatistic[[1]]
+  
+  # Numerator Degrees of freedom for F-statistic
+  f_stat_num_df <- summary(model)$fstatistic[[2]]
+  
+  # Denominator Degrees of freedom for F-statistc
+  f_stat_denom_df <- summary(model)$fstatistic[[3]]
+  
+  # Use this model to make predictions on the validation set
+  val_set_predictions <- predict(model, val_data)
+  
+  # Get the metrics for the models predictions on the validation set
+  pred_metrics <- caret::postResample(pred=val_set_predictions, 
+                                      obs=val_data$MSRP)
+  
+  
+  # RMSE for the predictions on the validation set
+  val_rmse <- pred_metrics[[1]]
+  
+  # R-squared for the preditions on the validation set
+  val_rsquared <- pred_metrics[[2]]
+  
+  # Mean absolute error for the predictions on the validation set
+  val_mae <- pred_metrics[[3]]
+  
+  
+  model_predictors <- stringr::str_c(predictor_set, collapse="  ")
+  
+  
+  model_eval_data <- data.frame(predictors=model_predictors,
+                                val_mae=val_mae,
+                                val_rmse=val_rmse,
+                                val_rsq=val_rsquared,
+                                aic=aic,
+                                apc=apc,
+                                fpe=fpe,
+                                hsp=hsp,
+                                msep=msep,
+                                rmse=rmse,
+                                press=press,
+                                sbc_SAS=sbc_SAS,
+                                sbc_R=sbc_R, 
+                                pred_rsq=pred_rsq,
+                                rsq=r_squared,
+                                adj_rsq=adjusted_r_squared,
+                                fstat=f_statistic_value,
+                                f_num_df=f_stat_num_df,
+                                f_denom_df=f_stat_denom_df)
+  
+  return(model_eval_data)
   
 }

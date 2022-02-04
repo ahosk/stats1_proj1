@@ -655,6 +655,10 @@ plot_means_by_category(df=clean_df,
 # Splitting data into training, testing and validation sets
 ```{r}
 
+
+clean_df <- read.csv("./clean_dataset_0203.csv")
+
+
 # Create the training, validation and test sets
 split_datasets <- create_train_val_test_sets(df=clean_df, train_pct = 0.8, val_pct = 0.1)
 
@@ -671,28 +675,3 @@ write.csv(test_df, "./testing_dataset.csv", row.names=FALSE)
 ```
 
 
-
-```{r}
-
-
-```
-
-
-
-```{r}
-
-
-
-```
-
-
-```{r}
-
-
-```
-
-
-```{r}
-
-
-```
