@@ -1,0 +1,121 @@
+---
+title: "modeling"
+author: "Braden Anderson"
+date: "2/3/2022"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+
+
+```{r}
+
+source("Applied_Stats_Project_Functions.R")
+
+clean_df <- read.csv("./clean_dataset_0203.csv")
+
+head(clean_df)
+
+```
+
+```{r}
+names(clean_df)
+
+sapply(clean_df, class)
+
+add_squared_terms <- function(df, terms){
+  
+  for(term_index in 1:length(terms)){
+    
+    term_name <- terms[term_index]
+    
+    squared_term_name <- gsub(x=paste(term_name, "_Squared"),
+                              pattern=" ",
+                              replacement="")
+    
+    df[,squared_term_name] <- df[,term_name]^2
+    
+  }
+  
+  return(df)
+}
+
+head(clean_df)
+
+```
+
+
+
+```{r}
+
+source("Applied_Stats_Project_Functions.R")
+clean_df <- read.csv("./clean_dataset_0203.csv")
+clean_df <- add_squared_terms(df=clean_df,
+                              terms=c("Engine_HP", "Year", "Engine_Cylinders", "city_mpg", "highway_MPG"))
+
+
+val_df <- read.csv("./validation_dataset.csv")
+val_df <- add_squared_terms(df=val_df,
+                            terms=c("Engine_HP", "Year", "Engine_Cylinders", "city_mpg", "highway_MPG"))
+
+test_predictors <- c("Year", "highway_MPG", "city_mpg", "Engine_Cylinders", "Engine_HP", "Number_of_Doors", "Vehicle_Style", 
+                     "Vehicle_Size", "Driven_Wheels", "Engine_HP_Squared", "Year_Squared", "Engine_Cylinders_Squared", "city_mpg_Squared",
+                     "highway_MPG_Squared", "Popularity")
+
+
+best_subsets <- run_best_subset_selection(train_data=clean_df, 
+                                          val_data=val_df, 
+                                          candidate_predictors = test_predictors,
+                                          save_every=2000,
+                                          base_save_name="proj1_all_subsets",
+                                          filter_combinations=FALSE
+                                          )
+
+```
+
+```{r}
+
+
+```
+
+
+
+```{r}
+
+source("Applied_Stats_Project_Functions.R")
+clean_df <- read.csv("./clean_dataset_0203.csv")
+clean_df <- add_squared_terms(df=clean_df,
+                              terms=c("Engine_HP", "Year", "Engine_Cylinders", "city_mpg", "highway_MPG"))
+
+
+val_df <- read.csv("./validation_dataset.csv")
+val_df <- add_squared_terms(df=val_df,
+                            terms=c("Engine_HP", "Year", "Engine_Cylinders", "city_mpg", "highway_MPG"))
+
+test_predictors <- c("Year", "highway_MPG", "city_mpg", "Engine_Cylinders", "Engine_HP", "Number_of_Doors", "Vehicle_Style", 
+                     "Vehicle_Size", "Driven_Wheels", "Engine_HP_Squared", "Year_Squared")
+
+
+
+best_subsets <- run_best_subset_selection(train_data=clean_df, 
+                                          val_data=val_df, 
+                                          candidate_predictors = test_predictors,
+                                          save_every=500, 
+                                          base_save_name="proj1_eng_yr_sq")
+
+
+
+```
+
+
+```{r}
+
+checkpoint = read.csv("./model_checkpoints/proj1_all_subsets_iteration_2000.csv")
+
+checkpoint[order(checkpoint[,"val_rmse"]),]
+
+```
+
