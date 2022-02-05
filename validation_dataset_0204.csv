@@ -1,0 +1,656 @@
+"Make","Model","Year","Engine_Fuel_Type","Engine_HP","Engine_Cylinders","Transmission_Type","Driven_Wheels","Number_of_Doors","Market_Category","Vehicle_Size","Vehicle_Style","highway_MPG","city_mpg","Popularity","MSRP","Factory_Tuner","Luxury","Performance","Flex_Fuel","Hatchback","Hybrid","Diesel","Exotic","Crossover","log_MSRP","obs_number"
+"Audi","R8","2015","regular",430,"8","MANUAL","all wheel drive",2,"Luxury,High-Performance","Compact","Coupe",20,11,3105,115900,0,1,1,0,0,0,0,0,0,11.6604830293278,4576
+"Subaru","Impreza","2017","regular",152,"4","MANUAL","all wheel drive",4,"Hatchback","Compact","4dr Hatchback",35,27,640,22495,0,0,0,0,1,0,0,0,0,10.0210483412753,3400
+"Honda","Civic","2017","regular",180,"4","MANUAL","front wheel drive",4,"Hatchback,Performance","Compact","4dr Hatchback",39,30,2202,21300,0,0,1,0,1,0,0,0,0,9.96646235169752,1553
+"Lincoln","Aviator","2004","regular",302,"8","AUTOMATIC","all wheel drive",4,"Luxury","Midsize","4dr SUV",16,12,61,44472.5,0,1,0,0,0,0,0,0,0,10.7026262995994,1069
+"Land Rover","Freelander","2005","regular",174,"6","AUTOMATIC","all wheel drive",4,"Crossover,Luxury","Compact","4dr SUV",19,16,258,26830,0,1,0,0,0,0,0,0,1,10.1972759434197,2832
+"Nissan","Quest","2014","regular",260,"6","AUTOMATIC","front wheel drive",4,"N/A","Compact","Passenger Minivan",25,19,2009,33202.5,0,0,0,0,0,0,0,0,0,10.4103804532744,4502
+"Lexus","GS 200t","2016","regular",241,"4","AUTOMATIC","rear wheel drive",4,"Luxury","Midsize","Sedan",33,22,454,45615,0,1,0,0,0,0,0,0,0,10.7279918887796,3249
+"Ford","Fiesta","2017","regular",120,"4","AUTOMATED_MANUAL","front wheel drive",4,"N/A","Compact","Sedan",36,27,5657,19120,0,0,0,0,0,0,0,0,0,9.85849018660539,2696
+"Infiniti","Q50","2016","regular",360,"6","AUTOMATIC","all wheel drive",4,"Luxury,High-Performance,Hybrid","Midsize","Sedan",31,27,190,49050,0,1,1,0,0,1,0,0,0,10.8005954649935,4424
+"Lexus","NX 300h","2016","regular",194,"4","AUTOMATIC","front wheel drive",4,"Crossover,Luxury,Hybrid","Midsize","4dr SUV",31,35,454,39720,0,1,0,0,0,1,0,0,1,10.5896101181591,4180
+"Honda","Prelude","1999","regular",200,"4","MANUAL","front wheel drive",2,"Factory Tuner,Performance","Compact","Coupe",24,20,2202,3367,1,0,1,0,0,0,0,0,0,8.12177741916107,4344
+"Infiniti","Q60 Coupe","2017","regular",400,"6","AUTOMATIC","all wheel drive",2,"Factory Tuner,Luxury,High-Performance","Midsize","Coupe",26,19,190,53300,1,1,1,0,0,0,0,0,0,10.8836916101539,4464
+"Infiniti","M35","2009","regular",275,"6","AUTOMATIC","all wheel drive",4,"Luxury,Performance","Large","Sedan",22,16,190,47950,0,1,1,0,0,0,0,0,0,10.7779140803116,3772
+"GMC","Jimmy","2001","regular",190,"6","MANUAL","rear wheel drive",2,"N/A","Compact","2dr SUV",20,14,549,19270,0,0,0,0,0,0,0,0,0,9.86630476140841,3520
+"Toyota","Tundra","2017","regular",381,"8","AUTOMATIC","four wheel drive",4,"N/A","Large","Crew Cab Pickup",17,13,2031,44676.25,0,0,0,0,0,0,0,0,0,10.7071973194907,6079
+"Volvo","S60","2016","regular",302,"4","AUTOMATIC","front wheel drive",4,"Luxury,High-Performance","Midsize","Sedan",33,23,870,41375,0,1,1,0,0,0,0,0,0,10.6304321126794,5023
+"Infiniti","Q60 Convertible","2015","regular",325,"6","MANUAL","rear wheel drive",2,"Luxury,Performance","Midsize","Convertible",24,16,190,53400,0,1,1,0,0,0,0,0,0,10.8855660249483,4453
+"Dodge","Nitro","2010","regular",260,"6","AUTOMATIC","rear wheel drive",4,"Crossover,Performance","Midsize","4dr SUV",21,16,1851,26250,0,0,1,0,0,0,0,0,1,10.1754212680198,4154
+"Cadillac","XLR","2007","regular",320,"8","AUTOMATIC","rear wheel drive",2,"Luxury","Compact","Convertible",24,15,1624,81050,0,1,0,0,0,0,0,0,0,11.3028215271638,6432
+"Buick","Rainier","2007","regular",291,"6","AUTOMATIC","rear wheel drive",4,"N/A","Midsize","4dr SUV",20,14,155,31550,0,0,0,0,0,0,0,0,0,10.3593288679694,4614
+"Dodge","Caravan","2006","regular",180,"6","AUTOMATIC","front wheel drive",4,"N/A","Large","Passenger Minivan",24,17,1851,22520,0,0,0,0,0,0,0,0,0,10.0221590822536,1411
+"Chevrolet","Sonic","2016","regular",138,"4","AUTOMATIC","front wheel drive",4,"Hatchback","Compact","4dr Hatchback",37,27,1385,20345,0,0,0,0,1,0,0,0,0,9.92059046043579,5453
+"Cadillac","CTS","2015","flex",321,"6","AUTOMATIC","all wheel drive",4,"Flex Fuel,Luxury,Performance","Large","Sedan",26,18,1624,59370,0,1,1,1,0,0,0,0,0,10.9915443272647,1924
+"Lexus","IS 200t","2017","regular",241,"4","AUTOMATIC","rear wheel drive",4,"Luxury","Midsize","Sedan",32,22,454,37825,0,1,0,0,0,0,0,0,0,10.5407255386566,3437
+"Maserati","Levante","2017","regular",345,"6","AUTOMATIC","all wheel drive",4,"Crossover,Exotic,Luxury,Performance","Large","4dr SUV",20,14,238,72000,0,1,1,0,0,0,0,1,1,11.1844213979982,3671
+"Chevrolet","Sonic","2017","regular",138,"4","AUTOMATIC","front wheel drive",4,"Hatchback","Compact","4dr Hatchback",36,27,1385,21215,0,0,0,0,1,0,0,0,0,9.96246375763643,5460
+"Ford","Focus","2015","flex",160,"4","MANUAL","front wheel drive",4,"Hatchback,Flex Fuel","Compact","4dr Hatchback",36,26,5657,18960,0,0,0,1,1,0,0,0,0,9.85008677580901,2758
+"FIAT","500X","2016","regular",160,"4","MANUAL","front wheel drive",4,"Crossover","Compact","4dr SUV",34,25,819,20000,0,0,0,0,0,0,0,0,1,9.90348755253613,386
+"BMW","6 Series","2015","regular",315,"6","AUTOMATIC","all wheel drive",2,"Luxury,Performance","Midsize","Coupe",29,20,3916,79100,0,1,1,0,0,0,0,0,0,11.2784681537557,434
+"Maserati","GranTurismo","2016","regular",454,"8","AUTOMATIC","rear wheel drive",2,"Exotic,Luxury,High-Performance","Large","Coupe",21,13,238,132825,0,1,1,0,0,0,0,1,0,11.7967877513191,3247
+"Nissan","Juke","2016","regular",211,"4","MANUAL","front wheel drive",4,"Crossover,Hatchback,Factory Tuner,Performance","Compact","4dr Hatchback",31,25,2009,28020,1,0,1,0,1,0,0,0,1,10.240673819891,3539
+"Ford","Fusion","2017","regular",231,"4","AUTOMATIC","all wheel drive",4,"Performance","Midsize","Sedan",29,20,5657,32878.3333333333,0,0,1,0,0,0,0,0,0,10.4005691585099,2883
+"Chevrolet","S-10","2003","flex",120,"4","MANUAL","rear wheel drive",2,"Flex Fuel","Compact","Regular Cab Pickup",25,19,1385,16643.75,0,0,0,1,0,0,0,0,0,9.71979004956224,4950
+"Ford","Tempo","1994","regular",96,"4","MANUAL","front wheel drive",4,"N/A","Compact","Sedan",30,21,5657,2000,0,0,0,0,0,0,0,0,0,7.60090245954208,5772
+"Ford","Mustang","2016","regular",310,"4","MANUAL","rear wheel drive",2,"Performance","Midsize","Convertible",29,20,5657,35145,0,0,1,0,0,0,0,0,0,10.46723763961,4072
+"Ford","E-150","1996","regular",199,"6","AUTOMATIC","rear wheel drive",3,"N/A","Midsize","Passenger Van",15,11,5657,2000,0,0,0,0,0,0,0,0,0,7.60090245954208,2143
+"Mercedes-Benz","SLR McLaren","2009","regular",617,"8","AUTOMATIC","rear wheel drive",2,"Exotic,Factory Tuner,Luxury,High-Performance","Compact","Convertible",16,12,617,495000,1,1,1,0,0,0,0,1,0,13.1123130415508,5397
+"Nissan","200SX","1996","regular",115,"4","MANUAL","front wheel drive",2,"N/A","Compact","Coupe",36,26,2009,2000,0,0,0,0,0,0,0,0,0,7.60090245954208,65
+"BMW","8 Series","1995","regular",322,"12","AUTOMATIC","rear wheel drive",2,"Luxury,Performance","Midsize","Coupe",19,12,3916,5858,0,1,1,0,0,0,0,0,0,8.67556352738768,528
+"Ford","Fusion","2017","regular",175,"4","AUTOMATIC","front wheel drive",4,"N/A","Midsize","Sedan",32,21,5657,23110,0,0,0,0,0,0,0,0,0,10.0480207032684,2884
+"Mazda","B-Series Pickup","2000","flex",143,"6","MANUAL","rear wheel drive",2,"Flex Fuel","Compact","Regular Cab Pickup",21,16,586,2551,0,0,0,1,0,0,0,0,0,7.84424071814181,1118
+"Lexus","SC 430","2009","regular",288,"8","AUTOMATIC","rear wheel drive",2,"Luxury,Performance","Compact","Convertible",23,16,454,66805,0,1,1,0,0,0,0,0,0,11.109533207023,5122
+"Audi","TT","2015","regular",211,"4","AUTOMATED_MANUAL","all wheel drive",2,"Luxury","Compact","Coupe",31,22,3105,40350,0,1,0,0,0,0,0,0,0,10.6053466736981,6023
+"GMC","S-15 Jimmy","1991","regular",150,"6","MANUAL","four wheel drive",2,"N/A","Compact","2dr SUV",18,14,549,2000,0,0,0,0,0,0,0,0,0,7.60090245954208,4959
+"Ford","Fiesta","2017","regular",120,"4","MANUAL","front wheel drive",4,"N/A","Compact","Sedan",35,27,5657,14745,0,0,0,0,0,0,0,0,0,9.59865932124938,2695
+"Cadillac","CTS Coupe","2014","regular",318,"6","AUTOMATIC","rear wheel drive",2,"Luxury,Performance","Midsize","Coupe",27,18,1624,43761.6666666667,0,1,1,0,0,0,0,0,0,10.6865135229032,1901
+"Honda","Accord","2015","regular",189,"4","MANUAL","front wheel drive",4,"N/A","Midsize","Sedan",34,24,2202,23865,0,0,0,0,0,0,0,0,0,10.08016822944,841
+"Chevrolet","S-10","2003","regular",190,"6","AUTOMATIC","four wheel drive",4,"N/A","Compact","Crew Cab Pickup",18,14,1385,24370,0,0,0,0,0,0,0,0,0,10.1011081466193,4951
+"GMC","Savana Cargo","2014","flex",310,"8","AUTOMATIC","all wheel drive",3,"Flex Fuel","Midsize","Cargo Van",17,13,549,32760,0,0,0,1,0,0,0,0,0,10.396963537967,5100
+"Lamborghini","Gallardo","2013","regular",550,"10","MANUAL","rear wheel drive",2,"Exotic,High-Performance","Compact","Convertible",20,12,1158,209500,0,0,1,0,0,0,0,1,0,12.2524790183443,3043
+"Toyota","Supra","1998","regular",225,"6","MANUAL","rear wheel drive",2,"Performance","Compact","Coupe",22,17,2031,20596,0,0,1,0,0,0,0,0,0,9.93285216116603,5652
+"GMC","Sierra 1500","2015","flex",285,"6","AUTOMATIC","rear wheel drive",2,"Flex Fuel","Large","Regular Cab Pickup",24,18,549,30261.25,0,0,0,1,0,0,0,0,0,10.3176232951475,5264
+"Ford","F-150","2015","flex",282,"6","AUTOMATIC","rear wheel drive",4,"Flex Fuel","Large","Extended Cab Pickup",25,18,5657,32147.5,0,0,0,1,0,0,0,0,0,10.3780899661446,2603
+"Oldsmobile","Alero","2002","regular",140,"4","AUTOMATIC","front wheel drive",2,"N/A","Midsize","Coupe",30,21,26,18830,0,0,0,0,0,0,0,0,0,9.8432066216512,905
+"Saab","9-3","2009","regular",280,"6","AUTOMATIC","all wheel drive",4,"Luxury,Performance","Midsize","Sedan",24,15,376,43605,0,1,1,0,0,0,0,0,0,10.6829271016611,582
+"Volkswagen","Touareg","2015","diesel",240,"6","AUTOMATIC","all wheel drive",4,"Crossover,Diesel","Midsize","4dr SUV",29,20,873,57038.3333333333,0,0,0,0,0,0,1,0,1,10.9514788353999,5866
+"BMW","Z8","2002","regular",394,"8","MANUAL","rear wheel drive",2,"Exotic,Luxury,High-Performance","Compact","Convertible",19,12,3916,130000,0,1,1,0,0,0,0,1,0,11.7752897294377,6534
+"Saab","9-7X","2009","regular",285,"6","AUTOMATIC","all wheel drive",4,"Luxury","Midsize","4dr SUV",20,14,376,42615,0,1,0,0,0,0,0,0,0,10.6599615829564,618
+"Mercedes-Benz","GL-Class","2014","regular",362,"8","AUTOMATIC","all wheel drive",4,"Crossover,Luxury","Large","4dr SUV",19,14,617,64550,0,1,0,0,0,0,0,0,1,11.0751953962748,3086
+"BMW","2 Series","2016","regular",240,"4","AUTOMATIC","rear wheel drive",2,"Luxury,Performance","Compact","Coupe",35,23,3916,32850,0,1,1,0,0,0,0,0,0,10.3997070239128,35
+"Dodge","Avenger","2014","regular",173,"4","AUTOMATIC","front wheel drive",4,"Flex Fuel","Midsize","Sedan",31,20,1851,23295,0,0,0,1,0,0,0,0,0,10.0559940242509,1051
+"GMC","Envoy","2007","regular",302,"8","AUTOMATIC","four wheel drive",4,"N/A","Midsize","4dr SUV",19,13,549,37190,0,0,0,0,0,0,0,0,0,10.5237951869191,2358
+"Chevrolet","Silverado 1500 Classic","2007","regular",285,"8","AUTOMATIC","four wheel drive",4,"Flex Fuel","Large","Extended Cab Pickup",18,14,1385,27168.3333333333,0,0,0,1,0,0,0,0,0,10.2098073583723,5309
+"Kia","Sorento","2016","regular",240,"4","AUTOMATIC","front wheel drive",4,"Crossover","Midsize","4dr SUV",27,20,1720,35500,0,0,0,0,0,0,0,0,1,10.4772879754635,5490
+"Mercedes-Benz","E-Class","2016","regular",302,"6","AUTOMATIC","all wheel drive",4,"Luxury,Performance","Midsize","Sedan",28,20,617,55600,0,1,1,0,0,0,0,0,0,10.9259384802387,2178
+"Ford","Ranger","2010","regular",207,"6","MANUAL","rear wheel drive",2,"N/A","Compact","Extended Cab Pickup",21,15,5657,22155,0,0,0,0,0,0,0,0,0,10.0058184836336,4752
+"Bentley","Continental GT","2014","regular",521,"8","AUTOMATIC","all wheel drive",2,"Exotic,Factory Tuner,Luxury,High-Performance","Midsize","Coupe",24,15,520,196500,1,1,1,0,0,0,0,1,0,12.1884177102915,1724
+"Chevrolet","Beretta","1996","regular",155,"6","AUTOMATIC","front wheel drive",2,"Performance","Midsize","Coupe",27,18,1385,2000,0,0,1,0,0,0,0,0,0,7.60090245954208,1189
+"Chevrolet","Uplander","2006","regular",201,"6","AUTOMATIC","front wheel drive",4,"N/A","Midsize","Passenger Minivan",23,16,1385,26875,0,0,0,0,0,0,0,0,0,10.19895176543,6096
+"Hyundai","Genesis","2016","regular",311,"6","AUTOMATIC","rear wheel drive",4,"Luxury,Performance","Large","Sedan",29,18,1439,38750,0,1,1,0,0,0,0,0,0,10.5648860347815,3070
+"Cadillac","ATS","2015","flex",321,"6","AUTOMATIC","all wheel drive",4,"Flex Fuel,Luxury,High-Performance","Compact","Sedan",26,18,1624,46238.3333333333,0,1,1,1,0,0,0,0,0,10.7415644588674,1014
+"GMC","Sierra 1500","2016","flex",285,"6","AUTOMATIC","four wheel drive",4,"Flex Fuel","Large","Extended Cab Pickup",22,17,549,38142.5,0,0,0,1,0,0,0,0,0,10.5490844249874,5278
+"BMW","6 Series","2017","regular",445,"8","AUTOMATIC","all wheel drive",2,"Luxury,High-Performance","Midsize","Convertible",24,15,3916,99500,0,1,1,0,0,0,0,0,0,11.5079129231467,455
+"Porsche","968","1995","regular",236,"4","MANUAL","rear wheel drive",2,"Luxury,Performance","Compact","Coupe",24,15,1715,4723,0,1,1,0,0,0,0,0,0,8.46019946989612,737
+"BMW","7 Series","2016","regular",445,"8","AUTOMATIC","rear wheel drive",4,"Luxury,High-Performance","Large","Sedan",25,17,3916,94400,0,1,1,0,0,0,0,0,0,11.4552963521336,500
+"Oldsmobile","Ninety-Eight","1995","regular",225,"6","AUTOMATIC","front wheel drive",4,"N/A","Large","Sedan",26,17,26,2000,0,0,0,0,0,0,0,0,0,7.60090245954208,4149
+"GMC","Savana","2014","flex",280,"8","AUTOMATIC","rear wheel drive",3,"Flex Fuel","Large","Passenger Van",17,11,549,36030,0,0,0,1,0,0,0,0,0,10.4921072037421,5108
+"Suzuki","Forenza","2007","regular",127,"4","AUTOMATIC","front wheel drive",4,"N/A","Compact","Sedan",28,19,481,15549,0,0,0,0,0,0,0,0,0,9.65175160685782,2775
+"Audi","Q7","2017","regular",333,"6","AUTOMATIC","all wheel drive",4,"Crossover,Luxury,Performance","Large","4dr SUV",25,19,3105,59300,0,1,1,0,0,0,0,0,1,10.9903645849858,4493
+"Chrysler","Aspen","2008","regular",302,"8","AUTOMATIC","rear wheel drive",4,"N/A","Large","4dr SUV",19,14,1013,32905,0,0,0,0,0,0,0,0,0,10.4013799008902,971
+"Dodge","Magnum","2006","regular",190,"6","AUTOMATIC","rear wheel drive",4,"N/A","Large","Wagon",26,18,1851,22680,0,0,0,0,0,0,0,0,0,10.0292387578417,3817
+"Dodge","Durango","2016","regular",295,"6","AUTOMATIC","all wheel drive",4,"Crossover","Large","4dr SUV",25,18,1851,44442.5,0,0,0,0,0,0,0,0,1,10.7019514977968,2128
+"Lincoln","MKT","2017","regular",365,"6","AUTOMATIC","all wheel drive",4,"Crossover,Luxury,Performance","Large","Wagon",21,15,61,49025,0,1,1,0,0,0,0,0,1,10.8000856510645,3965
+"Ford","F-150","2016","flex",282,"6","AUTOMATIC","four wheel drive",2,"Flex Fuel","Large","Regular Cab Pickup",23,17,5657,33407.5,0,0,0,1,0,0,0,0,0,10.4165357046552,2616
+"Kia","Forte","2015","regular",201,"4","MANUAL","front wheel drive",4,"Hatchback,Performance","Compact","4dr Hatchback",29,21,1720,20890,0,0,1,0,1,0,0,0,0,9.94702585455061,2793
+"Mazda","CX-5","2014","regular",184,"4","AUTOMATIC","front wheel drive",4,"Crossover","Midsize","4dr SUV",32,25,586,26317.5,0,0,0,0,0,0,0,0,1,10.1779893961255,1987
+"Buick","Rendezvous","2005","regular",185,"6","AUTOMATIC","all wheel drive",4,"Crossover","Midsize","4dr SUV",22,16,155,29970,0,0,0,0,0,0,0,0,1,10.3079521603107,4808
+"GMC","Sonoma","2003","flex",120,"4","MANUAL","rear wheel drive",3,"Flex Fuel","Compact","Extended Cab Pickup",25,19,549,17420,0,0,0,1,0,0,0,0,0,9.76537425040649,5476
+"Cadillac","CTS Coupe","2014","regular",318,"6","AUTOMATIC","all wheel drive",2,"Luxury,Performance","Midsize","Coupe",27,18,1624,45761.6666666667,0,1,1,0,0,0,0,0,0,10.7312020473018,1902
+"Nissan","Sentra","2017","regular",188,"4","AUTOMATIC","front wheel drive",4,"N/A","Midsize","Sedan",33,27,2009,21990,0,0,0,0,0,0,0,0,0,9.99834308354881,5162
+"Honda","Ridgeline","2017","regular",280,"6","AUTOMATIC","front wheel drive",4,"N/A","Large","Crew Cab Pickup",26,19,2202,32743,0,0,0,0,0,0,0,0,0,10.3964444777596,4822
+"Oldsmobile","Cutlass Supreme","1995","regular",160,"6","AUTOMATIC","front wheel drive",4,"N/A","Midsize","Sedan",26,17,26,2000,0,0,0,0,0,0,0,0,0,7.60090245954208,1973
+"Toyota","Tacoma","2015","regular",159,"4","AUTOMATIC","four wheel drive",4,"N/A","Compact","Extended Cab Pickup",21,18,2031,25700,0,0,0,0,0,0,0,0,0,10.1542462708833,5701
+"Land Rover","Discovery Series II","2001","regular",188,"8","AUTOMATIC","four wheel drive",4,"Luxury","Midsize","4dr SUV",16,12,258,34683.3333333333,0,1,0,0,0,0,0,0,0,10.4540145431537,2107
+"Dodge","Shadow","1992","regular",152,"4","MANUAL","front wheel drive",2,"Performance","Compact","Convertible",24,18,1851,2000,0,0,1,0,0,0,0,0,0,7.60090245954208,5187
+"Dodge","Stealth","1995","regular",164,"6","MANUAL","front wheel drive",2,"N/A","Compact","Coupe",22,17,1851,2000,0,0,0,0,0,0,0,0,0,7.60090245954208,5577
+"Honda","Pilot","2016","regular",280,"6","AUTOMATIC","front wheel drive",4,"Crossover","Midsize","4dr SUV",27,19,2202,34511.6666666667,0,0,0,0,0,0,0,0,1,10.449052710106,4336
+"Kia","Optima","2016","regular",245,"4","AUTOMATIC","front wheel drive",4,"Performance","Midsize","Sedan",32,22,1720,32990,0,0,1,0,0,0,0,0,0,10.4039597642226,4202
+"Chrysler","Imperial","1991","regular",150,"6","AUTOMATIC","front wheel drive",4,"N/A","Large","Sedan",23,15,1013,2000,0,0,0,0,0,0,0,0,0,7.60090245954208,3371
+"Volvo","240","1992","regular",114,"4","MANUAL","rear wheel drive",4,"Luxury","Midsize","Wagon",26,19,870,2000,0,1,0,0,0,0,0,0,0,7.60090245954208,78
+"Suzuki","XL-7","2005","regular",185,"6","AUTOMATIC","rear wheel drive",4,"N/A","Midsize","4dr SUV",21,16,481,23299,0,0,0,0,0,0,0,0,0,10.0561657201778,6420
+"BMW","1 Series","2013","regular",230,"6","MANUAL","rear wheel drive",2,"Luxury,Performance","Compact","Coupe",28,19,3916,31500,0,1,1,0,0,0,0,0,0,10.3577428248137,12
+"Lincoln","MKC","2016","regular",240,"4","AUTOMATIC","front wheel drive",4,"Crossover,Luxury","Compact","4dr SUV",29,20,61,39316.25,0,1,0,0,0,0,0,0,1,10.5793931984007,3947
+"Toyota","ECHO","2005","regular",108,"4","AUTOMATIC","front wheel drive",2,"N/A","Compact","Coupe",36,28,2031,11255,0,0,0,0,0,0,0,0,0,9.32856775334083,2222
+"Toyota","Tercel","1996","regular",93,"4","MANUAL","front wheel drive",2,"N/A","Compact","Coupe",36,29,2031,2000,0,0,0,0,0,0,0,0,0,7.60090245954208,5776
+"Maserati","GranTurismo Convertible","2015","regular",444,"8","AUTOMATIC","rear wheel drive",2,"Exotic,Luxury,High-Performance","Midsize","Convertible",20,13,238,145740,0,1,1,0,0,0,0,1,0,11.8895794912243,3238
+"Suzuki","Aerio","2005","regular",155,"4","MANUAL","front wheel drive",4,"N/A","Compact","Sedan",28,22,481,14749,0,0,0,0,0,0,0,0,0,9.5989305628595,876
+"Nissan","200SX","1998","regular",140,"4","MANUAL","front wheel drive",2,"Performance","Compact","Coupe",28,20,2009,2073,0,0,1,0,0,0,0,0,0,7.63675211243578,70
+"Chevrolet","Cavalier","2003","regular",140,"4","MANUAL","front wheel drive",4,"N/A","Compact","Sedan",30,22,1385,15663.3333333333,0,0,0,0,0,0,0,0,0,9.65907780342875,1422
+"Audi","80","1991","regular",130,"5","MANUAL","all wheel drive",4,"Luxury","Compact","Sedan",22,16,3105,2000,0,1,0,0,0,0,0,0,0,7.60090245954208,537
+"BMW","2 Series","2016","regular",240,"4","MANUAL","rear wheel drive",2,"Luxury,Performance","Compact","Coupe",34,22,3916,32850,0,1,1,0,0,0,0,0,0,10.3997070239128,41
+"Lexus","RC 350","2015","regular",306,"6","AUTOMATIC","rear wheel drive",2,"Luxury,Performance","Midsize","Coupe",28,19,454,42790,0,1,1,0,0,0,0,0,0,10.6640597094109,4780
+"Oldsmobile","Alero","2002","regular",170,"6","AUTOMATIC","front wheel drive",2,"N/A","Midsize","Coupe",27,18,26,21737.5,0,0,0,0,0,0,0,0,0,9.98679415866254,902
+"GMC","Jimmy","2001","regular",190,"6","AUTOMATIC","four wheel drive",4,"N/A","Midsize","4dr SUV",18,14,549,31210,0,0,0,0,0,0,0,0,0,10.3484938352648,3519
+"Volkswagen","Phaeton","2006","regular",335,"8","AUTOMATIC","all wheel drive",4,"Luxury","Large","Sedan",21,14,873,70525,0,1,0,0,0,0,0,0,0,11.1637225358702,4304
+"Audi","80","1990","regular",130,"5","MANUAL","all wheel drive",4,"Luxury","Compact","Sedan",22,16,3105,2000,0,1,0,0,0,0,0,0,0,7.60090245954208,535
+"Audi","R8","2015","regular",525,"10","MANUAL","all wheel drive",2,"Luxury,High-Performance","Compact","Convertible",19,12,3105,166100,0,1,1,0,0,0,0,0,0,12.0203452956014,4572
+"Hyundai","Santa Fe","2015","regular",290,"6","AUTOMATIC","all wheel drive",4,"Crossover","Midsize","4dr SUV",24,18,1439,33950,0,0,0,0,0,0,0,0,1,10.4326441329868,5092
+"Ford","Fusion","2015","regular",231,"4","AUTOMATIC","all wheel drive",4,"Performance","Midsize","Sedan",31,22,5657,32780,0,0,1,0,0,0,0,0,0,10.3975738522978,2876
+"Mercedes-Benz","CLS-Class","2016","regular",577,"8","AUTOMATIC","all wheel drive",4,"Factory Tuner,Luxury,High-Performance","Midsize","Sedan",22,16,617,107800,1,1,1,0,0,0,0,0,0,11.588032937457,1633
+"Infiniti","M","2013","regular",330,"6","AUTOMATIC","rear wheel drive",4,"Luxury,Performance","Large","Sedan",26,18,190,48700,0,1,1,0,0,0,0,0,0,10.7934343090707,3934
+"Infiniti","QX4","2003","regular",240,"6","AUTOMATIC","rear wheel drive",4,"Luxury","Midsize","4dr SUV",19,14,190,34750,0,1,0,0,0,0,0,0,0,10.4559348509929,4509
+"Subaru","Impreza","2017","regular",152,"4","AUTOMATIC","all wheel drive",4,"Hatchback","Compact","4dr Hatchback",37,28,640,22061.6666666667,0,0,0,0,1,0,0,0,0,10.0015968414798,3395
+"Land Rover","Range Rover Sport","2016","regular",550,"8","AUTOMATIC","four wheel drive",4,"Factory Tuner,Luxury,High-Performance","Midsize","4dr SUV",19,14,258,111350,1,1,1,0,0,0,0,0,0,11.6204336726855,4730
+"Oldsmobile","Cutlass Calais","1991","regular",160,"4","AUTOMATIC","front wheel drive",2,"N/A","Compact","Coupe",30,21,26,2000,0,0,0,0,0,0,0,0,0,7.60090245954208,1957
+"Hyundai","Santa Fe Sport","2017","regular",190,"4","AUTOMATIC","front wheel drive",4,"Crossover","Midsize","4dr SUV",27,21,1439,25350,0,0,0,0,0,0,0,0,1,10.1405340090193,5088
+"Lamborghini","Gallardo","2014","regular",560,"10","MANUAL","all wheel drive",2,"Exotic,High-Performance","Compact","Coupe",20,13,1158,202000,0,0,1,0,0,0,0,1,0,12.2160229763833,3050
+"Toyota","Venza","2014","regular",181,"4","AUTOMATIC","all wheel drive",4,"Crossover","Midsize","Wagon",26,20,2031,31330,0,0,0,0,0,0,0,0,1,10.3523313839462,6208
+"Chevrolet","Camaro","2015","regular",323,"6","AUTOMATIC","rear wheel drive",2,"N/A","Midsize","Coupe",30,19,1385,25145,0,0,0,0,0,0,0,0,0,10.1324143486061,1330
+"Nissan","Juke","2015","regular",188,"4","AUTOMATIC","all wheel drive",4,"Crossover,Hatchback,Performance","Compact","4dr Hatchback",31,26,2009,27230,0,0,1,0,1,0,0,0,1,10.2120745856678,3535
+"Suzuki","Kizashi","2011","regular",180,"4","AUTOMATIC","all wheel drive",4,"N/A","Midsize","Sedan",29,22,481,25399,0,0,0,0,0,0,0,0,0,10.1424650821529,3566
+"Ford","Fusion","2016","regular",175,"4","AUTOMATIC","front wheel drive",4,"N/A","Midsize","Sedan",34,22,5657,23535,0,0,0,0,0,0,0,0,0,10.0662439538352,2880
+"Mitsubishi","Precis","1992","regular",81,"4","MANUAL","front wheel drive",2,"Hatchback","Compact","2dr Hatchback",30,25,436,2000,0,0,0,0,1,0,0,0,0,7.60090245954208,4342
+"Toyota","4Runner","2014","regular",270,"6","AUTOMATIC","rear wheel drive",4,"N/A","Midsize","4dr SUV",23,17,2031,36641.6666666667,0,0,0,0,0,0,0,0,0,10.5089413053809,325
+"Honda","Insight","2013","regular",98,"4","AUTOMATIC","front wheel drive",4,"Hatchback,Hybrid","Compact","4dr Hatchback",44,41,2202,21207.5,0,0,0,0,1,1,0,0,0,9.96211017168189,3404
+"Ford","Escape Hybrid","2011","regular",177,"4","AUTOMATIC","all wheel drive",4,"Crossover,Hybrid","Compact","4dr SUV",27,30,5657,33575,0,0,0,0,0,1,0,0,1,10.4215370213914,2452
+"Toyota","Highlander","2015","regular",270,"6","AUTOMATIC","all wheel drive",4,"Crossover","Midsize","4dr SUV",24,18,2031,38224,0,0,0,0,0,0,0,0,1,10.5512188695656,3326
+"Mercedes-Benz","GLE-Class","2016","regular",302,"6","AUTOMATIC","all wheel drive",4,"Crossover,Luxury","Midsize","4dr SUV",22,17,617,53600,0,1,0,0,0,0,0,0,1,10.8893043470589,3119
+"Dodge","Caliber","2011","regular",158,"4","AUTOMATIC","front wheel drive",4,"N/A","Compact","Wagon",27,23,1851,19602.5,0,0,0,0,0,0,0,0,0,9.88341238810508,1314
+"BMW","Z4 M","2008","regular",330,"6","MANUAL","rear wheel drive",2,"Factory Tuner,Luxury,High-Performance","Compact","Coupe",23,15,3916,50400,1,1,1,0,0,0,0,0,0,10.8277464540595,6522
+"Infiniti","QX80","2016","regular",400,"8","AUTOMATIC","four wheel drive",4,"Luxury","Large","4dr SUV",19,13,190,77600,0,1,0,0,0,0,0,0,0,11.2593227061713,4545
+"Audi","A6","2015","regular",310,"6","AUTOMATIC","all wheel drive",4,"Luxury","Midsize","Sedan",27,18,3105,58200,0,1,0,0,0,0,0,0,0,10.9716406337195,772
+"Suzuki","Vitara","2004","regular",165,"6","AUTOMATIC","four wheel drive",4,"N/A","Compact","4dr SUV",20,17,481,19199,0,0,0,0,0,0,0,0,0,9.86261347332616,6268
+"Hyundai","Santa Fe","2017","regular",290,"6","AUTOMATIC","front wheel drive",4,"Crossover","Midsize","4dr SUV",25,18,1439,30800,0,0,0,0,0,0,0,0,1,10.3352699689617,5097
+"Chevrolet","Silverado 1500 Classic","2007","regular",195,"6","MANUAL","rear wheel drive",2,"Flex Fuel","Large","Regular Cab Pickup",21,15,1385,18136.25,0,0,0,1,0,0,0,0,0,9.80566797682989,5315
+"Honda","Accord","2015","regular",278,"6","MANUAL","front wheel drive",2,"Performance","Midsize","Coupe",28,18,2202,31662.5,0,0,1,0,0,0,0,0,0,10.3628882943099,833
+"Dodge","Shadow","1994","regular",93,"4","MANUAL","front wheel drive",2,"Hatchback","Compact","2dr Hatchback",30,23,1851,2000,0,0,0,0,1,0,0,0,0,7.60090245954208,5197
+"Chevrolet","Tracker","2002","regular",127,"4","MANUAL","rear wheel drive",4,"N/A","Compact","4dr SUV",24,20,1385,16790,0,0,0,0,0,0,0,0,0,9.72853875007159,5882
+"Mitsubishi","Raider","2007","regular",235,"8","AUTOMATIC","rear wheel drive",4,"N/A","Compact","Crew Cab Pickup",19,14,436,24005,0,0,0,0,0,0,0,0,0,10.086017420965,4596
+"Dodge","Colt","1993","regular",92,"4","MANUAL","front wheel drive",4,"N/A","Compact","Sedan",36,28,1851,2000,0,0,0,0,0,0,0,0,0,7.60090245954208,1686
+"Chevrolet","Silverado 1500","2015","regular",355,"8","AUTOMATIC","rear wheel drive",4,"N/A","Large","Crew Cab Pickup",23,16,1385,44185,0,0,0,0,0,0,0,0,0,10.6961406439521,5335
+"Porsche","Cayenne","2015","regular",520,"8","AUTOMATIC","all wheel drive",4,"Crossover,Luxury,Performance","Midsize","4dr SUV",21,14,1715,113600,0,1,1,0,0,0,0,0,1,11.6404387852692,1429
+"Dodge","Dart","2014","regular",160,"4","MANUAL","front wheel drive",4,"N/A","Midsize","Sedan",41,28,1851,19995,0,0,0,0,0,0,0,0,0,9.90323752128092,2043
+"Cadillac","DeVille","2005","regular",290,"8","AUTOMATIC","front wheel drive",4,"Luxury,Performance","Large","Sedan",24,16,1624,51600,0,1,1,0,0,0,0,0,0,10.8512769514697,2098
+"Honda","Fit","2016","regular",130,"4","MANUAL","front wheel drive",4,"Hatchback","Compact","4dr Hatchback",37,29,2202,16845,0,0,0,0,1,0,0,0,0,9.73180915584065,2714
+"Ford","F-150","2015","regular",325,"6","AUTOMATIC","rear wheel drive",4,"Flex Fuel","Large","Extended Cab Pickup",26,19,5657,36357.5,0,0,0,1,0,0,0,0,0,10.5011557890519,2604
+"Chevrolet","Colorado","2016","regular",200,"4","AUTOMATIC","four wheel drive",4,"Diesel","Compact","Extended Cab Pickup",25,19,1385,27545,0,0,0,0,0,0,1,0,0,10.2235763099068,1680
+"BMW","6 Series","2015","regular",445,"8","AUTOMATIC","rear wheel drive",2,"Luxury,High-Performance","Midsize","Convertible",25,17,3916,94900,0,1,1,0,0,0,0,0,0,11.460578984598,432
+"Mercedes-Benz","M-Class","2013","regular",402,"8","AUTOMATIC","all wheel drive",4,"Crossover,Luxury,Performance","Midsize","4dr SUV",20,14,617,58800,0,1,1,0,0,0,0,0,1,10.9818971338867,3750
+"Chrysler","Sebring","2009","flex",186,"6","AUTOMATIC","front wheel drive",2,"Flex Fuel","Midsize","Convertible",26,18,1013,30270,0,0,0,1,0,0,0,0,0,10.3179124020158,5138
+"Mercedes-Benz","C-Class","2017","regular",469,"8","AUTOMATIC","rear wheel drive",4,"Factory Tuner,Luxury,High-Performance","Midsize","Sedan",24,18,617,65200,1,1,1,0,0,0,0,0,0,11.0852147479147,1273
+"Subaru","BRZ","2015","regular",200,"4","MANUAL","rear wheel drive",2,"Performance","Compact","Coupe",30,22,640,27626.6666666667,0,0,1,0,0,0,0,0,0,10.2265367688252,1245
+"Dodge","Ram Van","1999","regular",175,"6","AUTOMATIC","rear wheel drive",3,"N/A","Compact","Cargo Van",16,14,1851,2041,0,0,0,0,0,0,0,0,0,7.62119516280984,4698
+"Pontiac","G6","2010","regular",164,"4","AUTOMATIC","front wheel drive",4,"N/A","Midsize","Sedan",30,22,210,21275,0,0,0,0,0,0,0,0,0,9.96528795344157,3020
+"Pontiac","Solstice","2007","regular",177,"4","MANUAL","rear wheel drive",2,"Performance","Compact","Convertible",26,17,210,21515,0,0,1,0,0,0,0,0,0,9.9765056452727,5411
+"Toyota","Matrix","2012","regular",158,"4","AUTOMATIC","all wheel drive",4,"Hatchback","Compact","4dr Hatchback",26,20,2031,21715,0,0,0,0,1,0,0,0,0,9.98575854496892,3869
+"Kia","Forte","2016","regular",173,"4","AUTOMATIC","front wheel drive",4,"Hatchback,Performance","Compact","4dr Hatchback",33,25,1720,20390,0,0,1,0,1,0,0,0,0,9.9227998635685,2805
+"Honda","HR-V","2016","regular",141,"4","AUTOMATIC","front wheel drive",4,"Crossover","Compact","4dr SUV",35,28,2202,22256.6666666667,0,0,0,0,0,0,0,0,1,10.0103968681838,3333
+"Honda","Accord Plug-In Hybrid","2014","regular",196,"4","AUTOMATIC","front wheel drive",4,"Hybrid","Midsize","Sedan",46,47,2202,39780,0,0,0,0,0,1,0,0,0,10.591119552408,832
+"Ford","Explorer Sport Trac","2008","regular",210,"6","AUTOMATIC","all wheel drive",4,"N/A","Compact","Crew Cab Pickup",19,13,5657,30015,0,0,0,0,0,0,0,0,0,10.3094525356859,2535
+"Suzuki","SX4","2011","regular",150,"4","MANUAL","front wheel drive",4,"N/A","Compact","Sedan",32,23,481,16479,0,0,0,0,0,0,0,0,0,9.70984212201073,5666
+"Audi","Coupe","1991","regular",164,"5","MANUAL","all wheel drive",2,"Hatchback,Factory Tuner,Luxury,Performance","Compact","2dr Hatchback",22,15,3105,2000,1,1,1,0,1,0,0,0,0,7.60090245954208,1817
+"Toyota","Sequoia","2016","flex",381,"8","AUTOMATIC","four wheel drive",4,"Flex Fuel","Large","4dr SUV",17,13,2031,56990,0,0,0,1,0,0,0,0,0,10.950631092829,5173
+"Ford","Escape","2015","regular",168,"4","AUTOMATIC","front wheel drive",4,"Crossover","Compact","4dr SUV",31,22,5657,23450,0,0,0,0,0,0,0,0,1,10.0626257738744,2455
+"Dodge","Shadow","1994","regular",100,"4","MANUAL","front wheel drive",2,"Hatchback","Compact","2dr Hatchback",27,21,1851,2000,0,0,0,0,1,0,0,0,0,7.60090245954208,5196
+"HUMMER","H3","2010","flex",300,"8","AUTOMATIC","four wheel drive",4,"Flex Fuel,Luxury","Midsize","4dr SUV",16,13,130,41705,0,1,0,1,0,0,0,0,0,10.6383763046757,3308
+"Lamborghini","Gallardo","2012","regular",560,"10","MANUAL","all wheel drive",2,"Exotic,High-Performance","Compact","Convertible",20,12,1158,225400,0,0,1,0,0,0,0,1,0,12.3256318805878,3033
+"Lexus","ES 350","2016","regular",268,"6","AUTOMATIC","front wheel drive",4,"Luxury,Performance","Midsize","Sedan",31,21,454,38100,0,1,1,0,0,0,0,0,0,10.5479695611148,2407
+"Mazda","CX-7","2010","regular",244,"4","AUTOMATIC","front wheel drive",4,"Crossover","Midsize","4dr SUV",25,18,586,28642.5,0,0,0,0,0,0,0,0,1,10.2626469077678,1998
+"Cadillac","CTS Wagon","2013","regular",318,"6","AUTOMATIC","rear wheel drive",4,"Luxury,Performance","Midsize","Wagon",26,18,1624,46970,0,1,1,0,0,0,0,0,0,10.757264379021,1916
+"Volkswagen","Beetle","2016","regular",170,"4","AUTOMATIC","front wheel drive",2,"Hatchback","Compact","2dr Hatchback",31,24,873,23995,0,0,0,0,1,0,0,0,0,10.0856007542923,1180
+"Mercedes-Benz","500-Class","1993","regular",315,"8","AUTOMATIC","rear wheel drive",2,"Luxury","Large","Coupe",16,12,617,3176,0,1,0,0,0,0,0,0,0,8.06337782236703,361
+"Suzuki","Equator","2012","regular",152,"4","AUTOMATIC","rear wheel drive",4,"N/A","Compact","Extended Cab Pickup",22,17,481,22799,0,0,0,0,0,0,0,0,0,10.0344719543315,2384
+"BMW","X5 M","2015","regular",567,"8","AUTOMATIC","all wheel drive",4,"Crossover,Factory Tuner,Luxury,High-Performance","Midsize","4dr SUV",19,14,3916,98700,1,1,1,0,0,0,0,0,1,11.4998402254216,6335
+"Infiniti","G35","2007","regular",275,"6","AUTOMATIC","rear wheel drive",2,"Luxury,Performance","Midsize","Coupe",23,16,190,33450,0,1,1,0,0,0,0,0,0,10.4178070655564,2962
+"Dodge","Ram Cargo","2003","regular",175,"6","AUTOMATIC","rear wheel drive",3,"N/A","Midsize","Cargo Van",15,13,1851,20080,0,0,0,0,0,0,0,0,0,9.90747957380566,4663
+"Toyota","Pickup","1993","regular",116,"4","MANUAL","four wheel drive",2,"N/A","Compact","Regular Cab Pickup",20,17,2031,2013,0,0,0,0,0,0,0,0,0,7.60738142563979,4317
+"Volkswagen","Jetta SportWagen","2013","regular",170,"5","MANUAL","front wheel drive",4,"N/A","Compact","Wagon",33,23,873,20595,0,0,0,0,0,0,0,0,0,9.93280360687018,3481
+"Chrysler","300","2017","regular",300,"6","AUTOMATIC","all wheel drive",4,"N/A","Large","Sedan",27,18,1013,38422.5,0,0,0,0,0,0,0,0,0,10.5563985044815,173
+"Chevrolet","Silverado 1500 Classic","2007","regular",295,"8","AUTOMATIC","four wheel drive",4,"N/A","Large","Extended Cab Pickup",18,13,1385,31296.6666666667,0,0,0,0,0,0,0,0,0,10.3512668745845,5310
+"Audi","R8","2014","regular",550,"10","MANUAL","all wheel drive",2,"Luxury,High-Performance","Compact","Coupe",19,12,3105,170545,0,1,1,0,0,0,0,0,0,12.0467544705012,4568
+"Kia","Borrego","2009","regular",337,"8","AUTOMATIC","rear wheel drive",4,"N/A","Midsize","4dr SUV",22,15,1720,34495,0,0,0,0,0,0,0,0,0,10.4485696649802,1211
+"Chevrolet","Prizm","2000","regular",125,"4","MANUAL","front wheel drive",4,"N/A","Compact","Sedan",34,27,1385,2066.5,0,0,0,0,0,0,0,0,0,7.63361163395179,4370
+"Oldsmobile","Bravada","2004","regular",275,"6","AUTOMATIC","rear wheel drive",4,"N/A","Midsize","4dr SUV",19,14,26,33920,0,0,0,0,0,0,0,0,0,10.4317600899058,1227
+"Bentley","Continental GT Speed Convertible","2014","flex",626,"12","AUTOMATIC","all wheel drive",2,"Exotic,Flex Fuel,Factory Tuner,Luxury,High-Performance","Midsize","Convertible",20,12,520,238700,1,1,1,1,0,0,0,1,0,12.3829628123269,1719
+"Lexus","NX 200t","2015","regular",235,"4","AUTOMATIC","all wheel drive",4,"Crossover,Luxury","Midsize","4dr SUV",28,21,454,36930,0,1,0,0,0,0,0,0,1,10.5167795078466,4169
+"Dodge","RAM 250","1991","regular",125,"8","MANUAL","rear wheel drive",2,"N/A","Large","Regular Cab Pickup",13,11,1851,2000,0,0,0,0,0,0,0,0,0,7.60090245954208,4632
+"Audi","S5","2017","regular",333,"6","MANUAL","all wheel drive",2,"Factory Tuner,Luxury,High-Performance","Midsize","Coupe",26,17,3105,53100,1,1,1,0,0,0,0,0,0,10.87993220723,5014
+"Volkswagen","Golf Alltrack","2017","regular",170,"4","AUTOMATED_MANUAL","all wheel drive",4,"Crossover","Compact","Wagon",30,22,873,30123.3333333333,0,0,0,0,0,0,0,0,1,10.3130553442279,3143
+"Dodge","Nitro","2011","regular",210,"6","AUTOMATIC","four wheel drive",4,"Crossover","Midsize","4dr SUV",21,15,1851,24106.6666666667,0,0,0,0,0,0,0,0,1,10.0902437063979,4159
+"Hyundai","Equus","2014","regular",429,"8","AUTOMATIC","rear wheel drive",4,"Luxury,High-Performance","Large","Sedan",23,15,1439,64875,0,1,1,0,0,0,0,0,0,11.0802176204682,2392
+"Dodge","Dakota","2008","regular",302,"8","AUTOMATIC","four wheel drive",4,"N/A","Compact","Extended Cab Pickup",19,14,1851,30760,0,0,0,0,0,0,0,0,0,10.3339704236196,2027
+"Ford","F-150","2015","flex",385,"8","AUTOMATIC","rear wheel drive",4,"Flex Fuel","Large","Crew Cab Pickup",22,15,5657,50963.3333333333,0,0,0,1,0,0,0,0,0,10.8388616988866,2613
+"Toyota","Tundra","2017","flex",381,"8","AUTOMATIC","four wheel drive",4,"Flex Fuel","Large","Extended Cab Pickup",17,13,2031,37894.1666666667,0,0,0,1,0,0,0,0,0,10.5425524654163,6081
+"Infiniti","G Sedan","2012","regular",218,"6","AUTOMATIC","rear wheel drive",4,"Luxury","Midsize","Sedan",29,20,190,33800,0,1,0,0,0,0,0,0,0,10.4282160814711,2943
+"Honda","Element","2009","regular",166,"4","MANUAL","all wheel drive",4,"Crossover","Compact","4dr SUV",23,18,2202,22785,0,0,0,0,0,0,0,0,1,10.033857703698,2301
+"Mitsubishi","Diamante","2004","regular",205,"6","AUTOMATIC","front wheel drive",4,"N/A","Midsize","Sedan",23,15,436,26309,0,0,0,0,0,0,0,0,0,10.1776663649502,2104
+"Porsche","Panamera","2015","regular",310,"6","AUTOMATED_MANUAL","rear wheel drive",4,"Luxury,Performance","Large","Sedan",28,18,1715,78100,0,1,1,0,0,0,0,0,0,11.2657453358278,4251
+"Toyota","Tundra","2016","flex",381,"8","AUTOMATIC","rear wheel drive",4,"Flex Fuel","Large","Crew Cab Pickup",18,13,2031,40678.3333333333,0,0,0,1,0,0,0,0,0,10.6134508791495,6067
+"Chevrolet","Cobalt","2008","regular",260,"4","MANUAL","front wheel drive",2,"Factory Tuner,High-Performance","Compact","Coupe",30,22,1385,22335,1,0,1,0,0,0,0,0,0,10.0139102337862,1641
+"Chevrolet","Tracker","2004","regular",165,"6","AUTOMATIC","rear wheel drive",4,"N/A","Compact","4dr SUV",20,17,1385,20740,0,0,0,0,0,0,0,0,0,9.93981948178352,5894
+"Ferrari","599","2010","regular",611,"12","MANUAL","rear wheel drive",2,"Exotic,High-Performance","Midsize","Coupe",15,11,2774,310543,0,0,1,0,0,0,0,1,0,12.6460776570797,412
+"Lotus","Evora","2014","regular",345,"6","MANUAL","rear wheel drive",2,"Exotic,High-Performance","Compact","Coupe",26,17,613,79365,0,0,1,0,0,0,0,1,0,11.2818127440063,2490
+"Toyota","MR2 Spyder","2004","regular",138,"4","AUTOMATED_MANUAL","rear wheel drive",2,"Performance","Compact","Convertible",30,23,2031,25895,0,0,1,0,0,0,0,0,0,10.161805178858,4024
+"Ferrari","360","2002","regular",400,"8","AUTOMATED_MANUAL","rear wheel drive",2,"Exotic,High-Performance","Compact","Coupe",15,10,2774,150694,0,0,1,0,0,0,0,1,0,11.9230065696216,211
+"Ford","E-Series Wagon","2014","flex",255,"8","AUTOMATIC","rear wheel drive",3,"Flex Fuel","Midsize","Passenger Van",15,11,5657,35690,0,0,0,1,0,0,0,0,0,10.4826258164842,2210
+"Nissan","240SX","1997","regular",155,"4","MANUAL","rear wheel drive",2,"Performance","Compact","Coupe",26,19,2009,4066.33333333333,0,0,1,0,0,0,0,0,0,8.31049697148063,72
+"Volvo","S70","1998","regular",236,"5","MANUAL","front wheel drive",4,"Luxury,Performance","Midsize","Sedan",23,17,870,2232,0,1,1,0,0,0,0,0,0,7.7106533235012,5037
+"Mercedes-Benz","R-Class","2010","regular",268,"6","AUTOMATIC","all wheel drive",4,"Crossover,Luxury","Large","Wagon",19,14,617,49300,0,1,0,0,0,0,0,0,1,10.8056793600308,4551
+"Audi","SQ5","2017","regular",354,"6","AUTOMATIC","all wheel drive",4,"Crossover,Factory Tuner,Luxury,Performance","Midsize","4dr SUV",24,17,3105,57050,1,1,1,0,0,0,0,0,1,10.9516833552902,5553
+"Lexus","LS 600h L","2014","regular",438,"8","AUTOMATIC","all wheel drive",4,"Luxury,High-Performance,Hybrid","Large","Sedan",23,19,454,120060,0,1,1,0,0,1,0,0,0,11.6957468968058,3706
+"Bentley","Continental GT","2016","regular",582,"12","AUTOMATIC","all wheel drive",2,"Exotic,Luxury,High-Performance","Midsize","Coupe",21,12,520,214600,0,1,1,0,0,0,0,1,0,12.2765311091787,1739
+"Ford","Taurus","2015","flex",288,"6","AUTOMATIC","all wheel drive",4,"Flex Fuel,Performance","Large","Sedan",26,18,5657,33795,0,0,1,1,0,0,0,0,0,10.4280681415345,5748
+"Subaru","Forester","2015","regular",170,"4","AUTOMATIC","all wheel drive",4,"Crossover","Midsize","4dr SUV",32,24,640,26620,0,0,0,0,0,0,0,0,1,10.1894180919491,2782
+"Porsche","911","2015","regular",350,"6","MANUAL","rear wheel drive",2,"Luxury,High-Performance","Compact","Convertible",27,19,1715,96200,0,1,1,0,0,0,0,0,0,11.4741846366538,655
+"Lincoln","MKZ","2017","regular",245,"4","AUTOMATIC","front wheel drive",4,"Luxury","Midsize","Sedan",31,21,61,39737.5,0,1,0,0,0,0,0,0,0,10.5900506052191,3980
+"Volvo","240","1991","regular",114,"4","MANUAL","rear wheel drive",4,"Luxury","Midsize","Sedan",26,19,870,2000,0,1,0,0,0,0,0,0,0,7.60090245954208,76
+"Toyota","Pickup","1993","regular",150,"6","MANUAL","rear wheel drive",2,"N/A","Compact","Extended Cab Pickup",20,15,2031,2023.5,0,0,0,0,0,0,0,0,0,7.61258396431592,4314
+"GMC","Acadia","2015","regular",288,"6","AUTOMATIC","front wheel drive",4,"Crossover","Midsize","4dr SUV",24,17,549,47690,0,0,0,0,0,0,0,0,1,10.7724770112923,800
+"Nissan","Truck","1997","regular",134,"4","MANUAL","four wheel drive",2,"N/A","Compact","Extended Cab Pickup",18,15,2009,3029,0,0,0,0,0,0,0,0,0,8.01598781102724,6004
+"Ford","F-150","2015","flex",282,"6","AUTOMATIC","four wheel drive",2,"Flex Fuel","Large","Regular Cab Pickup",23,17,5657,32860,0,0,0,1,0,0,0,0,0,10.4000113915913,2608
+"Chevrolet","C/K 1500 Series","1997","regular",200,"6","MANUAL","rear wheel drive",2,"N/A","Large","Regular Cab Pickup",20,15,1385,2364.625,0,0,0,0,0,0,0,0,0,7.76837472598583,1566
+"Toyota","Paseo","1996","regular",93,"4","MANUAL","front wheel drive",2,"N/A","Compact","Coupe",32,26,2031,2000,0,0,0,0,0,0,0,0,0,7.60090245954208,4269
+"Mazda","Tribute","2010","flex",240,"6","AUTOMATIC","all wheel drive",4,"Crossover,Flex Fuel","Compact","4dr SUV",23,18,586,28915,0,0,0,1,0,0,0,0,1,10.2721157705923,5973
+"Chevrolet","Silverado 1500 Classic","2007","regular",345,"8","AUTOMATIC","rear wheel drive",4,"N/A","Large","Extended Cab Pickup",17,13,1385,33280,0,0,0,0,0,0,0,0,0,10.4127118949351,5321
+"Pontiac","G6","2008","regular",217,"6","AUTOMATIC","front wheel drive",2,"N/A","Midsize","Convertible",26,17,210,30210,0,0,0,0,0,0,0,0,0,10.3159282743807,3003
+"Lexus","ES 300","2001","regular",210,"6","AUTOMATIC","front wheel drive",4,"Luxury","Midsize","Sedan",24,17,454,31505,0,1,0,0,0,0,0,0,0,10.3579015423762,2400
+"Pontiac","Le Mans","1993","regular",74,"4","MANUAL","front wheel drive",2,"N/A","Compact","Coupe",34,24,210,2000,0,0,0,0,0,0,0,0,0,7.60090245954208,3648
+"GMC","Sierra 1500","2015","flex",285,"6","AUTOMATIC","four wheel drive",4,"Flex Fuel","Large","Extended Cab Pickup",22,17,549,37360,0,0,0,1,0,0,0,0,0,10.5283558923428,5263
+"Infiniti","QX60","2015","regular",230,"4","AUTOMATIC","all wheel drive",4,"Crossover,Luxury,Hybrid","Large","4dr SUV",28,25,190,46800,0,1,0,0,0,1,0,0,1,10.7536384819057,4527
+"Kia","Amanti","2009","regular",264,"6","AUTOMATIC","front wheel drive",4,"N/A","Midsize","Sedan",24,17,1720,26045,0,0,0,0,0,0,0,0,0,10.1675810901793,950
+"Cadillac","XLR-V","2008","regular",443,"8","AUTOMATIC","rear wheel drive",2,"Factory Tuner,Luxury,High-Performance","Compact","Convertible",21,14,1624,99910,1,1,1,0,0,0,0,0,0,11.5120250597271,6430
+"Audi","Q3","2016","regular",200,"4","AUTOMATIC","all wheel drive",4,"Crossover,Luxury","Compact","4dr SUV",28,20,3105,38250,0,1,0,0,0,0,0,0,1,10.5518988392547,4403
+"Ford","F-150","2017","flex",385,"8","AUTOMATIC","four wheel drive",4,"Flex Fuel","Large","Crew Cab Pickup",21,15,5657,49738.2857142857,0,0,0,1,0,0,0,0,0,10.8145302518315,2634
+"Chevrolet","Sonic","2016","regular",138,"4","AUTOMATIC","front wheel drive",4,"N/A","Compact","Sedan",37,27,1385,19780,0,0,0,0,0,0,0,0,0,9.8924266051767,5455
+"Oldsmobile","Cutlass Ciera","1994","regular",120,"6","AUTOMATIC","front wheel drive",4,"N/A","Midsize","Sedan",26,17,26,2000,0,0,0,0,0,0,0,0,0,7.60090245954208,1969
+"Mazda","CX-7","2012","regular",244,"4","AUTOMATIC","front wheel drive",4,"Crossover","Midsize","4dr SUV",24,18,586,29147.5,0,0,0,0,0,0,0,0,1,10.2801244248074,2004
+"Dodge","Ram 50 Pickup","1991","regular",143,"6","MANUAL","four wheel drive",2,"N/A","Compact","Extended Cab Pickup",20,15,1851,2000,0,0,0,0,0,0,0,0,0,7.60090245954208,4642
+"Suzuki","Reno","2006","regular",126,"4","MANUAL","front wheel drive",4,"Hatchback","Compact","4dr Hatchback",28,20,481,14315.6666666667,0,0,0,0,1,0,0,0,0,9.56910978764353,4813
+"Nissan","Truck","1997","regular",134,"4","MANUAL","four wheel drive",2,"N/A","Compact","Regular Cab Pickup",18,15,2009,2676,0,0,0,0,0,0,0,0,0,7.89207842124812,6007
+"Audi","R8","2017","regular",610,"10","AUTOMATED_MANUAL","all wheel drive",2,"Luxury,High-Performance","Compact","Coupe",22,14,3105,189900,0,1,1,0,0,0,0,0,0,12.1542528968004,4583
+"Chevrolet","Impala Limited","2016","flex",300,"6","AUTOMATIC","front wheel drive",4,"Flex Fuel","Large","Sedan",30,18,1385,26335,0,0,0,1,0,0,0,0,0,10.1786541319175,3364
+"Mazda","B-Series Pickup","1998","regular",150,"6","MANUAL","rear wheel drive",2,"N/A","Compact","Extended Cab Pickup",21,15,586,2756,0,0,0,0,0,0,0,0,0,7.92153563213355,1096
+"Toyota","Sienna","2017","regular",296,"6","AUTOMATIC","all wheel drive",4,"N/A","Large","Passenger Minivan",24,18,2031,41313,0,0,0,0,0,0,0,0,0,10.6289324993952,5233
+"Oldsmobile","Cutlass Ciera","1994","regular",160,"6","AUTOMATIC","front wheel drive",4,"N/A","Midsize","Wagon",26,17,26,2000,0,0,0,0,0,0,0,0,0,7.60090245954208,1970
+"Nissan","NV200","2015","regular",131,"4","AUTOMATIC","front wheel drive",4,"N/A","Compact","Cargo Minivan",26,24,2009,21215,0,0,0,0,0,0,0,0,0,9.96246375763643,4166
+"Volkswagen","Fox","1992","regular",81,"4","MANUAL","front wheel drive",4,"N/A","Compact","Sedan",30,22,873,2000,0,0,0,0,0,0,0,0,0,7.60090245954208,2819
+"Lexus","NX 300h","2016","regular",194,"4","AUTOMATIC","all wheel drive",4,"Crossover,Luxury,Hybrid","Midsize","4dr SUV",30,33,454,41310,0,1,0,0,0,1,0,0,1,10.6288598803908,4179
+"Mercedes-Benz","GL-Class","2015","regular",362,"6","AUTOMATIC","all wheel drive",4,"Crossover,Luxury","Large","4dr SUV",21,17,617,65200,0,1,0,0,0,0,0,0,1,11.0852147479147,3091
+"Dodge","Journey","2015","regular",283,"6","AUTOMATIC","all wheel drive",4,"Crossover","Midsize","4dr SUV",24,16,1851,29845,0,0,0,0,0,0,0,0,1,10.3037726006028,3522
+"Nissan","370Z","2015","regular",332,"6","MANUAL","rear wheel drive",2,"High-Performance","Compact","Convertible",24,17,2009,46685,0,0,1,0,0,0,0,0,0,10.751178192918,223
+"Toyota","4Runner","2014","regular",270,"6","AUTOMATIC","four wheel drive",4,"N/A","Midsize","4dr SUV",22,17,2031,38016,0,0,0,0,0,0,0,0,0,10.5457624027223,326
+"Rolls-Royce","Ghost","2013","regular",563,"12","AUTOMATIC","rear wheel drive",4,"Exotic,Luxury,Performance","Large","Sedan",21,13,86,276325,0,1,1,0,0,0,0,1,0,12.5293329881792,3083
+"Honda","Ridgeline","2014","regular",250,"6","AUTOMATIC","four wheel drive",4,"N/A","Large","Crew Cab Pickup",21,15,2202,33067,0,0,0,0,0,0,0,0,0,10.4062910851992,4820
+"Porsche","Macan","2016","regular",400,"6","AUTOMATED_MANUAL","all wheel drive",4,"Crossover,Luxury,Performance","Midsize","4dr SUV",23,17,1715,73900,0,1,1,0,0,0,0,0,1,11.2104681069363,3810
+"Audi","80","1990","regular",108,"4","MANUAL","front wheel drive",4,"Luxury","Compact","Sedan",28,19,3105,2000,0,1,0,0,0,0,0,0,0,7.60090245954208,534
+"Mazda","MX-6","1995","regular",118,"4","MANUAL","front wheel drive",2,"N/A","Compact","Coupe",31,23,586,2000,0,0,0,0,0,0,0,0,0,7.60090245954208,4095
+"Volkswagen","Jetta","2015","regular",170,"4","AUTOMATED_MANUAL","front wheel drive",4,"Hybrid","Midsize","Sedan",48,42,873,31670,0,0,0,0,0,1,0,0,0,10.3631251395327,3494
+"Lincoln","MKX","2015","regular",305,"6","AUTOMATIC","all wheel drive",4,"Crossover,Luxury","Midsize","4dr SUV",23,17,61,40850,0,1,0,0,0,0,0,0,1,10.6176621002881,3966
+"Mazda","CX-7","2010","regular",244,"4","AUTOMATIC","all wheel drive",4,"Crossover","Midsize","4dr SUV",23,17,586,30342.5,0,0,0,0,0,0,0,0,1,10.3203046489805,1999
+"Dodge","Dakota","2008","regular",210,"6","AUTOMATIC","four wheel drive",4,"N/A","Compact","Crew Cab Pickup",18,14,1851,29767.5,0,0,0,0,0,0,0,0,0,10.3011724733253,2019
+"Hyundai","Elantra Touring","2011","regular",138,"4","AUTOMATIC","front wheel drive",4,"Hatchback","Compact","4dr Hatchback",30,23,1439,18745,0,0,0,0,1,0,0,0,0,9.83868232917001,2273
+"Scion","xA","2004","regular",108,"4","MANUAL","front wheel drive",4,"Hatchback","Compact","4dr Hatchback",34,27,105,12480,0,0,0,0,1,0,0,0,0,9.43188264192342,6362
+"Audi","R8","2014","regular",550,"10","AUTOMATED_MANUAL","all wheel drive",2,"Luxury,High-Performance","Compact","Coupe",22,13,3105,179645,0,1,1,0,0,0,0,0,0,12.098737960259,4561
+"Chrysler","TC","1991","regular",141,"6","AUTOMATIC","front wheel drive",2,"Luxury","Compact","Convertible",22,16,1013,2000,0,1,0,0,0,0,0,0,0,7.60090245954208,5759
+"Nissan","Armada","2015","regular",317,"8","AUTOMATIC","rear wheel drive",4,"N/A","Large","4dr SUV",19,13,2009,45692.5,0,0,0,0,0,0,0,0,0,10.7296894496286,956
+"Pontiac","Sunbird","1993","regular",110,"4","MANUAL","front wheel drive",4,"N/A","Compact","Sedan",32,22,210,2000,0,0,0,0,0,0,0,0,0,7.60090245954208,5623
+"Buick","LaCrosse","2016","flex",304,"6","AUTOMATIC","all wheel drive",4,"Flex Fuel,Performance","Large","Sedan",26,17,155,39790,0,0,1,1,0,0,0,0,0,10.591370903421,3584
+"Dodge","Daytona","1993","regular",100,"4","MANUAL","front wheel drive",2,"Hatchback","Compact","2dr Hatchback",29,22,1851,2000,0,0,0,0,1,0,0,0,0,7.60090245954208,2062
+"Mercedes-Benz","600-Class","1993","regular",389,"12","AUTOMATIC","rear wheel drive",4,"Luxury","Large","Sedan",15,11,617,3108,0,1,0,0,0,0,0,0,0,8.04173471148754,457
+"Mazda","6","2015","regular",184,"4","AUTOMATIC","front wheel drive",4,"N/A","Midsize","Sedan",40,28,586,29895,0,0,0,0,0,0,0,0,0,10.305446521315,488
+"Acura","TL","2013","regular",280,"6","AUTOMATIC","front wheel drive",4,"Luxury","Midsize","Sedan",29,20,204,35905,0,1,0,0,0,0,0,0,0,10.4886318405444,5833
+"Bentley","Continental GT","2016","regular",626,"12","AUTOMATIC","all wheel drive",2,"Exotic,Factory Tuner,Luxury,High-Performance","Midsize","Convertible",20,12,520,263400,1,1,1,0,0,0,0,1,0,12.4814290682913,1741
+"Nissan","Altima","2016","regular",270,"6","AUTOMATIC","front wheel drive",4,"Performance","Midsize","Sedan",32,22,2009,30040,0,0,1,0,0,0,0,0,0,10.3102851058781,942
+"Mazda","Tribute","2011","regular",171,"4","AUTOMATIC","front wheel drive",4,"Crossover","Compact","4dr SUV",28,21,586,24011.6666666667,0,0,0,0,0,0,0,0,1,10.0862951023275,5974
+"Mazda","CX-9","2015","regular",273,"6","AUTOMATIC","front wheel drive",4,"Crossover,Performance","Large","4dr SUV",24,17,586,35035,0,0,1,0,0,0,0,0,1,10.4641028408046,2011
+"Chevrolet","Colorado","2012","regular",185,"4","MANUAL","rear wheel drive",4,"N/A","Compact","Extended Cab Pickup",25,18,1385,19730,0,0,0,0,0,0,0,0,0,9.88989559901666,1661
+"Dodge","Stealth","1996","regular",222,"6","MANUAL","front wheel drive",2,"Performance","Compact","Coupe",23,17,1851,3044,0,0,1,0,0,0,0,0,0,8.02092771898158,5578
+"Mazda","B-Series Truck","2009","regular",143,"4","MANUAL","rear wheel drive",2,"N/A","Compact","Regular Cab Pickup",26,21,586,16060,0,0,0,0,0,0,0,0,0,9.68408698750075,1131
+"GMC","Terrain","2017","regular",182,"4","AUTOMATIC","front wheel drive",4,"Crossover","Compact","4dr SUV",31,21,549,29073,0,0,0,0,0,0,0,0,1,10.2775651874027,5785
+"Lamborghini","Diablo","2001","regular",550,"12","MANUAL","all wheel drive",2,"Exotic,High-Performance","Compact","Coupe",12,9,1158,294900,0,0,1,0,0,0,0,1,0,12.5943915948034,2099
+"Nissan","Juke","2016","regular",188,"4","MANUAL","front wheel drive",4,"Crossover,Hatchback,Performance","Compact","4dr Hatchback",34,28,2009,24830,0,0,1,0,1,0,0,0,1,10.1198078785022,3537
+"Infiniti","Q60 Coupe","2014","regular",348,"6","AUTOMATIC","rear wheel drive",2,"Factory Tuner,Luxury,High-Performance","Midsize","Coupe",27,19,190,53650,1,1,1,0,0,0,0,0,0,10.8902367480588,4459
+"BMW","5 Series","2015","regular",241,"4","AUTOMATIC","all wheel drive",4,"Luxury","Large","Sedan",33,22,3916,52250,0,1,0,0,0,0,0,0,0,10.8637951698271,344
+"Mercedes-Benz","300-Class","1991","diesel",121,"5","AUTOMATIC","rear wheel drive",4,"Diesel,Luxury","Midsize","Sedan",30,23,617,2000,0,1,0,0,0,0,1,0,0,7.60090245954208,133
+"Hyundai","Tucson","2015","regular",182,"4","AUTOMATIC","front wheel drive",4,"Crossover","Compact","4dr SUV",28,21,1439,25075,0,0,0,0,0,0,0,0,1,10.1296266128301,6032
+"Kia","Optima Hybrid","2015","regular",199,"4","AUTOMATIC","front wheel drive",4,"Hybrid","Midsize","Sedan",39,35,1720,32150,0,0,0,0,0,1,0,0,0,10.3781677296658,4191
+"Mitsubishi","Lancer Sportback","2014","regular",168,"4","AUTOMATIC","front wheel drive",4,"Hatchback","Compact","4dr Hatchback",29,22,436,21945,0,0,0,0,1,0,0,0,0,9.99629460212233,3600
+"Scion","xA","2005","regular",108,"4","AUTOMATIC","front wheel drive",4,"Hatchback","Compact","4dr Hatchback",35,27,105,13330,0,0,0,0,1,0,0,0,0,9.49777241317275,6364
+"Toyota","Camry","2016","regular",268,"6","AUTOMATIC","front wheel drive",4,"N/A","Midsize","Sedan",31,21,2031,31370,0,0,0,0,0,0,0,0,0,10.3536073011847,1367
+"Mitsubishi","Lancer","2016","regular",168,"4","MANUAL","front wheel drive",4,"N/A","Compact","Sedan",31,22,436,22495,0,0,0,0,0,0,0,0,0,10.0210483412753,3612
+"Toyota","Camry Solara","2007","regular",210,"6","AUTOMATIC","front wheel drive",2,"N/A","Midsize","Coupe",27,18,2031,24565,0,0,0,0,0,0,0,0,0,10.1090779446027,1357
+"Nissan","Juke","2015","regular",188,"4","MANUAL","front wheel drive",4,"Crossover,Hatchback,Performance","Compact","4dr Hatchback",34,28,2009,24830,0,0,1,0,1,0,0,0,1,10.1198078785022,3536
+"Lincoln","MKC","2015","regular",240,"4","AUTOMATIC","all wheel drive",4,"Crossover,Luxury","Compact","4dr SUV",26,19,61,42060,0,1,0,0,0,0,0,0,1,10.6468524492567,3946
+"Suzuki","Esteem","2001","regular",122,"4","MANUAL","front wheel drive",4,"N/A","Compact","Wagon",32,24,481,14099,0,0,0,0,0,0,0,0,0,9.55385915186536,2475
+"Dodge","Shadow","1992","regular",93,"4","MANUAL","front wheel drive",2,"Hatchback","Compact","2dr Hatchback",29,23,1851,2000,0,0,0,0,1,0,0,0,0,7.60090245954208,5183
+"Hyundai","XG350","2003","regular",194,"6","AUTOMATIC","front wheel drive",4,"N/A","Midsize","Sedan",24,15,1439,24799,0,0,0,0,0,0,0,0,0,10.1185586087595,6410
+"Volkswagen","Golf GTI","2015","regular",210,"4","AUTOMATED_MANUAL","front wheel drive",2,"Hatchback,Performance","Compact","2dr Hatchback",33,25,873,27385,0,0,1,0,1,0,0,0,0,10.2177506972178,3148
+"BMW","4 Series","2017","regular",248,"4","AUTOMATIC","all wheel drive",2,"Luxury","Midsize","Convertible",32,22,3916,52300,0,1,0,0,0,0,0,0,0,10.864751650053,294
+"Mercedes-Benz","S-Class","2017","regular",577,"8","AUTOMATIC","all wheel drive",2,"Factory Tuner,Luxury,High-Performance","Large","Convertible",22,14,617,176400,1,1,1,0,0,0,0,0,0,12.0805094225548,4984
+"Dodge","Shadow","1992","regular",152,"4","MANUAL","front wheel drive",2,"Hatchback,Performance","Compact","2dr Hatchback",24,18,1851,2000,0,0,1,0,1,0,0,0,0,7.60090245954208,5189
+"Nissan","Versa Note","2015","regular",109,"4","AUTOMATIC","front wheel drive",4,"Hatchback","Compact","4dr Hatchback",40,31,2009,17306.6666666667,0,0,0,0,1,0,0,0,0,9.75884706270986,6227
+"Nissan","Murano","2017","regular",260,"6","AUTOMATIC","all wheel drive",4,"Crossover","Midsize","4dr SUV",28,21,2009,36312.5,0,0,0,0,0,0,0,0,1,10.4999173135943,4048
+"Dodge","Stratus","2004","regular",150,"4","AUTOMATIC","front wheel drive",4,"N/A","Midsize","Sedan",27,20,1851,19970,0,0,0,0,0,0,0,0,0,9.90198642640986,5585
+"Nissan","Frontier","2015","regular",261,"6","AUTOMATIC","four wheel drive",4,"N/A","Compact","Crew Cab Pickup",21,15,2009,30660,0,0,0,0,0,0,0,0,0,10.3307141524258,2848
+"Cadillac","Escalade Hybrid","2013","regular",332,"8","AUTOMATIC","rear wheel drive",4,"Luxury,Hybrid","Large","4dr SUV",23,20,1624,79147.5,0,1,0,0,0,1,0,0,0,11.2790684792134,2431
+"Audi","A6","2016","regular",333,"6","AUTOMATIC","all wheel drive",4,"Luxury,Performance","Midsize","Sedan",30,20,3105,59500,0,1,1,0,0,0,0,0,0,10.9937315915337,776
+"Cadillac","XTS","2017","regular",304,"6","AUTOMATIC","all wheel drive",4,"Luxury,Performance","Large","Sedan",26,17,1624,58695,0,1,1,0,0,0,0,0,0,10.9801098233126,6453
+"Hyundai","Elantra","2017","regular",201,"4","AUTOMATED_MANUAL","front wheel drive",4,"N/A","Compact","Sedan",33,26,1439,22750,0,0,0,0,0,0,0,0,0,10.0323204243791,2292
+"BMW","6 Series","2016","regular",445,"8","AUTOMATIC","rear wheel drive",2,"Luxury,High-Performance","Midsize","Convertible",25,17,3916,96200,0,1,1,0,0,0,0,0,0,11.4741846366538,443
+"Lincoln","MKX","2017","regular",303,"6","AUTOMATIC","front wheel drive",4,"Crossover,Luxury","Midsize","4dr SUV",25,17,61,44711.25,0,1,0,0,0,0,0,0,1,10.7079804267885,3970
+"Suzuki","Vitara","2002","regular",127,"4","MANUAL","rear wheel drive",4,"N/A","Compact","4dr SUV",23,20,481,16799,0,0,0,0,0,0,0,0,0,9.72907463981021,6263
+"Dodge","Charger","2015","regular",292,"6","AUTOMATIC","rear wheel drive",4,"N/A","Large","Sedan",31,19,1851,28995,0,0,0,0,0,0,0,0,0,10.2748786803105,1491
+"BMW","3 Series","2015","regular",241,"4","AUTOMATIC","all wheel drive",4,"Luxury","Midsize","Wagon",33,22,3916,41950,0,1,0,0,0,0,0,0,0,10.6442337118954,93
+"Chevrolet","Traverse","2017","regular",288,"6","AUTOMATIC","front wheel drive",4,"Crossover","Midsize","4dr SUV",22,15,1385,42045,0,0,0,0,0,0,0,0,1,10.646495752267,5950
+"Lexus","IS 250 C","2013","regular",204,"6","AUTOMATIC","rear wheel drive",2,"Luxury","Compact","Convertible",30,21,454,42610,0,1,0,0,0,0,0,0,0,10.659844246494,3438
+"Porsche","911","2016","regular",400,"6","MANUAL","all wheel drive",2,"Luxury,High-Performance","Compact","Coupe",26,18,1715,111580,0,1,1,0,0,0,0,0,0,11.6224971013995,675
+"Lincoln","Mark VII","1992","regular",225,"8","AUTOMATIC","rear wheel drive",2,"Luxury","Large","Coupe",22,15,61,2000,0,1,0,0,0,0,0,0,0,7.60090245954208,3863
+"Lexus","LS 600h L","2016","regular",438,"8","AUTOMATIC","all wheel drive",4,"Luxury,High-Performance,Hybrid","Large","Sedan",23,19,454,120440,0,1,1,0,0,1,0,0,0,11.6989069825957,3708
+"Ford","Taurus X","2008","regular",260,"6","AUTOMATIC","all wheel drive",4,"Crossover","Large","Wagon",22,15,5657,31033.3333333333,0,0,0,0,0,0,0,0,1,10.342817174597,5741
+"Porsche","911","2016","regular",400,"6","MANUAL","rear wheel drive",2,"Luxury,High-Performance","Compact","Convertible",27,19,1715,110800,0,1,1,0,0,0,0,0,0,11.6154820532953,686
+"Chevrolet","Cavalier","2004","regular",140,"4","MANUAL","front wheel drive",2,"N/A","Compact","Coupe",33,23,1385,14421.25,0,0,0,0,0,0,0,0,0,9.5764580922415,1424
+"Cadillac","XTS","2016","regular",410,"6","AUTOMATIC","all wheel drive",4,"Luxury,High-Performance","Large","Sedan",23,16,1624,68045,0,1,1,0,0,0,0,0,0,11.1279245299944,6451
+"Audi","RS 4","2008","regular",420,"8","MANUAL","all wheel drive",4,"Factory Tuner,Luxury,High-Performance","Compact","Sedan",20,13,3105,66910,1,1,1,0,0,0,0,0,0,11.1111037117769,4872
+"Chevrolet","Classic","2005","regular",140,"4","AUTOMATIC","front wheel drive",4,"N/A","Midsize","Sedan",31,22,1385,19690,0,0,0,0,0,0,0,0,0,9.88786617163317,1610
+"Dodge","Stratus","2004","regular",200,"6","MANUAL","front wheel drive",4,"Performance","Midsize","Sedan",25,17,1851,22370,0,0,1,0,0,0,0,0,0,10.0154760544842,5587
+"Volvo","960","1997","regular",181,"6","AUTOMATIC","rear wheel drive",4,"Luxury","Midsize","Sedan",24,16,870,2000,0,1,0,0,0,0,0,0,0,7.60090245954208,732
+"Chevrolet","Tracker","2003","regular",127,"4","MANUAL","rear wheel drive",4,"N/A","Compact","4dr SUV",24,20,1385,17330,0,0,0,0,0,0,0,0,0,9.76019438270965,5891
+"Ford","Transit Wagon","2015","flex",275,"6","AUTOMATIC","rear wheel drive",3,"Flex Fuel","Large","Passenger Van",19,14,5657,34680,0,0,0,1,0,0,0,0,0,10.4539184308945,5925
+"BMW","6 Series","2016","regular",445,"8","AUTOMATIC","all wheel drive",2,"Luxury,High-Performance","Midsize","Coupe",25,16,3916,91700,0,1,1,0,0,0,0,0,0,11.4262776582446,446
+"Subaru","BRZ","2017","regular",200,"4","AUTOMATIC","rear wheel drive",2,"Performance","Compact","Coupe",33,24,640,28745,0,0,1,0,0,0,0,0,0,10.2662191180574,1249
+"Chevrolet","Corvette Stingray","2014","regular",455,"8","MANUAL","rear wheel drive",2,"High-Performance","Compact","Coupe",29,17,1385,55000,0,0,1,0,0,0,0,0,0,10.9150884642146,1796
+"Suzuki","Samurai","1994","regular",66,"4","MANUAL","four wheel drive",2,"N/A","Compact","Convertible SUV",26,24,481,2000,0,0,0,0,0,0,0,0,0,7.60090245954208,5075
+"Oldsmobile","Ciera","1996","regular",120,"4","AUTOMATIC","front wheel drive",4,"N/A","Midsize","Sedan",29,21,26,2000,0,0,0,0,0,0,0,0,0,7.60090245954208,1514
+"Subaru","Impreza","2015","regular",148,"4","AUTOMATIC","all wheel drive",4,"Hatchback","Compact","4dr Hatchback",36,27,640,22645,0,0,0,0,1,0,0,0,0,10.0276943559903,3383
+"Chevrolet","C/K 1500 Series","1997","regular",200,"6","MANUAL","four wheel drive",2,"N/A","Large","Regular Cab Pickup",18,14,1385,2755.375,0,0,0,0,0,0,0,0,0,7.9213088284765,1565
+"Volkswagen","Beetle Convertible","2014","diesel",140,"4","MANUAL","front wheel drive",2,"Diesel","Compact","Convertible",41,28,873,29495,0,0,0,0,0,0,1,0,0,10.2919760364372,1161
+"Oldsmobile","Bravada","2002","regular",270,"6","AUTOMATIC","rear wheel drive",4,"N/A","Midsize","4dr SUV",20,14,26,32437.5,0,0,0,0,0,0,0,0,0,10.3870704399082,1224
+"Buick","Reatta","1990","regular",165,"6","AUTOMATIC","front wheel drive",2,"N/A","Compact","Coupe",25,16,155,2000,0,0,0,0,0,0,0,0,0,7.60090245954208,4795
+"Volkswagen","Jetta SportWagen","2014","regular",170,"5","AUTOMATIC","front wheel drive",4,"N/A","Compact","Wagon",30,23,873,24555,0,0,0,0,0,0,0,0,0,10.1086707784733,3486
+"Chevrolet","Malibu Maxx","2006","regular",201,"6","AUTOMATIC","front wheel drive",4,"Hatchback","Midsize","4dr Hatchback",28,20,1385,21065,0,0,0,0,1,0,0,0,0,9.95536817441312,3838
+"Toyota","Tundra","2017","regular",310,"8","AUTOMATIC","four wheel drive",4,"N/A","Large","Crew Cab Pickup",18,14,2031,37200,0,0,0,0,0,0,0,0,0,10.5240640402612,6092
+"Suzuki","Esteem","2002","regular",122,"4","MANUAL","front wheel drive",4,"N/A","Compact","Wagon",31,24,481,14299,0,0,0,0,0,0,0,0,0,9.56794488373285,2480
+"Aston Martin","Rapide S","2016","regular",552,"12","AUTOMATIC","rear wheel drive",4,"Exotic,High-Performance","Large","Sedan",22,14,259,206000,0,0,1,0,0,0,0,1,0,12.2356314477717,4763
+"Saab","900","1998","regular",185,"4","MANUAL","front wheel drive",2,"Luxury,Performance","Compact","Convertible",25,18,376,2268,0,1,1,0,0,0,0,0,0,7.72665366484764,647
+"Mazda","B-Series Pickup","1998","regular",119,"4","MANUAL","rear wheel drive",2,"N/A","Compact","Regular Cab Pickup",24,19,586,2305.5,0,0,0,0,0,0,0,0,0,7.74305285164676,1093
+"Cadillac","ATS Coupe","2016","regular",335,"6","AUTOMATIC","rear wheel drive",2,"Luxury,High-Performance","Compact","Coupe",30,20,1624,48220,0,1,1,0,0,0,0,0,0,10.7835291517352,999
+"Dodge","Caliber","2011","regular",158,"4","MANUAL","front wheel drive",4,"N/A","Compact","Wagon",32,24,1851,17982.5,0,0,0,0,0,0,0,0,0,9.79715434174151,1315
+"Audi","R8","2015","regular",430,"8","AUTOMATED_MANUAL","all wheel drive",2,"Luxury,High-Performance","Compact","Coupe",23,14,3105,124900,0,1,1,0,0,0,0,0,0,11.7352686961137,4571
+"Subaru","Outback","2015","regular",256,"6","AUTOMATIC","all wheel drive",4,"Crossover","Midsize","4dr SUV",27,20,640,32995,0,0,0,0,0,0,0,0,1,10.4041113138175,4206
+"Ford","Mustang","2017","regular",310,"4","MANUAL","rear wheel drive",2,"Performance","Midsize","Convertible",27,21,5657,35145,0,0,1,0,0,0,0,0,0,10.46723763961,4080
+"Buick","Riviera","1998","regular",240,"6","AUTOMATIC","front wheel drive",2,"N/A","Large","Coupe",25,16,155,2155,0,0,0,0,0,0,0,0,0,7.67554600253785,4835
+"Hyundai","XG300","2001","regular",192,"6","AUTOMATIC","front wheel drive",4,"N/A","Midsize","Sedan",25,17,1439,24249,0,0,0,0,0,0,0,0,0,10.096130658402,6409
+"Pontiac","Montana SV6","2006","regular",196,"6","AUTOMATIC","all wheel drive",4,"N/A","Midsize","Passenger Minivan",21,15,210,27750,0,0,0,0,0,0,0,0,0,10.2309911191746,3986
+"Plymouth","Neon","1999","regular",132,"4","MANUAL","front wheel drive",2,"N/A","Compact","Coupe",36,24,535,2000,0,0,0,0,0,0,0,0,0,7.60090245954208,4127
+"Volkswagen","Fox","1991","regular",81,"4","MANUAL","front wheel drive",2,"N/A","Compact","Coupe",29,22,873,2000,0,0,0,0,0,0,0,0,0,7.60090245954208,2817
+"Chevrolet","HHR","2009","flex",155,"4","MANUAL","front wheel drive",4,"Flex Fuel","Compact","Wagon",32,22,1385,18875,0,0,0,1,0,0,0,0,0,9.84559357411723,3319
+"Mercedes-Benz","GLE-Class Coupe","2016","regular",577,"8","AUTOMATIC","all wheel drive",4,"Crossover,Factory Tuner,Luxury,High-Performance","Midsize","4dr SUV",18,14,617,109300,1,1,1,0,0,0,0,0,1,11.6018516741646,3111
+"GMC","Yukon XL","2017","regular",420,"8","AUTOMATIC","rear wheel drive",4,"Performance","Large","4dr SUV",22,15,549,68665,0,0,1,0,0,0,0,0,0,11.1369948869644,6496
+"Volvo","240","1993","regular",114,"4","MANUAL","rear wheel drive",4,"Luxury","Midsize","Wagon",25,18,870,2000,0,1,0,0,0,0,0,0,0,7.60090245954208,80
+"Chevrolet","Sonic","2016","regular",138,"4","AUTOMATIC","front wheel drive",4,"Hatchback","Compact","4dr Hatchback",35,24,1385,17170,0,0,0,0,1,0,0,0,0,9.75091895389152,5451
+"BMW","6 Series Gran Coupe","2017","regular",445,"8","AUTOMATIC","all wheel drive",4,"Luxury,High-Performance","Large","Sedan",24,15,3916,94200,0,1,1,0,0,0,0,0,0,11.4531754605645,430
+"Infiniti","Q50","2017","regular",208,"4","AUTOMATIC","rear wheel drive",4,"Luxury","Midsize","Sedan",31,23,190,36175,0,1,0,0,0,0,0,0,0,10.4961235514997,4429
+"Oldsmobile","Cutlass Calais","1990","regular",160,"4","AUTOMATIC","front wheel drive",2,"N/A","Compact","Coupe",28,20,26,2000,0,0,0,0,0,0,0,0,0,7.60090245954208,1953
+"Acura","NSX","2004","regular",290,"6","MANUAL","rear wheel drive",2,"Exotic,Luxury,High-Performance","Compact","Coupe",22,16,204,89000,0,1,1,0,0,0,0,1,0,11.3963916487143,4161
+"Porsche","944","1990","regular",208,"4","MANUAL","rear wheel drive",2,"Hatchback,Luxury,Performance","Compact","2dr Hatchback",24,15,1715,2667,0,1,1,0,1,0,0,0,0,7.88870952418201,723
+"Chevrolet","Colorado","2016","regular",200,"4","MANUAL","rear wheel drive",4,"Diesel","Compact","Extended Cab Pickup",26,19,1385,22435,0,0,0,0,0,0,1,0,0,10.0183775184101,1681
+"Lexus","RX 400h","2007","regular",268,"6","AUTOMATIC","front wheel drive",4,"Crossover,Luxury,Hybrid","Midsize","4dr SUV",25,28,454,41180,0,1,0,0,0,1,0,0,1,10.6257079805818,4913
+"Lamborghini","Murcielago","2009","regular",631,"12","MANUAL","all wheel drive",2,"Exotic,High-Performance","Compact","Convertible",13,8,1158,382400,0,0,1,0,0,0,0,1,0,12.8542224601594,4053
+"Hyundai","Equus","2015","regular",429,"8","AUTOMATIC","rear wheel drive",4,"Luxury,High-Performance","Large","Sedan",23,15,1439,65125,0,1,1,0,0,0,0,0,0,11.0840637790557,2393
+"Plymouth","Laser","1993","regular",195,"4","MANUAL","front wheel drive",2,"Hatchback,Performance","Compact","2dr Hatchback",26,19,535,2000,0,0,1,0,1,0,0,0,0,7.60090245954208,3624
+"Volvo","S70","2000","regular",168,"5","MANUAL","front wheel drive",4,"Luxury","Midsize","Sedan",26,19,870,2354,0,1,0,0,0,0,0,0,0,7.76387128782022,5044
+"Land Rover","Range Rover","2016","regular",340,"6","AUTOMATIC","four wheel drive",4,"Luxury","Large","4dr SUV",23,17,258,84950,0,1,0,0,0,0,0,0,0,11.3498181271001,4741
+"BMW","X3","2016","regular",300,"6","AUTOMATIC","all wheel drive",4,"Crossover,Luxury,Performance","Midsize","4dr SUV",27,19,3916,46800,0,1,1,0,0,0,0,0,1,10.7536384819057,6321
+"Dodge","Charger","2015","regular",485,"8","AUTOMATIC","rear wheel drive",4,"Factory Tuner,High-Performance","Large","Sedan",25,15,1851,47995,1,0,1,0,0,0,0,0,0,10.7788521177976,1487
+"Audi","TT","2016","regular",220,"4","AUTOMATED_MANUAL","all wheel drive",2,"Luxury,Performance","Compact","Coupe",30,23,3105,42900,0,1,1,0,0,0,0,0,0,10.6666271049161,6024
+"Ford","Mustang","2015","regular",300,"6","MANUAL","rear wheel drive",2,"Performance","Midsize","Convertible",28,17,5657,29300,0,0,1,0,0,0,0,0,0,10.2853427950052,4065
+"Subaru","Baja","2005","regular",210,"4","AUTOMATIC","all wheel drive",4,"Crossover","Compact","Crew Cab Pickup",21,16,640,26295,0,0,0,0,0,0,0,0,1,10.1771340860234,1150
+"Honda","Civic","2015","regular",143,"4","MANUAL","front wheel drive",4,"N/A","Compact","Sedan",36,28,2202,18490,0,0,0,0,0,0,0,0,0,9.82498532438117,1544
+"Toyota","Avalon","2015","regular",268,"6","AUTOMATIC","front wheel drive",4,"Performance","Midsize","Sedan",31,21,2031,37743.3333333333,0,0,1,0,0,0,0,0,0,10.53856413864,1037
+"Oldsmobile","Cutlass Ciera","1993","regular",160,"4","AUTOMATIC","front wheel drive",4,"N/A","Midsize","Wagon",26,18,26,2000,0,0,0,0,0,0,0,0,0,7.60090245954208,1966
+"Volvo","XC90","2017","regular",316,"4","AUTOMATIC","all wheel drive",4,"Crossover,Luxury,Performance","Large","4dr SUV",25,20,870,54800,0,1,1,0,0,0,0,0,1,10.9114454729361,6401
+"BMW","3 Series","2017","regular",248,"4","AUTOMATIC","rear wheel drive",4,"Luxury,Performance","Midsize","Sedan",34,23,3916,38750,0,1,1,0,0,0,0,0,0,10.5648860347815,115
+"Acura","RLX","2016","regular",310,"6","AUTOMATIC","front wheel drive",4,"Luxury,Performance","Midsize","Sedan",31,20,204,55283.3333333333,0,1,1,0,0,0,0,0,0,10.9202267557071,4841
+"Chevrolet","Silverado 1500 Classic","2007","regular",295,"8","AUTOMATIC","rear wheel drive",4,"N/A","Large","Extended Cab Pickup",19,14,1385,28600,0,0,0,0,0,0,0,0,0,10.2611619968079,5307
+"Acura","Legend","1994","regular",200,"6","MANUAL","front wheel drive",4,"Luxury","Midsize","Sedan",23,16,204,2028,0,1,0,0,0,0,0,0,0,7.61480536471107,3660
+"Dodge","Dakota","2009","regular",210,"6","AUTOMATIC","rear wheel drive",4,"Flex Fuel","Compact","Extended Cab Pickup",20,15,1851,24528.3333333333,0,0,0,1,0,0,0,0,0,10.1075841909301,2031
+"Chevrolet","Silverado 1500 Classic","2007","flex",295,"8","AUTOMATIC","four wheel drive",4,"Flex Fuel","Large","Crew Cab Pickup",18,13,1385,33395,0,0,0,1,0,0,0,0,0,10.4161614671597,5320
+"Scion","xD","2014","regular",128,"4","AUTOMATIC","front wheel drive",4,"Hatchback","Compact","4dr Hatchback",33,27,105,16720,0,0,0,0,1,0,0,0,0,9.72436088663869,6408
+"Subaru","Justy","1992","regular",73,"3","MANUAL","four wheel drive",2,"Hatchback","Compact","2dr Hatchback",29,24,640,2000,0,0,0,0,1,0,0,0,0,7.60090245954208,3549
+"Buick","Encore","2015","regular",138,"4","AUTOMATIC","all wheel drive",4,"Crossover","Compact","4dr SUV",30,23,155,28401.25,0,0,0,0,0,0,0,0,1,10.2541884372652,2321
+"Chevrolet","Venture","2003","regular",185,"6","AUTOMATIC","front wheel drive",4,"N/A","Midsize","Passenger Minivan",24,17,1385,28270,0,0,0,0,0,0,0,0,0,10.2495564506876,6193
+"Cadillac","Allante","1992","regular",200,"8","AUTOMATIC","front wheel drive",2,"Luxury,Performance","Compact","Convertible",20,14,1624,2234,0,1,1,0,0,0,0,0,0,7.71154897962915,915
+"Volkswagen","Golf GTI","2017","regular",210,"4","MANUAL","front wheel drive",2,"Hatchback,Performance","Compact","2dr Hatchback",34,24,873,24995,0,0,1,0,1,0,0,0,0,10.1264310838477,3166
+"Volvo","740","1991","regular",162,"4","MANUAL","rear wheel drive",4,"Luxury,Performance","Midsize","Wagon",24,18,870,2000,0,1,1,0,0,0,0,0,0,7.60090245954208,514
+"Toyota","Tundra","2016","flex",381,"8","AUTOMATIC","rear wheel drive",2,"Flex Fuel","Large","Regular Cab Pickup",18,13,2031,29950,0,0,0,1,0,0,0,0,0,10.3072846035436,6073
+"Mitsubishi","Mighty Max Pickup","1994","regular",116,"6","MANUAL","four wheel drive",2,"N/A","Compact","Regular Cab Pickup",20,15,436,2000,0,0,0,0,0,0,0,0,0,7.60090245954208,3917
+"Audi","Cabriolet","1997","regular",172,"6","AUTOMATIC","front wheel drive",2,"Luxury","Compact","Convertible",22,17,3105,2837,0,1,0,0,0,0,0,0,0,7.95050243480885,1298
+"Aston Martin","V8 Vantage","2014","regular",430,"8","AUTOMATED_MANUAL","rear wheel drive",2,"Exotic,High-Performance","Compact","Coupe",21,14,259,136400,0,0,1,0,0,0,0,1,0,11.8233470243915,6145
+"Ford","Transit Wagon","2017","regular",275,"6","AUTOMATIC","rear wheel drive",3,"Diesel","Large","Passenger Van",19,14,5657,41472.5,0,0,0,0,0,0,1,0,0,10.6327858359664,5937
+"Toyota","Tundra","2016","flex",381,"8","AUTOMATIC","four wheel drive",4,"Flex Fuel","Large","Crew Cab Pickup",17,13,2031,44186.25,0,0,0,1,0,0,0,0,0,10.6961689336957,6070
+"Cadillac","CTS Coupe","2012","regular",318,"6","AUTOMATIC","all wheel drive",2,"Luxury,Performance","Midsize","Coupe",27,18,1624,45505,0,1,1,0,0,0,0,0,0,10.7255774890115,1897
+"Honda","HR-V","2016","regular",141,"4","MANUAL","front wheel drive",4,"Crossover","Compact","4dr SUV",34,25,2202,20240,0,0,0,0,0,0,0,0,1,9.9154161234014,3335
+"Lincoln","Navigator","2015","regular",365,"6","AUTOMATIC","four wheel drive",4,"Luxury","Large","4dr SUV",19,15,61,67220,0,1,0,0,0,0,0,0,0,11.1157261012791,4107
+"Chevrolet","Colorado","2012","regular",242,"5","AUTOMATIC","rear wheel drive",4,"N/A","Compact","Extended Cab Pickup",23,17,1385,26160,0,0,0,0,0,0,0,0,0,10.1719868055711,1658
+"Volkswagen","Rabbit","2009","regular",170,"5","MANUAL","front wheel drive",2,"Hatchback","Compact","2dr Hatchback",30,21,873,16300,0,0,0,0,1,0,0,0,0,9.69892038679485,4593
+"Nissan","Frontier","2017","regular",152,"4","MANUAL","rear wheel drive",4,"N/A","Compact","Extended Cab Pickup",23,19,2009,20625,0,0,0,0,0,0,0,0,0,9.93425921120288,2868
+"Infiniti","G Coupe","2012","regular",330,"6","AUTOMATIC","all wheel drive",2,"Luxury,Performance","Midsize","Coupe",25,18,190,40900,0,1,1,0,0,0,0,0,0,10.6188853420309,2928
+"Honda","Odyssey","2015","regular",248,"6","AUTOMATIC","front wheel drive",4,"N/A","Large","Passenger Minivan",28,19,2202,36972.1428571429,0,0,0,0,0,0,0,0,0,10.5179200123051,4188
+"Land Rover","LR2","2015","regular",240,"4","AUTOMATIC","all wheel drive",4,"Crossover,Luxury","Compact","4dr SUV",24,17,258,39133.3333333333,0,1,0,0,0,0,0,0,1,10.574729897708,3687
+"GMC","Canyon","2016","regular",200,"4","AUTOMATIC","four wheel drive",4,"N/A","Compact","Extended Cab Pickup",25,19,549,30225,0,0,0,0,0,0,0,0,0,10.316424675483,1392
+"Hyundai","Tucson","2016","regular",175,"4","AUTOMATED_MANUAL","all wheel drive",4,"Crossover","Compact","4dr SUV",28,24,1439,29425,0,0,0,0,0,0,0,0,1,10.2895999321285,6041
+"Chevrolet","Silverado 1500 Classic","2007","regular",285,"8","AUTOMATIC","rear wheel drive",4,"N/A","Large","Crew Cab Pickup",19,15,1385,25712.5,0,0,0,0,0,0,0,0,0,10.1547325339612,5318
+"BMW","4 Series","2015","regular",300,"6","AUTOMATIC","all wheel drive",2,"Luxury,Performance","Midsize","Coupe",30,20,3916,48250,0,1,1,0,0,0,0,0,0,10.7841511067671,281
+"Chevrolet","Metro","1999","regular",55,"3","MANUAL","front wheel drive",2,"Hatchback","Compact","2dr Hatchback",42,34,1385,2000,0,0,0,0,1,0,0,0,0,7.60090245954208,3909
+"BMW","Z4 M","2008","regular",330,"6","MANUAL","rear wheel drive",2,"Factory Tuner,Luxury,High-Performance","Compact","Convertible",23,15,3916,52400,1,1,1,0,0,0,0,0,0,10.8666618703091,6523
+"Maybach","57","2010","regular",543,"12","AUTOMATIC","rear wheel drive",4,"Exotic,Luxury","Large","Sedan",16,10,67,366000,0,1,0,0,0,0,0,1,0,12.8103886123835,403
+"Volkswagen","Jetta GLI","2013","regular",210,"4","AUTOMATED_MANUAL","front wheel drive",4,"Performance","Midsize","Sedan",32,24,873,27438.3333333333,0,0,1,0,0,0,0,0,0,10.219696341414,3467
+"BMW","X5","2016","regular",300,"6","AUTOMATIC","all wheel drive",4,"Crossover,Luxury","Midsize","4dr SUV",24,18,3916,57000,0,1,0,0,0,0,0,0,1,10.9508065468167,6342
+"Volvo","XC60","2016","regular",250,"5","AUTOMATIC","all wheel drive",4,"Crossover,Luxury","Midsize","4dr SUV",26,19,870,41700,0,1,0,0,0,0,0,0,1,10.6382564077869,6381
+"Pontiac","Bonneville","2003","regular",240,"6","AUTOMATIC","front wheel drive",4,"Performance","Large","Sedan",25,16,210,34020,0,0,1,0,0,0,0,0,0,10.4347038659499,1206
+"GMC","Savana","2015","flex",285,"8","AUTOMATIC","rear wheel drive",3,"Flex Fuel","Large","Passenger Van",17,11,549,36527.5,0,0,0,1,0,0,0,0,0,10.5058206805462,5111
+"Mercedes-Benz","CLS-Class","2016","regular",402,"8","AUTOMATIC","rear wheel drive",4,"Luxury,High-Performance","Midsize","Sedan",26,17,617,74100,0,1,1,0,0,0,0,0,0,11.2131708112842,1635
+"Mazda","Navajo","1994","regular",160,"6","MANUAL","rear wheel drive",2,"N/A","Compact","2dr SUV",19,14,586,2000,0,0,0,0,0,0,0,0,0,7.60090245954208,4104
+"Ford","Focus ST","2016","regular",252,"4","MANUAL","front wheel drive",4,"Hatchback,Factory Tuner,Performance","Compact","4dr Hatchback",31,22,5657,24425,1,0,1,0,1,0,0,0,0,10.103362476911,2755
+"Toyota","Camry","2016","regular",268,"6","AUTOMATIC","front wheel drive",4,"Performance","Midsize","Sedan",31,21,2031,31370,0,0,1,0,0,0,0,0,0,10.3536073011847,1366
+"Mitsubishi","3000GT","1999","regular",218,"6","MANUAL","front wheel drive",2,"Hatchback,Performance","Compact","2dr Hatchback",23,17,436,5306,0,0,1,0,1,0,0,0,0,8.57659353469768,159
+"Ferrari","575M","2002","regular",515,"12","AUTOMATED_MANUAL","rear wheel drive",2,"Exotic,High-Performance","Compact","Coupe",16,9,2774,224670,0,0,1,0,0,0,0,1,0,12.3223879379115,398
+"Acura","NSX","2017","regular",573,"6","AUTOMATED_MANUAL","all wheel drive",2,"Exotic,Luxury,High-Performance,Hybrid","Compact","Coupe",22,21,204,156000,0,1,1,0,0,1,0,1,0,11.9576112862317,4165
+"Honda","Civic CRX","1990","regular",92,"4","MANUAL","front wheel drive",2,"Hatchback","Compact","2dr Hatchback",32,27,2202,2000,0,0,0,0,1,0,0,0,0,7.60090245954208,1524
+"Pontiac","6000","1991","regular",140,"6","AUTOMATIC","front wheel drive",4,"N/A","Midsize","Sedan",28,17,210,2000,0,0,0,0,0,0,0,0,0,7.60090245954208,465
+"Pontiac","Torrent","2009","regular",185,"6","AUTOMATIC","front wheel drive",4,"Crossover","Compact","4dr SUV",24,17,210,24820,0,0,0,0,0,0,0,0,1,10.1194050587586,5856
+"Ferrari","550","2001","regular",485,"12","MANUAL","rear wheel drive",2,"Exotic,High-Performance","Compact","Coupe",12,8,2774,205840,0,0,1,0,0,0,0,1,0,12.2348544469556,391
+"Mercedes-Benz","CL-Class","2013","regular",429,"8","AUTOMATIC","all wheel drive",2,"Luxury,High-Performance","Large","Coupe",24,15,617,115300,0,1,1,0,0,0,0,0,0,11.6552927062571,1589
+"Dodge","Monaco","1992","regular",150,"6","AUTOMATIC","front wheel drive",4,"N/A","Midsize","Sedan",24,16,1851,2000,0,0,0,0,0,0,0,0,0,7.60090245954208,3984
+"Ford","Transit Wagon","2017","flex",275,"6","AUTOMATIC","rear wheel drive",3,"Flex Fuel","Midsize","Passenger Van",19,14,5657,35087.5,0,0,0,1,0,0,0,0,0,10.4656002206701,5935
+"Mercedes-Benz","C-Class","2017","regular",241,"4","AUTOMATIC","all wheel drive",2,"Luxury","Midsize","Coupe",31,24,617,44650,0,1,0,0,0,0,0,0,0,10.7066095863046,1270
+"Volkswagen","Rabbit","2009","regular",170,"5","AUTOMATIC","front wheel drive",2,"Hatchback","Compact","2dr Hatchback",29,20,873,17400,0,0,0,0,1,0,0,0,0,9.76422548520262,4594
+"Cadillac","Fleetwood","1995","regular",260,"8","AUTOMATIC","rear wheel drive",4,"Luxury","Large","Sedan",23,15,1624,2000,0,1,0,0,0,0,0,0,0,7.60090245954208,2735
+"Ford","Tempo","1993","regular",96,"4","MANUAL","front wheel drive",2,"N/A","Compact","Coupe",30,21,5657,2000,0,0,0,0,0,0,0,0,0,7.60090245954208,5770
+"Suzuki","Aerio","2006","regular",155,"4","AUTOMATIC","front wheel drive",4,"N/A","Compact","Wagon",28,22,481,15849,0,0,0,0,0,0,0,0,0,9.67086168583243,882
+"Dodge","Stratus","2005","regular",150,"4","AUTOMATIC","front wheel drive",4,"Flex Fuel","Midsize","Sedan",26,19,1851,20255,0,0,0,1,0,0,0,0,0,9.91615695563679,5592
+"Dodge","Ram 50 Pickup","1991","regular",116,"4","MANUAL","rear wheel drive",2,"N/A","Compact","Extended Cab Pickup",22,17,1851,2000,0,0,0,0,0,0,0,0,0,7.60090245954208,4641
+"Chevrolet","Venture","2005","regular",185,"6","AUTOMATIC","front wheel drive",4,"N/A","Midsize","Passenger Minivan",24,17,1385,26986.6666666667,0,0,0,0,0,0,0,0,0,10.2030981958532,6200
+"GMC","Sierra 1500 Classic","2007","regular",285,"8","AUTOMATIC","rear wheel drive",4,"N/A","Large","Crew Cab Pickup",19,15,549,26072.5,0,0,0,0,0,0,0,0,0,10.1686363979954,5245
+"Chevrolet","Blazer","2005","regular",190,"6","AUTOMATIC","rear wheel drive",4,"N/A","Midsize","4dr SUV",20,15,1385,25480,0,0,0,0,0,0,0,0,0,10.1456491096861,1203
+"GMC","Envoy XL","2006","regular",291,"6","AUTOMATIC","rear wheel drive",4,"N/A","Large","4dr SUV",19,14,549,29145,0,0,0,0,0,0,0,0,0,10.2800386504796,2351
+"Chrysler","Sebring","2008","regular",235,"6","AUTOMATIC","all wheel drive",4,"N/A","Midsize","Sedan",24,15,1013,28415,0,0,0,0,0,0,0,0,0,10.2546724537312,5134
+"Porsche","Carrera GT","2004","regular",605,"10","MANUAL","rear wheel drive",2,"Exotic,Luxury,High-Performance","Compact","Convertible",15,9,1715,440000,0,1,1,0,0,0,0,1,0,12.9945300058944,1415
+"Mazda","Millenia","2000","regular",170,"6","AUTOMATIC","front wheel drive",4,"N/A","Midsize","Sedan",24,17,586,2138,0,0,0,0,0,0,0,0,0,7.66762609158499,3922
+"Acura","TLX","2017","regular",206,"4","AUTOMATED_MANUAL","front wheel drive",4,"Luxury","Midsize","Sedan",35,24,204,33925,0,1,0,0,0,0,0,0,0,10.4319074847031,5845
+"Chevrolet","Cruze","2015","regular",138,"4","AUTOMATIC","front wheel drive",4,"N/A","Midsize","Sedan",35,22,1385,18870,0,0,0,0,0,0,0,0,0,9.8453286383626,1874
+"Infiniti","I30","1999","regular",190,"6","MANUAL","front wheel drive",4,"Luxury,Performance","Midsize","Sedan",24,19,190,2433,0,1,1,0,0,0,0,0,0,7.79688034278352,3347
+"Chevrolet","Silverado 1500","2017","flex",285,"6","AUTOMATIC","rear wheel drive",4,"Flex Fuel","Large","Extended Cab Pickup",24,18,1385,33732.5,0,0,0,1,0,0,0,0,0,10.4262170433049,5353
+"Volvo","S90","1998","regular",181,"6","AUTOMATIC","rear wheel drive",4,"Luxury","Midsize","Sedan",23,16,870,2269,0,1,0,0,0,0,0,0,0,7.72709448477984,5058
+"Lotus","Evora","2014","regular",276,"6","MANUAL","rear wheel drive",2,"Exotic,High-Performance","Compact","Coupe",26,18,613,69365,0,0,1,0,0,0,0,1,0,11.1471376965148,2491
+"Honda","Accord Crosstour","2011","regular",271,"6","AUTOMATIC","all wheel drive",4,"Crossover,Hatchback","Midsize","4dr Hatchback",26,18,2202,35440,0,0,0,0,1,0,0,0,1,10.475596404719,828
+"Subaru","Impreza","2016","regular",148,"4","MANUAL","all wheel drive",4,"Hatchback","Compact","4dr Hatchback",33,24,640,21095,0,0,0,0,1,0,0,0,0,9.95679132455844,3389
+"BMW","5 Series","2015","regular",302,"6","AUTOMATIC","rear wheel drive",4,"Luxury,Performance","Large","Sedan",31,20,3916,55600,0,1,1,0,0,0,0,0,0,10.9259384802387,348
+"Plymouth","Voyager","1998","regular",150,"4","AUTOMATIC","front wheel drive",3,"N/A","Midsize","Passenger Minivan",24,18,535,2000,0,0,0,0,0,0,0,0,0,7.60090245954208,6279
+"Toyota","Venza","2014","regular",268,"6","AUTOMATIC","front wheel drive",4,"Crossover,Performance","Midsize","Wagon",26,19,2031,33840,0,0,1,0,0,0,0,0,1,10.4293988137202,6206
+"Toyota","RAV4","2015","regular",176,"4","AUTOMATIC","all wheel drive",4,"Crossover","Midsize","4dr SUV",29,22,2031,27190,0,0,0,0,0,0,0,0,1,10.2106045376265,4770
+"BMW","3 Series","2016","regular",240,"4","AUTOMATIC","rear wheel drive",4,"Luxury,Performance","Midsize","Sedan",34,22,3916,38350,0,1,1,0,0,0,0,0,0,10.5545098067954,107
+"Ford","Transit Wagon","2015","flex",275,"6","AUTOMATIC","rear wheel drive",3,"Flex Fuel,Diesel","Large","Passenger Van",19,14,5657,39205,0,0,0,1,0,0,1,0,0,10.576559568665,5926
+"Toyota","Supra","1998","regular",320,"6","MANUAL","rear wheel drive",2,"Performance","Compact","Coupe",22,15,2031,25279,0,0,1,0,0,0,0,0,0,10.1377292905164,5653
+"Mercedes-Benz","E-Class","2015","regular",329,"6","AUTOMATIC","all wheel drive",4,"Luxury,Performance","Midsize","Sedan",28,20,617,64850,0,1,1,0,0,0,0,0,0,11.0798321897446,2167
+"Lexus","IS 250","2014","regular",204,"6","AUTOMATIC","rear wheel drive",4,"Luxury","Midsize","Sedan",30,21,454,36100,0,1,0,0,0,0,0,0,0,10.494048144321,3443
+"Lamborghini","Huracan","2016","regular",580,"10","AUTOMATED_MANUAL","rear wheel drive",2,"Exotic,High-Performance","Compact","Coupe",21,14,1158,199800,0,0,1,0,0,0,0,1,0,12.2050721451966,3345
+"Subaru","Impreza WRX","2013","regular",265,"4","MANUAL","all wheel drive",4,"Performance","Compact","Sedan",25,19,640,27795,0,0,1,0,0,0,0,0,0,10.2326114273876,3375
+"Mercedes-Benz","CL-Class","2012","regular",536,"8","AUTOMATIC","rear wheel drive",2,"Factory Tuner,Luxury,High-Performance","Large","Coupe",22,15,617,151500,1,1,1,0,0,0,0,0,0,11.9283409039316,1586
+"Dodge","Ram Pickup 1500","2010","regular",390,"8","AUTOMATIC","four wheel drive",4,"N/A","Large","Crew Cab Pickup",18,13,1851,41572.5,0,0,0,0,0,0,0,0,0,10.6351941699621,4691
+"Toyota","Yaris","2017","regular",106,"4","MANUAL","front wheel drive",4,"Hatchback","Compact","4dr Hatchback",36,30,2031,17200,0,0,0,0,1,0,0,0,0,9.75266466280154,6479
+"Volkswagen","Passat","2017","regular",170,"4","AUTOMATIC","front wheel drive",4,"N/A","Midsize","Sedan",34,23,873,26180,0,0,0,0,0,0,0,0,0,10.1727510394639,4280
+"Mercedes-Benz","SL-Class","2017","regular",449,"8","AUTOMATIC","rear wheel drive",2,"Luxury,High-Performance","Compact","Convertible",25,17,617,110800,0,1,1,0,0,0,0,0,0,11.6154820532953,5380
+"Honda","S2000","2008","regular",237,"4","MANUAL","rear wheel drive",2,"Performance","Compact","Convertible",25,18,2202,34300,0,0,1,0,0,0,0,0,0,10.442900633154,4991
+"Chrysler","Grand Voyager","2000","regular",158,"6","AUTOMATIC","front wheel drive",4,"N/A","Large","Passenger Minivan",23,16,1013,2169,0,0,0,0,0,0,0,0,0,7.68202151082687,3223
+"Toyota","Highlander Hybrid","2014","regular",280,"6","AUTOMATIC","all wheel drive",4,"Crossover,Hybrid","Midsize","4dr SUV",28,27,2031,48545,0,0,0,0,0,1,0,0,1,10.7902464818042,3323
+"Nissan","370Z","2015","regular",332,"6","AUTOMATIC","rear wheel drive",2,"High-Performance","Compact","Coupe",26,19,2009,35950,0,0,1,0,0,0,0,0,0,10.4898843631492,226
+"Dodge","Ram Pickup 1500","2008","regular",310,"8","MANUAL","rear wheel drive",2,"Flex Fuel","Large","Regular Cab Pickup",17,13,1851,25577.5,0,0,0,1,0,0,0,0,0,10.1494683377531,4671
+"Toyota","Camry Hybrid","2017","regular",200,"4","AUTOMATIC","front wheel drive",4,"Hybrid","Midsize","Sedan",38,42,2031,26790,0,0,0,0,0,1,0,0,0,10.1957839625387,1348
+"Pontiac","G6","2009","flex",219,"6","AUTOMATIC","front wheel drive",4,"Flex Fuel","Midsize","Sedan",26,17,210,24710,0,0,0,1,0,0,0,0,0,10.1149632989827,3013
+"Toyota","ECHO","2003","regular",108,"4","MANUAL","front wheel drive",2,"N/A","Compact","Coupe",38,30,2031,10245,0,0,0,0,0,0,0,0,0,9.234545060673,2215
+"Acura","Legend","1995","regular",230,"6","MANUAL","front wheel drive",2,"Luxury,Performance","Midsize","Coupe",24,16,204,2385.5,0,1,1,0,0,0,0,0,0,7.77716402495616,3664
+"Nissan","Cube","2014","regular",122,"4","AUTOMATIC","front wheel drive",4,"N/A","Compact","Wagon",31,27,2009,18450,0,0,0,0,0,0,0,0,0,9.82281964946867,1943
+"Infiniti","G37 Sedan","2010","regular",328,"6","AUTOMATIC","rear wheel drive",4,"Luxury,High-Performance","Midsize","Sedan",27,19,190,43350,0,1,1,0,0,0,0,0,0,10.6770619822087,2979
+"Mercedes-Benz","S-Class","2015","regular",449,"8","AUTOMATIC","rear wheel drive",4,"Luxury,High-Performance","Large","Sedan",26,17,617,94400,0,1,1,0,0,0,0,0,0,11.4552963521336,4964
+"Nissan","Juke","2017","regular",188,"4","MANUAL","front wheel drive",4,"Crossover,Hatchback,Performance","Compact","4dr Hatchback",33,27,2009,24830,0,0,1,0,1,0,0,0,1,10.1198078785022,3544
+"BMW","2 Series","2016","regular",320,"6","AUTOMATIC","rear wheel drive",2,"Factory Tuner,Luxury,High-Performance","Compact","Convertible",31,20,3916,48750,1,1,1,0,0,0,0,0,0,10.794460476426,37
+"Porsche","911","2016","regular",350,"6","MANUAL","all wheel drive",2,"Luxury,High-Performance","Compact","Coupe",27,19,1715,92915,0,1,1,0,0,0,0,0,0,11.4394403757078,677
+"Toyota","Sequoia","2017","regular",381,"8","AUTOMATIC","rear wheel drive",4,"N/A","Large","4dr SUV",17,13,2031,53900,0,0,0,0,0,0,0,0,0,10.8948857568971,5177
+"GMC","Acadia","2017","regular",310,"6","AUTOMATIC","all wheel drive",4,"Crossover","Midsize","4dr SUV",25,18,549,44040,0,0,0,0,0,0,0,0,1,10.6928535908366,807
+"Honda","Civic del Sol","1996","regular",160,"4","MANUAL","front wheel drive",2,"Factory Tuner,Performance","Compact","Coupe",27,23,2202,2213,1,0,1,0,0,0,0,0,0,7.70210434005105,1532
+"BMW","X4","2017","regular",355,"6","AUTOMATIC","all wheel drive",4,"Crossover,Factory Tuner,Luxury,High-Performance","Midsize","4dr SUV",26,19,3916,58100,1,1,1,0,0,0,0,0,1,10.96992094284,6333
+"Chrysler","Pacifica","2017","regular",287,"6","AUTOMATIC","front wheel drive",4,"Performance","Midsize","Passenger Minivan",28,18,1013,42495,0,0,1,0,0,0,0,0,0,10.6571417009327,4242
+"Ford","Explorer Sport Trac","2008","regular",210,"6","AUTOMATIC","rear wheel drive",4,"N/A","Compact","Crew Cab Pickup",20,14,5657,26445,0,0,0,0,0,0,0,0,0,10.1828223835001,2537
+"Audi","100","1993","regular",172,"6","MANUAL","all wheel drive",4,"Luxury","Midsize","Sedan",21,16,3105,2000,0,1,0,0,0,0,0,0,0,7.60090245954208,22
+"Dodge","RAM 150","1992","regular",230,"8","MANUAL","rear wheel drive",2,"N/A","Large","Extended Cab Pickup",16,11,1851,2000,0,0,0,0,0,0,0,0,0,7.60090245954208,4624
+"Dodge","Daytona","1991","regular",141,"6","MANUAL","front wheel drive",2,"Hatchback","Compact","2dr Hatchback",25,17,1851,2000,0,0,0,0,1,0,0,0,0,7.60090245954208,2058
+"Cadillac","Escalade Hybrid","2013","regular",332,"8","AUTOMATIC","four wheel drive",4,"Luxury,Hybrid","Large","4dr SUV",23,20,1624,81697.5,0,1,0,0,0,1,0,0,0,11.3107786806247,2432
+"Aston Martin","DB7","2003","regular",420,"12","AUTOMATIC","rear wheel drive",2,"Exotic,Factory Tuner,High-Performance","Compact","Coupe",18,11,259,156300,1,0,1,0,0,0,0,1,0,11.9595325164096,2065
+"Mazda","Tribute","2009","regular",171,"4","AUTOMATIC","all wheel drive",4,"Crossover","Compact","4dr SUV",25,19,586,24870,0,0,0,0,0,0,0,0,1,10.1214175367975,5964
+"BMW","5 Series Gran Turismo","2015","regular",445,"8","AUTOMATIC","all wheel drive",4,"Hatchback,Luxury,Performance","Large","4dr Hatchback",24,16,3916,71400,0,1,1,0,1,0,0,0,0,11.1760531483277,332
+"Volkswagen","GTI","2013","regular",200,"4","AUTOMATED_MANUAL","front wheel drive",2,"Hatchback,Performance","Compact","2dr Hatchback",33,24,873,28496.25,0,0,1,0,1,0,0,0,0,10.2575277786521,3290
+"Nissan","Juke","2016","regular",188,"4","AUTOMATIC","all wheel drive",4,"Crossover,Hatchback","Compact","4dr Hatchback",31,26,2009,24396.6666666667,0,0,0,0,1,0,0,0,1,10.1022017899272,3538
+"Mercedes-Benz","CLK-Class","2009","regular",382,"8","AUTOMATIC","rear wheel drive",2,"Luxury,High-Performance","Midsize","Coupe",22,15,617,56800,0,1,1,0,0,0,0,0,0,10.9472916047092,1624
+"Volvo","S80","2014","regular",240,"6","AUTOMATIC","front wheel drive",4,"Luxury","Midsize","Sedan",29,20,870,39900,0,1,0,0,0,0,0,0,0,10.594131602878,5049
+"Hyundai","Santa Fe","2016","regular",290,"6","AUTOMATIC","all wheel drive",4,"Crossover","Midsize","4dr SUV",24,18,1439,34200,0,0,0,0,0,0,0,0,1,10.4399809230507,5093
+"Dodge","Ram Pickup 1500","2008","regular",345,"8","AUTOMATIC","four wheel drive",4,"N/A","Large","Crew Cab Pickup",17,13,1851,39370,0,0,0,0,0,0,0,0,0,10.5807593839378,4675
+"Pontiac","Vibe","2009","regular",158,"4","AUTOMATIC","all wheel drive",4,"Hatchback","Compact","4dr Hatchback",26,20,210,20475,0,0,0,0,1,0,0,0,0,9.92695990872127,6244
+"Mercedes-Benz","SLS AMG GT","2013","regular",583,"8","AUTOMATED_MANUAL","rear wheel drive",2,"Exotic,Factory Tuner,Luxury,High-Performance","Compact","Convertible",19,13,617,206000,1,1,1,0,0,0,0,1,0,12.2356314477717,5401
+"Hyundai","Tiburon","2007","regular",172,"6","MANUAL","front wheel drive",2,"Hatchback","Compact","2dr Hatchback",24,17,1439,20545,0,0,0,0,1,0,0,0,0,9.93037288131751,5800
+"Land Rover","Range Rover Sport","2014","flex",510,"8","AUTOMATIC","four wheel drive",4,"Flex Fuel,Luxury,High-Performance","Midsize","4dr SUV",19,14,258,85750,0,1,1,1,0,0,0,0,0,11.3591913650282,4722
+"Porsche","Cayenne","2016","regular",440,"6","AUTOMATIC","all wheel drive",4,"Crossover,Luxury,High-Performance","Midsize","4dr SUV",23,16,1715,95500,0,1,1,0,0,0,0,0,1,11.4668815264688,1431
+"Porsche","Boxster","2016","regular",315,"6","MANUAL","rear wheel drive",2,"Luxury,High-Performance","Compact","Convertible",28,20,1715,63900,0,1,1,0,0,0,0,0,0,11.0650746403656,1221
+"Mazda","3","2015","regular",155,"4","MANUAL","front wheel drive",4,"N/A","Compact","Sedan",41,29,586,19432.5,0,0,0,0,0,0,0,0,0,9.87470220110438,243
+"GMC","Acadia Limited","2017","regular",281,"6","AUTOMATIC","front wheel drive",4,"Crossover","Midsize","4dr SUV",22,15,549,43850,0,0,0,0,0,0,0,0,1,10.6885299978003,796
+"Lincoln","Mark LT","2008","regular",300,"8","AUTOMATIC","four wheel drive",4,"Luxury","Large","Crew Cab Pickup",17,13,61,41865,0,1,0,0,0,0,0,0,0,10.6422054346385,3856
+"Ford","Festiva","1991","regular",63,"4","MANUAL","front wheel drive",2,"Hatchback","Compact","2dr Hatchback",38,30,5657,2000,0,0,0,0,1,0,0,0,0,7.60090245954208,2681
+"Chevrolet","HHR","2011","flex",155,"4","MANUAL","front wheel drive",4,"Flex Fuel","Compact","Wagon",32,22,1385,19156.6666666667,0,0,0,1,0,0,0,0,0,9.86040606283368,3322
+"Honda","Civic del Sol","1997","regular",127,"4","MANUAL","front wheel drive",2,"N/A","Compact","Coupe",33,26,2202,2322,0,0,0,0,0,0,0,0,0,7.75018416225784,1536
+"Chevrolet","Cruze","2017","regular",153,"4","AUTOMATIC","front wheel drive",4,"N/A","Midsize","Sedan",39,29,1385,23475,0,0,0,0,0,0,0,0,0,10.0636913040765,1884
+"Aston Martin","V12 Vanquish","2005","regular",520,"12","AUTOMATED_MANUAL","rear wheel drive",2,"Exotic,Factory Tuner,High-Performance","Compact","Coupe",16,10,259,255000,1,0,1,0,0,0,0,1,0,12.4490188241406,6108
+"Toyota","4Runner","2016","regular",270,"6","AUTOMATIC","four wheel drive",4,"N/A","Midsize","4dr SUV",21,17,2031,39528.3333333333,0,0,0,0,0,0,0,0,0,10.5847729933309,330
+"Ford","F-250","1998","regular",220,"8","MANUAL","four wheel drive",2,"N/A","Large","Regular Cab Pickup",16,13,5657,3385.5,0,0,0,0,0,0,0,0,0,8.1272568849257,2655
+"Volkswagen","Beetle Convertible","2014","regular",210,"4","AUTOMATED_MANUAL","front wheel drive",2,"Performance","Compact","Convertible",29,23,873,32395,0,0,1,0,0,0,0,0,0,10.3857593688841,1157
+"GMC","Vandura","1994","regular",165,"6","AUTOMATIC","rear wheel drive",3,"N/A","Midsize","Cargo Van",20,15,549,2000,0,0,0,0,0,0,0,0,0,7.60090245954208,6164
+"Lexus","GX 460","2015","regular",301,"8","AUTOMATIC","four wheel drive",4,"Luxury","Midsize","4dr SUV",20,15,454,55300,0,1,0,0,0,0,0,0,0,10.9205281875104,3297
+"Buick","LaCrosse","2015","flex",304,"6","AUTOMATIC","front wheel drive",4,"Flex Fuel","Large","Sedan",28,18,155,31065,0,0,0,1,0,0,0,0,0,10.3438370624978,3580
+"BMW","4 Series Gran Coupe","2017","regular",320,"6","AUTOMATIC","rear wheel drive",4,"Luxury,High-Performance","Midsize","Sedan",32,21,3916,48300,0,1,1,0,0,0,0,0,0,10.7851868396407,272
+"Audi","allroad quattro","2005","regular",250,"6","AUTOMATIC","all wheel drive",4,"Crossover,Luxury,Performance","Midsize","Wagon",20,15,3105,40250,0,1,1,0,0,0,0,0,1,10.6028652828467,924
+"Kia","Soul","2014","regular",164,"4","AUTOMATIC","front wheel drive",4,"N/A","Compact","Wagon",31,23,1720,19450,0,0,0,0,0,0,0,0,0,9.87560234904659,5499
+"Mercedes-Benz","E-Class","2016","regular",329,"6","AUTOMATIC","rear wheel drive",2,"Luxury,Performance","Midsize","Convertible",29,20,617,62250,0,1,1,0,0,0,0,0,0,11.038913814327,2181
+"Mercedes-Benz","E-Class","2016","regular",302,"6","AUTOMATIC","all wheel drive",4,"Luxury,Performance","Midsize","Wagon",27,20,617,59900,0,1,1,0,0,0,0,0,0,11.0004317841035,2173
+"Lamborghini","Gallardo","2014","regular",570,"10","MANUAL","all wheel drive",2,"Exotic,Factory Tuner,High-Performance","Compact","Convertible",20,13,1158,251600,1,0,1,0,0,0,0,1,0,12.4355958038084,3046
+"Audi","RS 5","2014","regular",450,"8","AUTOMATED_MANUAL","all wheel drive",2,"Factory Tuner,Luxury,High-Performance","Midsize","Coupe",23,16,3105,69600,1,1,1,0,0,0,0,0,0,11.1505198463225,4875
+"Cadillac","Seville","2002","regular",300,"8","AUTOMATIC","front wheel drive",4,"Luxury,Performance","Large","Sedan",25,16,1624,49705,0,1,1,0,0,0,0,0,0,10.8138608106462,5179
+"BMW","5 Series Gran Turismo","2016","regular",300,"6","AUTOMATIC","rear wheel drive",4,"Hatchback,Luxury","Large","4dr Hatchback",28,19,3916,60900,0,1,0,0,1,0,0,0,0,11.016988453698,337
+"Kia","Spectra","2007","regular",138,"4","AUTOMATIC","front wheel drive",4,"N/A","Compact","Wagon",32,23,1720,16995,0,0,0,0,0,0,0,0,0,9.74067446213022,5516
+"Suzuki","SX4","2011","regular",148,"4","AUTOMATIC","all wheel drive",4,"Crossover,Hatchback","Compact","4dr Hatchback",29,23,481,18974,0,0,0,0,1,0,0,0,1,9.85082489995282,5663
+"Volvo","V40","2004","regular",170,"4","AUTOMATIC","front wheel drive",4,"Luxury","Compact","Wagon",27,19,870,27772.5,0,1,0,0,0,0,0,0,0,10.2318016014559,6117
+"Mitsubishi","Montero Sport","2003","regular",165,"6","AUTOMATIC","rear wheel drive",4,"N/A","Midsize","4dr SUV",21,16,436,24272,0,0,0,0,0,0,0,0,0,10.0970787015883,4010
+"Cadillac","ATS Coupe","2016","regular",272,"4","AUTOMATIC","all wheel drive",2,"Luxury,Performance","Compact","Coupe",30,22,1624,45281.25,0,1,1,0,0,0,0,0,0,10.7206483185031,1000
+"Chevrolet","Silverado 1500","2015","flex",285,"6","AUTOMATIC","rear wheel drive",4,"Flex Fuel","Large","Extended Cab Pickup",24,18,1385,33055,0,0,0,1,0,0,0,0,0,10.4059281197677,5336
+"Ford","GT","2005","regular",550,"8","MANUAL","rear wheel drive",2,"Exotic,High-Performance","Compact","Coupe",19,12,5657,149995,0,0,1,0,0,0,0,1,0,11.9183572391895,3282
+"Saab","9-3","2009","regular",280,"6","AUTOMATIC","all wheel drive",4,"Luxury,Performance","Compact","Wagon",24,15,376,44885,0,1,1,0,0,0,0,0,0,10.7118589421908,579
+"Oldsmobile","Cutlass Ciera","1992","regular",110,"4","AUTOMATIC","front wheel drive",4,"N/A","Midsize","Wagon",28,19,26,2000,0,0,0,0,0,0,0,0,0,7.60090245954208,1962
+"Genesis","G80","2017","regular",311,"6","AUTOMATIC","rear wheel drive",4,"Luxury,Performance","Large","Sedan",28,18,21,41400,0,1,1,0,0,0,0,0,0,10.6310361598134,3021
+"Volvo","S40","2010","regular",227,"5","MANUAL","all wheel drive",4,"Luxury","Compact","Sedan",27,20,870,31350,0,1,0,0,0,0,0,0,0,10.3529695460611,5001
+"Nissan","Truck","1996","regular",134,"4","MANUAL","rear wheel drive",2,"N/A","Compact","Extended Cab Pickup",24,19,2009,2436.5,0,0,0,0,0,0,0,0,0,7.79831786228356,6003
+"FIAT","500X","2017","regular",180,"4","AUTOMATIC","front wheel drive",4,"Crossover","Compact","4dr SUV",30,22,819,24235,0,0,0,0,0,0,0,0,1,10.0955531482795,388
+"Buick","Encore","2017","regular",138,"4","AUTOMATIC","front wheel drive",4,"Crossover","Compact","4dr SUV",34,28,155,25565,0,0,0,0,0,0,0,0,1,10.1489795075141,2329
+"Dodge","Colt","1992","regular",92,"4","MANUAL","front wheel drive",2,"Hatchback","Compact","2dr Hatchback",32,25,1851,2000,0,0,0,0,1,0,0,0,0,7.60090245954208,1683
+"Mazda","Truck","2003","regular",135,"4","MANUAL","rear wheel drive",2,"N/A","Compact","Extended Cab Pickup",26,21,586,18050,0,0,0,0,0,0,0,0,0,9.80090096376103,5992
+"Dodge","Magnum","2008","regular",250,"6","AUTOMATIC","all wheel drive",4,"N/A","Large","Wagon",22,15,1851,29855,0,0,0,0,0,0,0,0,0,10.3041076089811,3828
+"Mazda","3","2017","regular",184,"4","MANUAL","front wheel drive",4,"Hatchback,Performance","Compact","4dr Hatchback",33,25,586,23145,0,0,1,0,1,0,0,0,0,10.0495340534654,262
+"Scion","FR-S","2015","regular",200,"4","AUTOMATIC","rear wheel drive",2,"Performance","Compact","Coupe",34,25,105,28545,0,0,1,0,0,0,0,0,0,10.2592370683984,2824
+"Plymouth","Laser","1993","regular",135,"4","MANUAL","front wheel drive",2,"Hatchback","Compact","2dr Hatchback",26,19,535,2000,0,0,0,0,1,0,0,0,0,7.60090245954208,3626
+"Honda","Civic","2016","regular",158,"4","MANUAL","front wheel drive",4,"N/A","Midsize","Sedan",40,27,2202,18640,0,0,0,0,0,0,0,0,0,9.83306508823958,1548
+"Dodge","Avenger","2013","regular",173,"4","AUTOMATIC","front wheel drive",4,"Flex Fuel","Midsize","Sedan",29,21,1851,19795,0,0,0,1,0,0,0,0,0,9.89318465954023,1047
+"Buick","Rendezvous","2007","regular",196,"6","AUTOMATIC","front wheel drive",4,"Crossover","Midsize","4dr SUV",23,17,155,26977.5,0,0,0,0,0,0,0,0,1,10.2027584642379,4812
+"GMC","Canyon","2012","regular",242,"5","AUTOMATIC","four wheel drive",4,"N/A","Compact","Crew Cab Pickup",21,16,549,29841.6666666667,0,0,0,0,0,0,0,0,0,10.3036609061985,1374
+"Toyota","FJ Cruiser","2013","regular",260,"6","AUTOMATIC","rear wheel drive",4,"N/A","Midsize","4dr SUV",20,16,2031,27030,0,0,0,0,0,0,0,0,0,10.2047026392705,2728
+"Pontiac","Bonneville","2003","regular",205,"6","AUTOMATIC","front wheel drive",4,"N/A","Large","Sedan",27,17,210,28182.5,0,0,0,0,0,0,0,0,0,10.2464564969187,1205
+"Cadillac","XTS","2015","regular",410,"6","AUTOMATIC","all wheel drive",4,"Luxury,Performance","Large","Sedan",24,16,1624,66260,0,1,1,0,0,0,0,0,0,11.1013416758539,6448
+"Toyota","Venza","2014","regular",268,"6","AUTOMATIC","all wheel drive",4,"Crossover,Performance","Midsize","Wagon",25,18,2031,35290,0,0,1,0,0,0,0,0,1,10.4713549166693,6207
+"Hyundai","Elantra","2016","regular",173,"4","AUTOMATIC","front wheel drive",4,"Performance","Compact","Sedan",35,24,1439,21250,0,0,1,0,0,0,0,0,0,9.96411217435256,2282
+"Mercedes-Benz","CLS-Class","2015","regular",329,"6","AUTOMATIC","all wheel drive",4,"Luxury,Performance","Midsize","Sedan",28,20,617,68490,0,1,1,0,0,0,0,0,0,11.134443028192,1629
+"BMW","5 Series Gran Turismo","2017","regular",300,"6","AUTOMATIC","all wheel drive",4,"Hatchback,Luxury","Large","4dr Hatchback",26,18,3916,63200,0,1,0,0,1,0,0,0,0,11.0540595801349,338
+"Chevrolet","Monte Carlo","2005","regular",180,"6","AUTOMATIC","front wheel drive",2,"N/A","Midsize","Coupe",29,19,1385,22280,0,0,0,0,0,0,0,0,0,10.0114446940412,3996
+"Toyota","Tundra","2015","regular",381,"8","AUTOMATIC","rear wheel drive",4,"N/A","Large","Crew Cab Pickup",18,13,2031,39468.3333333333,0,0,0,0,0,0,0,0,0,10.583253941602,6051
+"Pontiac","Grand Am","2004","regular",175,"6","AUTOMATIC","front wheel drive",2,"N/A","Midsize","Coupe",27,18,210,22905,0,0,0,0,0,0,0,0,0,10.0391105063208,3198
+"Suzuki","Swift","2001","regular",79,"4","AUTOMATIC","front wheel drive",2,"Hatchback","Compact","2dr Hatchback",31,26,481,10449,0,0,0,0,1,0,0,0,0,9.25426155903411,5660
+"BMW","4 Series Gran Coupe","2016","regular",300,"6","AUTOMATIC","all wheel drive",4,"Luxury,Performance","Midsize","Sedan",30,20,3916,49950,0,1,1,0,0,0,0,0,0,10.8187777840767,269
+"Suzuki","Equator","2012","regular",261,"6","AUTOMATIC","four wheel drive",4,"N/A","Compact","Extended Cab Pickup",19,14,481,26299,0,0,0,0,0,0,0,0,0,10.1772861946293,2385
+"Infiniti","QX60","2016","regular",250,"4","AUTOMATIC","front wheel drive",4,"Crossover,Luxury,Hybrid","Large","4dr SUV",28,26,190,52050,0,1,0,0,0,1,0,0,1,10.8599600740431,4531
+"Mazda","B-Series Truck","2008","regular",207,"6","MANUAL","four wheel drive",4,"N/A","Compact","Extended Cab Pickup",19,15,586,22045,0,0,0,0,0,0,0,0,0,10.000841097792,1129
+"Suzuki","Sidekick","1997","regular",95,"4","MANUAL","rear wheel drive",2,"N/A","Compact","Convertible SUV",24,21,481,2000,0,0,0,0,0,0,0,0,0,7.60090245954208,5219
+"Mercedes-Benz","300-Class","1992","diesel",121,"5","AUTOMATIC","rear wheel drive",4,"Diesel,Luxury","Midsize","Sedan",29,23,617,2000,0,1,0,0,0,0,1,0,0,7.60090245954208,134
+"Saab","9-3 Griffin","2012","flex",220,"4","MANUAL","front wheel drive",2,"Flex Fuel,Luxury","Compact","Convertible",33,20,376,43216.6666666667,0,1,0,1,0,0,0,0,0,10.6739815022987,567
+"Maserati","GranTurismo","2014","regular",454,"8","AUTOMATIC","rear wheel drive",2,"Exotic,Factory Tuner,Luxury,High-Performance","Large","Coupe",21,13,238,143400,1,1,1,0,0,0,0,1,0,11.8733932071477,3242
+"Volkswagen","CC","2016","regular",200,"4","MANUAL","front wheel drive",4,"Performance","Midsize","Sedan",32,21,873,33112.5,0,0,1,0,0,0,0,0,0,10.4076661335803,1455
+"Toyota","Celica","2003","regular",140,"4","AUTOMATIC","front wheel drive",2,"Hatchback","Compact","2dr Hatchback",33,25,2031,18140,0,0,0,0,1,0,0,0,0,9.80587472366913,1460
+"Mercedes-Benz","CLK-Class","2007","regular",382,"8","AUTOMATIC","rear wheel drive",2,"Luxury,High-Performance","Compact","Convertible",22,15,617,62900,0,1,1,0,0,0,0,0,0,11.0493014426885,1614
+"Toyota","Venza","2015","regular",268,"6","AUTOMATIC","all wheel drive",4,"Crossover,Performance","Midsize","Wagon",25,18,2031,37770,0,0,1,0,0,0,0,0,1,10.5392704157065,6210
+"Mazda","B-Series Pickup","2000","flex",143,"6","MANUAL","rear wheel drive",2,"Flex Fuel","Compact","Extended Cab Pickup",21,16,586,3032,0,0,0,1,0,0,0,0,0,8.01697774676226,1121
+"Scion","xB","2013","regular",158,"4","AUTOMATIC","front wheel drive",4,"N/A","Compact","Wagon",28,22,105,19040,0,0,0,0,0,0,0,0,0,9.85429730834536,6369
+"Cadillac","CTS Coupe","2013","regular",318,"6","AUTOMATIC","all wheel drive",2,"Luxury,Performance","Midsize","Coupe",27,18,1624,45568.3333333333,0,1,1,0,0,0,0,0,0,10.7269683098198,1899
+"Ford","Contour","2000","regular",170,"6","MANUAL","front wheel drive",4,"N/A","Midsize","Sedan",27,18,5657,2000,0,0,0,0,0,0,0,0,0,7.60090245954208,1769
+"Toyota","86","2017","regular",200,"4","AUTOMATIC","rear wheel drive",2,"Performance","Compact","Coupe",32,24,2031,26975,0,0,1,0,0,0,0,0,0,10.2026657901263,561
+"Chevrolet","Tracker","2002","regular",127,"4","MANUAL","four wheel drive",4,"N/A","Compact","4dr SUV",23,20,1385,17890,0,0,0,0,0,0,0,0,0,9.79199717650276,5883
+"Kia","Forte","2015","regular",173,"4","AUTOMATIC","front wheel drive",2,"N/A","Compact","Coupe",34,25,1720,19590,0,0,0,0,0,0,0,0,0,9.88277451093859,2790
+"Volkswagen","Golf","2015","diesel",150,"4","AUTOMATED_MANUAL","front wheel drive",4,"Hatchback,Diesel","Compact","4dr Hatchback",43,31,873,26645,0,0,0,0,1,0,1,0,0,10.1903567947309,3181
+"Kia","K900","2016","regular",311,"6","AUTOMATIC","rear wheel drive",4,"Luxury","Large","Sedan",26,17,1720,51950,0,1,0,0,0,0,0,0,0,10.8580369965274,3562
+"Infiniti","Q50","2016","regular",300,"6","AUTOMATIC","all wheel drive",4,"Luxury,Performance","Midsize","Sedan",27,19,190,41900,0,1,1,0,0,0,0,0,0,10.6430411059102,4422
+"Volkswagen","Jetta SportWagen","2014","diesel",140,"4","AUTOMATED_MANUAL","front wheel drive",4,"Diesel","Compact","Wagon",39,29,873,29131.6666666667,0,0,0,0,0,0,1,0,0,10.2795810631011,3484
+"Volvo","850","1996","regular",240,"5","AUTOMATIC","front wheel drive",4,"Factory Tuner,Luxury,Performance","Midsize","Sedan",24,17,870,2000,1,1,1,0,0,0,0,0,0,7.60090245954208,549
+"Scion","FR-S","2016","regular",200,"4","MANUAL","rear wheel drive",2,"Performance","Compact","Coupe",30,22,105,27407.5,0,0,1,0,0,0,0,0,0,10.2185719775487,2826
+"McLaren","MP4-12C","2012","regular",592,"8","AUTOMATED_MANUAL","rear wheel drive",2,"Exotic,High-Performance","Compact","Coupe",22,15,416,229000,0,0,1,0,0,0,0,1,0,12.3414772825364,4017
+"Honda","Ridgeline","2017","regular",280,"6","AUTOMATIC","all wheel drive",4,"N/A","Large","Crew Cab Pickup",25,18,2202,36707.8571428571,0,0,0,0,0,0,0,0,0,10.5107461022145,4821
+"Ford","Focus","2015","flex",160,"4","MANUAL","front wheel drive",4,"Flex Fuel","Compact","Sedan",36,26,5657,17815,0,0,0,1,0,0,0,0,0,9.78779607803994,2757
+"Porsche","Cayenne","2015","diesel",240,"6","AUTOMATIC","all wheel drive",4,"Crossover,Luxury,Diesel","Midsize","4dr SUV",29,20,1715,61700,0,1,0,0,0,0,1,0,1,11.0300392098935,1430
+"Acura","TLX","2015","regular",206,"4","AUTOMATED_MANUAL","front wheel drive",4,"Luxury","Midsize","Sedan",35,24,204,33472.5,0,1,0,0,0,0,0,0,0,10.4184794851715,5839
+"Audi","R8","2014","regular",430,"8","AUTOMATED_MANUAL","all wheel drive",2,"Luxury,High-Performance","Compact","Coupe",23,14,3105,124000,0,1,1,0,0,0,0,0,0,11.7280368445872,4565
+"Ford","Freestyle","2005","regular",203,"6","AUTOMATIC","all wheel drive",4,"Crossover","Large","Wagon",22,17,5657,28506.6666666667,0,0,0,0,0,0,0,0,1,10.2578932570308,2840
+"Volkswagen","Jetta","2017","regular",210,"4","AUTOMATED_MANUAL","front wheel drive",4,"Factory Tuner,Performance","Midsize","Sedan",33,24,873,28995,1,0,1,0,0,0,0,0,0,10.2748786803105,3503
+"Mercedes-Benz","S-Class","2015","regular",577,"8","AUTOMATIC","all wheel drive",4,"Factory Tuner,Luxury,High-Performance","Large","Sedan",23,15,617,141450,1,1,1,0,0,0,0,0,0,11.8597015767297,4965
+"Honda","Civic","2015","regular",205,"4","MANUAL","front wheel drive",2,"Factory Tuner,Performance","Compact","Coupe",31,22,2202,23740,1,0,1,0,0,0,0,0,0,10.0749166681637,1541
+"Pontiac","Grand Am","2003","regular",140,"4","MANUAL","front wheel drive",4,"N/A","Midsize","Sedan",30,22,210,17980,0,0,0,0,0,0,0,0,0,9.79701530802561,3195
+"Kia","Optima Hybrid","2015","regular",199,"4","AUTOMATIC","front wheel drive",4,"Hybrid","Midsize","Sedan",40,36,1720,25990,0,0,0,0,0,1,0,0,0,10.1654671276355,4192
+"Scion","xD","2013","regular",128,"4","AUTOMATIC","front wheel drive",4,"Hatchback","Compact","4dr Hatchback",33,27,105,17750,0,0,0,0,1,0,0,0,0,9.78414079490356,6405
+"Audi","A8","2017","regular",450,"8","AUTOMATIC","all wheel drive",4,"Luxury,High-Performance","Large","Sedan",29,18,3105,91500,0,1,1,0,0,0,0,0,0,11.4240942512636,794
+"Volkswagen","Rabbit","2008","regular",170,"5","MANUAL","front wheel drive",4,"Hatchback","Compact","4dr Hatchback",29,22,873,17575,0,0,0,0,1,0,0,0,0,9.77423271667887,4588
+"Lexus","RX 450h","2015","regular",295,"6","AUTOMATIC","front wheel drive",4,"Crossover,Luxury,Hybrid","Midsize","4dr SUV",28,32,454,47620,0,1,0,0,0,1,0,0,1,10.7710081200409,4917
+"Acura","RDX","2016","regular",279,"6","AUTOMATIC","front wheel drive",4,"Crossover,Luxury","Midsize","4dr SUV",29,20,204,38700,0,1,0,0,0,0,0,0,1,10.5635948790179,4791
+"Mercedes-Benz","R-Class","2012","regular",302,"6","AUTOMATIC","all wheel drive",4,"Crossover,Luxury","Large","Wagon",21,16,617,52690,0,1,0,0,0,0,0,0,1,10.8721809632033,4555
+"Toyota","Matrix","2011","regular",158,"4","AUTOMATIC","all wheel drive",4,"Hatchback","Compact","4dr Hatchback",26,20,2031,21715,0,0,0,0,1,0,0,0,0,9.98575854496892,3867
+"Infiniti","G Coupe","2013","regular",348,"6","AUTOMATIC","rear wheel drive",2,"Factory Tuner,Luxury,High-Performance","Midsize","Coupe",27,19,190,53100,1,1,1,0,0,0,0,0,0,10.87993220723,2934
+"Toyota","4Runner","2015","regular",270,"6","AUTOMATIC","rear wheel drive",4,"N/A","Midsize","4dr SUV",22,17,2031,36915,0,0,0,0,0,0,0,0,0,10.5163732514933,328
+"Infiniti","G Coupe","2013","regular",330,"6","AUTOMATIC","rear wheel drive",2,"Luxury,Performance","Midsize","Coupe",27,19,190,40400,0,1,1,0,0,0,0,0,0,10.6065850639492,2933
+"Kia","Forte","2017","regular",201,"4","AUTOMATED_MANUAL","front wheel drive",4,"Hatchback,Performance","Compact","4dr Hatchback",30,25,1720,23690,0,0,1,0,1,0,0,0,0,10.0728082971528,2815
+"Nissan","Pathfinder","2015","regular",260,"6","AUTOMATIC","four wheel drive",4,"Crossover","Large","4dr SUV",26,19,2009,35525,0,0,0,0,0,0,0,0,1,10.4779919529653,4294
+"Dodge","RAM 150","1991","regular",170,"8","MANUAL","rear wheel drive",2,"N/A","Large","Extended Cab Pickup",14,11,1851,2000,0,0,0,0,0,0,0,0,0,7.60090245954208,4620
+"GMC","Canyon","2016","regular",200,"4","AUTOMATIC","rear wheel drive",4,"N/A","Compact","Crew Cab Pickup",27,20,549,25865,0,0,0,0,0,0,0,0,0,10.1606459824376,1395
+"Cadillac","XLR-V","2007","regular",443,"8","AUTOMATIC","rear wheel drive",2,"Factory Tuner,Luxury,High-Performance","Compact","Convertible",20,13,1624,97460,1,1,1,0,0,0,0,0,0,11.4871973163975,6429
+"Mercedes-Benz","S-Class","2015","regular",577,"8","AUTOMATIC","all wheel drive",2,"Factory Tuner,Luxury,High-Performance","Large","Coupe",23,15,617,160900,1,1,1,0,0,0,0,0,0,11.9885383329805,4967
+"Ford","Mustang SVT Cobra","1998","regular",305,"8","MANUAL","rear wheel drive",2,"Factory Tuner,Performance","Compact","Convertible",24,16,5657,4059,1,0,1,0,0,0,0,0,0,8.3086919168389,4061
+"GMC","Sierra 1500","2015","regular",355,"8","AUTOMATIC","rear wheel drive",4,"N/A","Large","Crew Cab Pickup",23,16,549,46662.5,0,0,0,0,0,0,0,0,0,10.7506961232228,5257
+"Kia","Soul","2014","regular",130,"4","MANUAL","front wheel drive",4,"N/A","Compact","Wagon",30,24,1720,14900,0,0,0,0,0,0,0,0,0,9.60911649193355,5500
+"Mercedes-Benz","SLS AMG GT","2013","regular",583,"8","AUTOMATED_MANUAL","rear wheel drive",2,"Exotic,Factory Tuner,Luxury,High-Performance","Compact","Coupe",19,13,617,199500,1,1,1,0,0,0,0,1,0,12.2035695153121,5400
+"Kia","Forte","2015","regular",145,"4","AUTOMATIC","front wheel drive",4,"N/A","Compact","Sedan",39,26,1720,17490,0,0,0,0,0,0,0,0,0,9.76938456801265,2795
+"Toyota","ECHO","2004","regular",108,"4","MANUAL","front wheel drive",2,"N/A","Compact","Coupe",38,30,2031,10355,0,0,0,0,0,0,0,0,0,9.24522477382969,2220
+"Volkswagen","GTI","2013","regular",200,"4","MANUAL","front wheel drive",4,"Hatchback,Performance","Compact","4dr Hatchback",31,21,873,27778.3333333333,0,0,1,0,1,0,0,0,0,10.2320116193082,3289
+"Hyundai","Tucson","2016","regular",164,"4","AUTOMATIC","front wheel drive",4,"Crossover","Compact","4dr SUV",31,23,1439,22700,0,0,0,0,0,0,0,0,1,10.0301202034695,6042
+"Suzuki","Kizashi","2011","regular",185,"4","MANUAL","front wheel drive",4,"N/A","Midsize","Sedan",31,21,481,18999,0,0,0,0,0,0,0,0,0,9.85214162518454,3569
+"Pontiac","Sunbird","1992","regular",111,"4","MANUAL","front wheel drive",2,"N/A","Compact","Convertible",32,22,210,2000,0,0,0,0,0,0,0,0,0,7.60090245954208,5620
+"Chevrolet","Malibu","2015","regular",259,"4","AUTOMATIC","front wheel drive",4,"Performance","Midsize","Sedan",30,21,1385,28680,0,0,1,0,0,0,0,0,0,10.2639552947136,3844
+"Volvo","XC70","2016","regular",250,"5","AUTOMATIC","all wheel drive",4,"Crossover,Luxury","Midsize","Wagon",26,19,870,43810,0,1,0,0,0,0,0,0,1,10.6876173808079,6394
+"Bentley","Flying Spur","2016","regular",616,"12","AUTOMATIC","all wheel drive",4,"Exotic,Luxury,High-Performance","Large","Sedan",20,12,520,222300,0,1,1,0,0,0,0,1,0,12.3117830999523,2752
+"Volkswagen","CC","2016","regular",280,"6","AUTOMATED_MANUAL","all wheel drive",4,"Performance","Midsize","Sedan",25,17,873,44355,0,0,1,0,0,0,0,0,0,10.6999807209547,1456
+"Mercedes-Benz","S-Class","2016","regular",577,"8","AUTOMATIC","all wheel drive",2,"Factory Tuner,Luxury,High-Performance","Large","Coupe",23,15,617,163150,1,1,1,0,0,0,0,0,0,12.0024253020215,4978
+"Chevrolet","Cruze","2017","regular",153,"4","MANUAL","front wheel drive",4,"Hatchback","Compact","4dr Hatchback",37,28,1385,21240,0,0,0,0,1,0,0,0,0,9.96364147535587,1881
+"Chevrolet","S-10","2002","flex",120,"4","AUTOMATIC","rear wheel drive",3,"Flex Fuel","Compact","Extended Cab Pickup",23,17,1385,20341.5,0,0,0,1,0,0,0,0,0,9.92041841319611,4936
+"Porsche","944","1990","regular",208,"4","MANUAL","rear wheel drive",2,"Luxury,Performance","Compact","Convertible",24,15,1715,3083,0,1,1,0,0,0,0,0,0,8.03365842788615,724
+"Porsche","968","1993","regular",236,"4","MANUAL","rear wheel drive",2,"Luxury,Performance","Compact","Convertible",24,15,1715,4651,0,1,1,0,0,0,0,0,0,8.4448375292241,733
+"Mazda","Protege5","2003","regular",130,"4","MANUAL","front wheel drive",4,"N/A","Compact","Wagon",28,22,586,16895,0,0,0,0,0,0,0,0,0,9.73477299914839,4380

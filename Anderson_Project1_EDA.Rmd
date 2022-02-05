@@ -653,11 +653,29 @@ plot_means_by_category(df=clean_df,
 
 
 # Splitting data into training, testing and validation sets
+
+```{r}
+source("Applied_Stats_Project_Functions.R")
+
+df <- read.csv("./data1.csv", check.names=FALSE, na.strings=c("", "NA"))
+names(df) <- gsub(" ", "_", names(df))
+
+clean_df <- clean_data(df=df)
+```
+
+
+```{r}
+
+```
+
+
+
 ```{r}
 
 
-clean_df <- read.csv("./clean_dataset_0203.csv")
+#clean_df <- read.csv("./CLEAN_DATASET_0204.csv")
 
+#write.csv(clean_df, "./CLEAN_DATASET_0204.csv", row.names=FALSE)
 
 # Create the training, validation and test sets
 split_datasets <- create_train_val_test_sets(df=clean_df, train_pct = 0.8, val_pct = 0.1)
@@ -668,10 +686,16 @@ test_df <- split_datasets$test
 
 
 # Save the datasets to .csv for easy repeatability and sharing
-write.csv(train_df, "./training_dataset.csv", row.names=FALSE)
-write.csv(val_df, "./validation_dataset.csv", row.names=FALSE)
-write.csv(test_df, "./testing_dataset.csv", row.names=FALSE)
+write.csv(train_df, "./training_dataset_0204.csv", row.names=FALSE)
+write.csv(val_df, "./validation_dataset_0204.csv", row.names=FALSE)
+write.csv(test_df, "./testing_dataset_0204.csv", row.names=FALSE)
 
 ```
+
+
+
+
+
+
 
 

@@ -380,6 +380,14 @@ build_data_cleaning_report <- function(df_orig, df_missing, df_duplicate, df_fin
   ad_dup_only_diff_prices <- sum((duplicated(df_duplicate[,names(df_duplicate) != "MSRP"]) & !duplicated(df_duplicate)))
   
   
+  # AFTER THE HANDLE DUPLICATE FUNCTION RUNS
+  # calculate total number of rows in the data set
+  final_total_rows <- nrow(df_final)
+  # Calculate the total number of duplicates
+  final_complete_duplicates <- sum(duplicated(df_final))
+  # Calculate the number of rows that are exactly the same, only different prices
+  final_dup_only_diff_prices <- sum((duplicated(df_final[,names(df_final) != "MSRP"]) & !duplicated(df_final)))
+  
   
   cat("=========================================\n", file=filepath)
   cat("          DATA CLEANING REPORT           \n", file=filepath, append=TRUE)
@@ -414,7 +422,7 @@ build_data_cleaning_report <- function(df_orig, df_missing, df_duplicate, df_fin
   cat("\n", "=======================================================", "\n\n\n", file=filepath, append=TRUE)
   
   
-  cat(">>>>> At Conclusion of Data Cleaning Script <<<<<\n\n", file=filepath, append=TRUE)
+  cat(">>>>> After duplicate handling  <<<<<\n\n", file=filepath, append=TRUE)
   cat("Total number of rows: ", ad_total_rows, "\n", file=filepath, append=TRUE)
   cat("Number of fully duplicate rows: ", ad_complete_duplicates, " <-- should be zero ", "\n", file=filepath, append=TRUE)
   cat("Number of rows duplicate other than different MSRP's: ",ad_dup_only_diff_prices, "<-- should be zero", "\n\n", file=filepath, append=TRUE)
@@ -422,6 +430,13 @@ build_data_cleaning_report <- function(df_orig, df_missing, df_duplicate, df_fin
   add_missing_counts_to_file(df=df_duplicate, filepath=filepath)
   cat("\n", "=======================================================", "\n\n\n", file=filepath, append=TRUE)
   
+  
+  cat(">>>>> At conclusion of data cleaning script  <<<<<\n\n", file=filepath, append=TRUE)
+  cat("Total number of rows: ", final_total_rows, "\n", file=filepath, append=TRUE)
+  cat("Number of fully duplicate rows: ", final_complete_duplicates, " <-- should be zero ", "\n", file=filepath, append=TRUE)
+  cat("Number of rows duplicate other than different MSRP's: ",final_dup_only_diff_prices, "<-- should be zero", "\n\n", file=filepath, append=TRUE)
+  cat("MISSING VALUES\n", file=filepath, append=TRUE)
+  add_missing_counts_to_file(df=df_final, filepath=filepath)
   
   cat(">>>>> FACTOR COLUMN LEVELS <<<<<\n\n", file=filepath, append=TRUE)
   column_names <- colnames(df_final)
@@ -493,6 +508,16 @@ clean_data <- function(df, duplicate_handling=TRUE, build_cleaning_report=TRUE, 
   #### ONLY TO GENERATE DATA CLEANING REPORT
   df_dup <- df
   
+  
+  # CREATE BINARY COLUMNS FOR THE UNIQUE MARKET CATEGORIES, THIS WAY THE ACTUAL UNIQUE
+  # CATEGORIES GET THERE ONLY COLUMN, RATHER THAN EACH UNIQUE COMBINATION THAT SHOWS UP
+  df <- market_categories_to_binary(df=df)
+  names(df) <- gsub(" ", "_", names(df))   # Fix the names since there are new columns now
+  
+  # ADD A LOG_MSRP COLUMN!
+  df[,"log_MSRP"] <- log(df[,"MSRP"])
+  
+  
   ### Ensure datatypes match the assignments data dictionary
   df <- set_datatypes(df)
   
@@ -512,6 +537,113 @@ clean_data <- function(df, duplicate_handling=TRUE, build_cleaning_report=TRUE, 
   df[,"obs_number"] <- seq(1, as.numeric(nrow(df))) 
   
   return(df)
+}
+
+
+
+market_categories_to_binary <- function(df){
+  
+  split_categories <- str_split(string=df[,"Market_Category"],
+                                pattern=",")  
+  
+  
+  
+  # Get a character vector of the unique categories
+  unique_categories <- unique(unlist(split_categories))
+  
+  # Remove N/A from unique_categories vector
+  unique_categories <- unique_categories[unique_categories != "N/A"]
+  
+  # Remove High-Performance from unique_categories vector
+  unique_categories <- unique_categories[unique_categories != "High-Performance"] 
+  
+  # Add all the new columns, initialized to zero
+  for(category_index in 1:length(unique_categories)){
+    
+    category_name <- unique_categories[category_index]
+    
+    # Create a column of all zeros with this name
+    df[,category_name] <- rep(0, nrow(df))
+  }
+  
+  
+  for(row_index in 1:length(split_categories)){
+    
+    categories <- split_categories[[row_index]]
+    
+    if("Factory Tuner" %in% categories){
+      df[row_index, "Factory Tuner"] <- 1
+    }
+    
+    if(("High-Performance" %in% categories) | ("Performance" %in% categories)){
+      df[row_index, "Performance"] <- 1
+    }
+    
+    if("Luxury" %in% categories){
+      df[row_index, "Luxury"] <- 1
+    }
+    
+    if("Flex Fuel" %in% categories){
+      df[row_index, "Flex Fuel"] <- 1
+    }
+    
+    if("Hatchback" %in% categories){
+      df[row_index, "Hatchback"] <- 1
+    }
+    
+    if("Hybrid" %in% categories){
+      df[row_index, "Hybrid"] <- 1
+    }
+    
+    if("Diesel" %in% categories){
+      df[row_index, "Diesel"] <- 1
+    }
+    
+    if("Crossover" %in% categories){
+      df[row_index, "Crossover"] <- 1
+    }
+    
+    if("Exotic" %in% categories){
+      df[row_index, "Exotic"] <- 1
+    }
+  }
+  
+  return(df)
+}
+
+
+
+clean_fuel_type_column <- function(df){
+  
+  # STEP 1: Remove the natural gas car
+  df <- df[df[,"Engine_Fuel_Type"] != "natural gas",]
+  
+  
+  # STEP 2: Map to the new values
+  df[,"Engine_Fuel_Type"] <- plyr::mapvalues(df[,"Engine_Fuel_Type"],
+                                             from=c("premium unleaded (required)", 
+                                                    "regular unleaded", 
+                                                    "premium unleaded (recommended)", 
+                                                    "flex-fuel (unleaded/E85)", 
+                                                    "flex-fuel (premium unleaded recommended/E85)", 
+                                                    "flex-fuel (premium unleaded required/E85)",
+                                                    "flex-fuel (unleaded/natural gas)",
+                                                    "diesel"),
+                                             to=c("regular", 
+                                                  "regular", 
+                                                  "regular", 
+                                                  "flex", 
+                                                  "flex", 
+                                                  "flex",
+                                                  "flex",
+                                                  "diesel"))
+  
+  
+  
+  
+  
+  return(df)
+  
 }
 
 
@@ -538,6 +670,17 @@ cleaning_filters <- function(df, remove_electric_cars, expensive_threshold){
     
   }
   
+  
+  # UPDATE THE TWO DIRECT_DRIVE TRANSMISSIONS CHEVYS TO BE AUTOMATIC TRANSMISSIONS
+  chevy_direct_drive_filter <- (df[,"Transmission_Type"] == "DIRECT_DRIVE") & (df[,"Make"] == "Chevrolet") & (df[,"Model"] == "Malibu")
+  df[chevy_direct_drive_filter, "Transmission_Type"] <- "AUTOMATIC"
+  
+  # Remove UNKNOWN Transmission_Type values
+  df <- df[df[,"Transmission_Type"] != "UNKNOWN",]
+  
+  
+  # Cleaning the Engine_Fuel_Type column
+  df <- clean_fuel_type_column(df=df)
   
   return(df)
   
@@ -620,7 +763,7 @@ set_datatypes <- function(df){
   ##### Columns with Factor Data Type #####
   
   factor_columns <- c("Make", "Model", "Engine_Fuel_Type", "Transmission_Type", "Market_Category",
-                      "Vehicle_Size", "Vehicle_Style", "Driven_Wheels")
+                      "Vehicle_Size", "Vehicle_Style", "Driven_Wheels", "Year", "Engine_Cylinders")
   
   
   # For each column that needs to be a factor
@@ -639,7 +782,7 @@ set_datatypes <- function(df){
   
   ##### Columns with Numeric Data Type #####
   
-  numeric_columns <- c("MSRP", "Year", "Engine_HP", "Engine_Cylinders", "Number_of_Doors",
+  numeric_columns <- c("MSRP", "Engine_HP", "Number_of_Doors",
                        "highway_MPG", "city_mpg", "Popularity")
   
   # For each column that needs to be a factor
@@ -876,7 +1019,7 @@ filter_predictor_squared_terms <- function(candidate_combinations){
 }
 
 
-run_best_subset_selection <- function(train_data, val_data, candidate_predictors, response_variable="MSRP",
+run_best_subset_selection <- function(train_data, val_data, test_data, candidate_predictors, response_variable="MSRP",
                                       save_every=1000, save_path="./model_checkpoints/", base_save_name="project1_models",
                                       order_column="val_rmse", filter_combinations=TRUE){
   
@@ -905,8 +1048,11 @@ run_best_subset_selection <- function(train_data, val_data, candidate_predictors
     
     
     # Generate the internal and validation metrics for this model
-    model_metrics <- generate_model_metrics(model=fit, 
+    model_metrics <- generate_model_metrics(model=fit,
+                                            train_data=train_data,
                                             val_data=val_data, 
+                                            test_data=test_data,
+                                            response_variable=response_variable,
                                             predictor_set=predictor_set)
     
     
@@ -951,7 +1097,7 @@ run_best_subset_selection <- function(train_data, val_data, candidate_predictors
 }
 
 
-generate_model_metrics <- function(model, val_data, predictor_set){
+generate_model_metrics <- function(model, val_data, test_data, train_data, predictor_set, response_variable){
   
   # Akaike Information Criterion
   aic <- olsrr::ols_aic(model=model)
@@ -999,12 +1145,14 @@ generate_model_metrics <- function(model, val_data, predictor_set){
   # Denominator Degrees of freedom for F-statistc
   f_stat_denom_df <- summary(model)$fstatistic[[3]]
   
+  #### VALIDATION SET ####
+  
   # Use this model to make predictions on the validation set
   val_set_predictions <- predict(model, val_data)
   
   # Get the metrics for the models predictions on the validation set
   pred_metrics <- caret::postResample(pred=val_set_predictions, 
-                                      obs=val_data$MSRP)
+                                      obs=val_data[,response_variable])
   
   
   # RMSE for the predictions on the validation set
@@ -1016,6 +1164,44 @@ generate_model_metrics <- function(model, val_data, predictor_set){
   # Mean absolute error for the predictions on the validation set
   val_mae <- pred_metrics[[3]]
   
+  #### TEST SET #### 
+  
+  # Predictions on test set
+  test_set_predictions <- predict(model, test_data)
+  
+  # Get the metrics for the models predictions on the test set
+  test_pred_metrics <- caret::postResample(pred=test_set_predictions, 
+                                      obs=test_data[,response_variable])
+  
+  
+  # RMSE for the predictions on the test set
+  test_rmse <- test_pred_metrics[[1]]
+  
+  # R-squared for the predictions on the test set
+  test_rsquared <- test_pred_metrics[[2]]
+  
+  # Mean absolute error for the predictions on the test set
+  test_mae <- test_pred_metrics[[3]]
+  
+  #### TRAIN SET ####
+  
+  # Predictions on test set
+  train_set_predictions <- predict(model, train_data)
+  
+  # Get the metrics for the models predictions on the test set
+  train_pred_metrics <- caret::postResample(pred=train_set_predictions, 
+                                           obs=train_data[,response_variable])
+  
+  
+  # RMSE for the predictions on the test set
+  train_rmse <- train_pred_metrics[[1]]
+  
+  # R-squared for the predictions on the test set
+  train_rsquared <- train_pred_metrics[[2]]
+  
+  # Mean absolute error for the predictions on the test set
+  train_mae <- train_pred_metrics[[3]]
+
   
   model_predictors <- stringr::str_c(predictor_set, collapse="  ")
   
@@ -1036,6 +1222,12 @@ generate_model_metrics <- function(model, val_data, predictor_set){
                                 pred_rsq=pred_rsq,
                                 rsq=r_squared,
                                 adj_rsq=adjusted_r_squared,
+                                test_rmse=test_rmse,
+                                test_rsquared=test_rsquared,
+                                test_mae=test_mae,
+                                train_rmse=train_rmse,
+                                train_rsquared=train_rsquared,
+                                train_mae=train_mae,
                                 fstat=f_statistic_value,
                                 f_num_df=f_stat_num_df,
                                 f_denom_df=f_stat_denom_df)
@@ -1043,3 +1235,22 @@ generate_model_metrics <- function(model, val_data, predictor_set){
   return(model_eval_data)
   
 }
+
+
+add_squared_terms <- function(df, terms){
+  
+  for(term_index in 1:length(terms)){
+    
+    term_name <- terms[term_index]
+    
+    squared_term_name <- gsub(x=paste(term_name, "_Squared"),
+                              pattern=" ",
+                              replacement="")
+    
+    df[,squared_term_name] <- df[,term_name]^2
+    
+  }
+  
+  return(df)
+}
+
