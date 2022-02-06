@@ -18,9 +18,9 @@ source("Applied_Stats_Project_Functions.R")
 
 
 # READ IN THE TRAIN, VALIDATION AND TEST SETS
-train_df <- read.csv("./training_dataset_0206.csv")
-val_df <- read.csv("./validation_dataset_0206.csv")
-test_df <- read.csv("./testing_dataset_0206.csv")
+train_df <- read.csv("./training_dataset_0206_2.csv")
+val_df <- read.csv("./validation_dataset_0206_2.csv")
+test_df <- read.csv("./testing_dataset_0206_2.csv")
 
 # Ensure all datatypes are correct
 train_df <- set_datatypes(train_df)
