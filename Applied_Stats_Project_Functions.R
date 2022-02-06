@@ -1020,8 +1020,8 @@ filter_predictor_squared_terms <- function(candidate_combinations){
 
 
 run_best_subset_selection <- function(train_data, val_data, test_data, candidate_predictors, response_variable="MSRP",
-                                      save_every=1000, save_path="./model_checkpoints/", base_save_name="project1_models",
-                                      order_column="val_rmse", filter_combinations=TRUE){
+                                      save_every=20000, save_path="./model_checkpoints/", base_save_name="project1_models",
+                                       filter_combinations=TRUE, reverse_order=FALSE){
   
   # Generate all possible predictor combinations
   predictor_combinations <- get_predictor_combos_manual(features=candidate_predictors)
@@ -1032,7 +1032,12 @@ run_best_subset_selection <- function(train_data, val_data, test_data, candidate
     predictor_combinations <- filter_predictor_squared_terms(candidate_combinations = predictor_combinations)  
   }
   
-  for(combo_index in 1:length(predictor_combinations)){
+  # Reverse the predictor combinations if desired
+  if(reverse_order){
+    predictor_combinations <- rev(predictor_combinations)
+  }
+  
+  for(combo_index in 1:(length(predictor_combinations) %/% 2)){
     
     # Get the set of predictors for this model
     predictor_set <- predictor_combinations[[combo_index]]
@@ -1072,7 +1077,7 @@ run_best_subset_selection <- function(train_data, val_data, test_data, candidate
       # on top. This makes it easy to see if the best model has improved when checking on progress.
       # save_file <- final_metrics[order(final_metrics[,order_by]),]
       
-      final_metrics <- final_metrics[order(final_metrics[,order_column]),]
+    #  final_metrics <- final_metrics[order(final_metrics[,order_column]),]
       save_file_name <- paste(base_save_name, "_iteration_", combo_index, ".csv")
       full_save_path <- gsub(x=paste(save_path, save_file_name),
                              pattern=" ",
@@ -1084,7 +1089,7 @@ run_best_subset_selection <- function(train_data, val_data, test_data, candidate
   }
   
   # Final Save 
-  final_metrics <- final_metrics[order(final_metrics[,order_column]),]
+ # final_metrics <- final_metrics[order(final_metrics[,order_column]),]
   save_file_name <- paste(base_save_name, "_FINAL.csv")
   full_save_path <- gsub(x=paste(save_path, save_file_name),
                          pattern=" ",
