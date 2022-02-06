@@ -18,9 +18,9 @@ source("Applied_Stats_Project_Functions.R")
 
 
 # READ IN THE TRAIN, VALIDATION AND TEST SETS
-train_df <- read.csv("./training_dataset_0204.csv")
-val_df <- read.csv("./validation_dataset_0204.csv")
-test_df <- read.csv("./testing_dataset_0204.csv")
+train_df <- read.csv("./training_dataset_0206.csv")
+val_df <- read.csv("./validation_dataset_0206.csv")
+test_df <- read.csv("./testing_dataset_0206.csv")
 
 # Ensure all datatypes are correct
 train_df <- set_datatypes(train_df)
@@ -73,7 +73,8 @@ test_predictors <- c("Year",
                      "Hybrid", 
                      "Diesel", 
                      "Exotic", 
-                     "Crossover"
+                     "Crossover",
+                     "Popularity"
                      )
 
 
@@ -84,7 +85,7 @@ best_subsets <- run_best_subset_selection(train_data=train_df,
                                           response_variable="log_MSRP",             # <-- Can be "MSRP" or "log_MSRP", whichever you want to explore
                                           candidate_predictors = test_predictors,
                                           save_every=10000,
-                                          base_save_name="first_half",
+                                          base_save_name="second_half",
                                           filter_combinations=FALSE,
                                           reverse_order=TRUE
                                           )
