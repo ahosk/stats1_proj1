@@ -611,6 +611,27 @@ market_categories_to_binary <- function(df){
   return(df)
 }
 
+clean_vehicle_style_column <- function(df){
+  
+  
+  df[,"Vehicle_Style"] <- plyr::mapvalues(df[,"Vehicle_Style"],
+                                          from=c("2dr Hatchback", "4dr Hatchback", "Convertible", "Coupe", "Sedan", "Wagon", 
+                                                 "Crew Cab Pickup", "Extended Cab Pickup", "Regular Cab Pickup",
+                                                 "Cargo Minivan", "Cargo Van",
+                                                 "Passenger Minivan", "Passenger Van",
+                                                 "2dr SUV", "4dr SUV", "Convertible SUV"),
+                                          to=c("car", "car", "car", "car", "car", "car",
+                                               "truck", "truck", "truck",
+                                               "cargo_van", "cargo_van",
+                                               "passenger_van", "passenger_van",
+                                               "suv", "suv", "suv"))
+  
+  
+  
+  return(df)
+  
+}
+
 
 
 clean_fuel_type_column <- function(df){
@@ -679,8 +700,11 @@ cleaning_filters <- function(df, remove_electric_cars, expensive_threshold){
   df <- df[df[,"Transmission_Type"] != "UNKNOWN",]
   
   
-  # Cleaning the Engine_Fuel_Type column
+  # Cleaning the Engine_Fuel_Type column (binning values)
   df <- clean_fuel_type_column(df=df)
+  
+  # Bin vehicle_style column 
+  df <- clean_vehicle_style_column(df)
   
   return(df)
   
@@ -1020,8 +1044,8 @@ filter_predictor_squared_terms <- function(candidate_combinations){
 
 
 run_best_subset_selection <- function(train_data, val_data, test_data, candidate_predictors, response_variable="MSRP",
-                                      save_every=20000, save_path="./model_checkpoints/", base_save_name="project1_models",
-                                       filter_combinations=TRUE, reverse_order=FALSE){
+                                      save_every=1000, save_path="./model_checkpoints/", base_save_name="project1_models",
+                                      order_column="val_rmse", filter_combinations=TRUE, reverse_order=FALSE){
   
   # Generate all possible predictor combinations
   predictor_combinations <- get_predictor_combos_manual(features=candidate_predictors)
@@ -1031,12 +1055,13 @@ run_best_subset_selection <- function(train_data, val_data, test_data, candidate
   if(filter_combinations){
     predictor_combinations <- filter_predictor_squared_terms(candidate_combinations = predictor_combinations)  
   }
-  
+
   # Reverse the predictor combinations if desired
   if(reverse_order){
     predictor_combinations <- rev(predictor_combinations)
   }
   
+    
   for(combo_index in 1:(length(predictor_combinations) %/% 2)){
     
     # Get the set of predictors for this model
@@ -1077,7 +1102,7 @@ run_best_subset_selection <- function(train_data, val_data, test_data, candidate
       # on top. This makes it easy to see if the best model has improved when checking on progress.
       # save_file <- final_metrics[order(final_metrics[,order_by]),]
       
-    #  final_metrics <- final_metrics[order(final_metrics[,order_column]),]
+      #final_metrics <- final_metrics[order(final_metrics[,order_column]),]
       save_file_name <- paste(base_save_name, "_iteration_", combo_index, ".csv")
       full_save_path <- gsub(x=paste(save_path, save_file_name),
                              pattern=" ",
@@ -1089,7 +1114,7 @@ run_best_subset_selection <- function(train_data, val_data, test_data, candidate
   }
   
   # Final Save 
- # final_metrics <- final_metrics[order(final_metrics[,order_column]),]
+  #final_metrics <- final_metrics[order(final_metrics[,order_column]),]
   save_file_name <- paste(base_save_name, "_FINAL.csv")
   full_save_path <- gsub(x=paste(save_path, save_file_name),
                          pattern=" ",
