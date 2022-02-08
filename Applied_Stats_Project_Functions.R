@@ -124,69 +124,7 @@ plot_histogram <- function(df, continuous_variable, fill_color="#bc5090",
   return(p)
 }
 
-get_table_location <- function(table_loc){
-  
-  if(table_loc == "upper_right"){
-    x_coord <- Inf
-    y_coord <- Inf
-  }
-  else if(table_loc == "lower_right"){
-    x_coord <- Inf
-    y_coord <- -Inf
-    
-  }
-  else if(table_loc == "upper_left"){
-    x_coord <- -Inf
-    y_coord <- Inf
-    
-  }
-  else if(table_loc == "lower_left"){
-    x_coord <- -Inf
-    y_coord <- -Inf
-  }
-  
-  coords <- list(x_coordinate=x_coord, 
-                 y_coordinate=y_coord)
-  
-  return(coords)
-  
-}
-
-calculate_summary_stats <- function(df, column_name){
-  
-  summary_vector <- c(min(df[,column_name]), 
-                      quantile(df[,column_name], probs=c(0.25)), 
-                      mean(df[,column_name]), 
-                      median(df[,column_name]), 
-                      quantile(df[,column_name], probs=c(0.75)), 
-                      max=max(df[,column_name]))
-  
-  
-  summary_stat_names <- c("min", "25%", "mean", "median", "75%", "max")
-  
-  summary_df <- data.frame(summary_stats=summary_vector)
-  rownames(summary_df) <- summary_stat_names
-  
-  return(summary_df)
-  
-}
-
-add_table_to_plot <- function(p, df, x_var, table_loc){
-  
-  annot_table <- calculate_summary_stats(df=df, column_name=x_var)
-  
-  table_coordinates <- get_table_location(table_loc=table_loc)
-  
-  p <- p + 
-    annotate(geom="table", 
-             x=table_coordinates[["x_coordinate"]], 
-             y=table_coordinates[["y_coordinate"]], 
-             label=list(annot_table), 
-             table.rownames=TRUE)
-  
-}
-
-
+# Function for creating scatter plots
 plot_scatter <- function(data, x_var, y_var, shade_var=NULL, shape_var=NULL, 
                          size_var=NULL, max_size=8, size_guide=FALSE, alpha=0.8,
                          show_regression=FALSE, conf_level=0.95, pred_band=TRUE, conf_band=TRUE, 
@@ -242,7 +180,8 @@ plot_scatter <- function(data, x_var, y_var, shade_var=NULL, shape_var=NULL,
   
 }
 
-
+# Function to plot the average value of some continuous variable, for each level of a categorical variable
+# Error bars representing the standard deviation of each average are also added
 plot_means_by_category <- function(df, continuous_variable, categorical_variable, errorbar_width=0.1, xtick_rotation=45,
                                    remove_legend=FALSE){
   
@@ -318,145 +257,322 @@ plot_factor_level_counts <- function(df, factor_variable, xtick_rotation=0, outl
   
 }
 
-
-############################################# DATA CLEANING REPORT #################################################
-
-
-add_missing_counts_to_file <- function(df, filepath){
+# FUNCTION TO PLOT RESIDUALS VS FITTED VALUES
+# valid residual_types: "externally_studentized", "internally_studentized", "regular", "deleted" (PRESS)
+#                 
+plot_residuals <- function(fit, dataframe=NULL, residual_type="externally_studentized", plot_zero_hline=TRUE,
+                           zero_hline_linetype="solid", zero_hline_color="red", remove_less_than=NULL,
+                           remove_greater_than=NULL, flag_extreme_values=TRUE, extreme_thresh_std=3.5,
+                           extreme_thresh_regular=3, id_extreme_values=FALSE, extreme_value_color="red",
+                           obs_txt_size=3, obs_txt_hjust=0, obs_txt_vjust=-0.4){
   
-  # Calculate the number of missing values per column
-  df_missings <- sapply(df, function(x) sum(is.na(x)))
   
-  # Grab the column names
-  df_col_names <- names(df_missings)
   
-  # For each column
-  for(col_index in 1:length(df_col_names)){
+  case_df <- get_residual_plot_data(fit=fit, 
+                                    dataframe=dataframe,
+                                    residual_type=residual_type, 
+                                    remove_less_than=remove_less_than, 
+                                    remove_greater_than=remove_greater_than)
+  
+  
+  plot_labels <- get_plot_labels(plot_kind="residual", plot_type_info=residual_type)
+  
+  p <- ggplot(data=case_df, mapping=aes(x=fitted_values, y=Resid_Plot_Column)) + 
+    geom_point() +
+    xlab(plot_labels$xlabel) + 
+    ylab(plot_labels$ylabel) + 
+    ggtitle(plot_labels$title)
+  
+  if(plot_zero_hline){
+    p <- p + geom_hline(yintercept=0, linetype=zero_hline_linetype, color=zero_hline_color)
     
-    # Grab the name of this column and the number of missing values
-    column_name <- df_col_names[col_index]
-    num_missings <- df_missings[df_col_names[col_index]]
-    
-    # Write that information to the file
-    cat(column_name, ":", num_missings, "\n", file=filepath, append=TRUE)
   }
+  
+  if(flag_extreme_values){
+    
+    extreme_rule_of_thumb <- list("externally_studentized"=case_df[abs(case_df[,"stu.res"]) >= extreme_thresh_std,], 
+                                  "internally_studentized"=case_df[abs(case_df[,"sta.res"]) >= extreme_thresh_std,], 
+                                  "regular"=case_df[order(abs(case_df[,"e"]), decreasing=TRUE),][1:extreme_thresh_regular,],
+                                  "deleted"=case_df[order(abs(case_df[,"deleted_resids"]), decreasing=TRUE),][1:extreme_thresh_regular,])
+    
+    extreme_df <- as.data.frame(extreme_rule_of_thumb[[residual_type]])
+    
+    p <- p + geom_point(data=extreme_df, mapping=aes(x=fitted_values, y=Resid_Plot_Column), shape=8, color=extreme_value_color) +
+      geom_point(data=extreme_df, mapping=aes(x=fitted_values, y=Resid_Plot_Column), color=extreme_value_color)
+    
+  }
+  
+  if(id_extreme_values){
+    p <- p +       
+      geom_text(data=extreme_df, mapping=aes(x=fitted_values, y=Resid_Plot_Column, label=obs_number), 
+                hjust=obs_txt_hjust, vjust=obs_txt_vjust, color=extreme_value_color, size=obs_txt_size)
+    
+  }
+  
+  
+  return(p)
+}
+
+plot_residual_histogram <- function(fit, dataframe=NULL, residual_type="externally_studentized", binwidth=NULL, num_bins=NULL,
+                                    remove_less_than=NULL, remove_greater_than=NULL, fill_color="Pink", 
+                                    outline_color="Navy", overlay_normal=TRUE, normal_linetype="solid", 
+                                    normal_linecolor="black", normal_linesize=0.5){
+  
+  case_df <- get_residual_plot_data(fit=fit, 
+                                    dataframe=dataframe,
+                                    residual_type=residual_type, 
+                                    remove_less_than=remove_less_than, 
+                                    remove_greater_than=remove_greater_than)
+  
+  plot_labels <- get_plot_labels(plot_kind="residual_histogram", plot_type_info=residual_type)
+  
+  num_obs <- sum(!is.na(case_df$Resid_Plot_Column))
+  
+  p <- ggplot(data=case_df, mapping=aes(x=Resid_Plot_Column)) +
+    geom_histogram(binwidth=binwidth, bins=num_bins, fill=fill_color, color=outline_color) + 
+    xlab(plot_labels$xlabel) + 
+    ylab(plot_labels$ylabel) + 
+    ggtitle(plot_labels$title) 
+  
+  if(overlay_normal){
+    
+    binwidth <- get_binwith(binwidth=binwidth, 
+                            num_bins=num_bins, 
+                            current_plot=p)
+    
+    p <- p +stat_function(fun=function(x)
+      dnorm(x, mean=mean(case_df$Resid_Plot_Column), sd=sd(case_df$Resid_Plot_Column))*binwidth*num_obs, 
+      linetype=normal_linetype, 
+      color=normal_linecolor, 
+      size=normal_linesize)
+    
+  }
+  
+  return(p)
+  
+}
+
+# PARTIAL (COMPONENT PLUS) RESIDUAL PLOT
+# Before using this function, make sure the reference levels for any categorical variables are set as desired
+# by performing: df <- within(df, relevel(categorical_variable, ref=desired_level)) before passing df into this function.
+#
+# identify_obs --> TRUE to identify all, vector to specify which observation numbers to identify
+# add_pt_removal_line --> either FALSE or a vector of OBSERVATION NUMBERS for the points to remove and then 
+#                         replot a regression line for.
+#
+#
+plot_partial_residuals <- function(df, analysis_var, response_var="log_MSRP", explanatory_vars=c("Engine_HP", "Vehicle_Style"), 
+                                   augmented=FALSE, identify_obs=FALSE, show_regression=TRUE, remove_less_than=NULL, 
+                                   remove_greater_than=NULL, desired_factor_level=NULL, alpha=0.5, add_least_squares=TRUE,
+                                   add_smooth_fit=FALSE, smooth_method="loess", ls_linecolor="red", ls_linetype="solid", 
+                                   smooth_linecolor="#B026FF", smooth_linetype="dashed", ls_showlegend=TRUE, obs_txt_color="red", 
+                                   obs_txt_vjust=-0.4,obs_txt_hjust=0, obs_txt_size=3, add_pt_removal_line=FALSE, 
+                                   removed_pt_color="#30D5C8", removed_pt_showlegend=TRUE, removed_pt_linetype="solid", 
+                                   id_removal_compare_pts=TRUE, shade_by_case=NULL){
+  
+  
+  if(check_datatypes(df=df, analysis_var=analysis_var) && is.null(desired_factor_level)){
+    return("Invalid datatypes error")
+  }
+  
+  # Add observation number column
+  df <- add_obs_number_column(df)
+  
+  # If the variable we want to plot partial resids for is a categorical variable, each level will have its own coef in the
+  # regression model. This section is used to update the analysis_vars name to the one that will be given to its coef in the
+  # lm function, which will be the simple concatenation of variable_namelevel_name
+  if(!is.null(desired_factor_level)){
+    analysis_var <- str_c(analysis_var, desired_factor_level)
+  }
+  
+  # Get plot title and axis labels
+  plot_labels <- get_plot_labels(plot_kind="partial_residual", plot_type_info=analysis_var, extra_info=augmented)
+  
+  if(augmented){
+    augmented_data <- get_augmented_data(df=df, analysis_var=analysis_var, explanatory_vars=explanatory_vars)
+    df <- augmented_data[["data_frame"]]
+    analysis_var <- augmented_data[["analysis_variables"]]
+    explanatory_vars <- augmented_data[["explanatory_variables"]]
+    
+  }
+  
+  
+  fit <- build_lm_from_strings(df=df,response_var=response_var, explanatory_vars=explanatory_vars)
+  
+  df <- compute_partial_residuals(df=df, fit=fit, analysis_var=analysis_var)
+  
+  df <- add_shading_variable(fit=fit, df=df, shade_by_case=shade_by_case)
+  
+  p <- ggplot() +
+    geom_point(data=df, mapping=aes(x=analysis_variable, y=partial_resid,  color=shade_by_case), alpha=alpha) +
+    xlab(plot_labels$xlabel) + 
+    ylab(plot_labels$ylabel) + 
+    ggtitle(plot_labels$title) 
+  
+  p <- add_legend_data(p, shade_var=shade_by_case, shape_var=NULL)
+  
+  # If we want to plot a least squares line through the data
+  p <- add_least_squares_line(p=p, df=df, x_var="analysis_variable", y_var="partial_resid", linecolor=ls_linecolor, 
+                              linetype=ls_linetype,show_legend=ls_showlegend, add_least_squares=add_least_squares)
+  
+  # If we want points to point their observation number, for investigative purposes
+  p <- add_obs_numbers(p=p, df=df, obs_txt_color=obs_txt_color, obs_txt_size=obs_txt_size, obs_txt_vjust=obs_txt_vjust, 
+                       obs_txt_hjust=obs_txt_hjust, identify_obs=identify_obs)
+  
+  p <- add_point_removal_comparison_line(p=p, df=df, x_var="analysis_variable", y_var="partial_resid", 
+                                         linecolor=removed_pt_color, linetype=removed_pt_linetype, 
+                                         show_legend=removed_pt_showlegend,add_pt_removal_line=add_pt_removal_line,
+                                         id_removal_compare_pts=id_removal_compare_pts,obs_txt_size=obs_txt_size, 
+                                         obs_txt_hjust=obs_txt_hjust, obs_txt_vjust=obs_txt_vjust, obs_txt_color=removed_pt_color)
+  
+  if(add_smooth_fit){
+    p <- p + 
+      geom_smooth(data=df, mapping=aes(x=analysis_variable, y=partial_resid),
+                  method=smooth_method, color=smooth_linecolor)
+    
+  }
+  
+  return(p)
+  
+}
+
+# This function is intended to be used with the following case statistics:
+# 1) DFFITS, 2) Cooks D, 3) Leverage, 4) Externally Studentized Residual, 5) Deleted Standard Deviation
+#
+# NOTE: rot abbreviates "rule of thumb" (indicates the value is the rule of thumb)
+#       rotm abbreviates "rule of thumb multiplier" indicates the value is a multiplier in an equation
+#       that creates the rule of thumb.
+#
+plot_case_stat_vs_obs <- function(fit, dataframe=NULL, case_stat="cook", remove_less_than=NULL, remove_greater_than=NULL, 
+                                  cook_rot=1, dffit_rotm=2, leverage_rotm=3, resid_rot=3, std_rotm=0.05,
+                                  ref_linecolor="red", ref_linetype="dashed", annot_reflines=TRUE, 
+                                  plot_rot_reflines=TRUE, alpha=0.3, flag_extreme=TRUE, max_flagged=5, 
+                                  extreme_value_shape=8, extreme_value_color="red", obs_txt_size=3, 
+                                  obs_txt_vjust=-0.4, obs_txt_hjust=0){
+  
+  case_stat_short_name <- case_stat_name_map(case_stat, get_short_name=TRUE)
+  
+  case_df <- get_residual_plot_data(fit=fit, 
+                                    dataframe=dataframe,
+                                    residual_type=case_stat_short_name, 
+                                    remove_less_than=remove_less_than, 
+                                    remove_greater_than=remove_greater_than)
+  
+  
+  plot_labels <- get_plot_labels(plot_kind="case_stat_vs_obs", plot_type_info=case_stat)
+  
+  p <- ggplot(data=case_df) + 
+    geom_point(mapping=aes(x=obs_number, y=Resid_Plot_Column), alpha=alpha) +
+    xlab(plot_labels$xlabel) + 
+    ylab(plot_labels$ylabel) + 
+    ggtitle(plot_labels$title) 
+  
+  
+  p <- plot_rule_of_thumb(fit=fit, case_df=case_df, case_stat=case_stat_short_name, cook_rot=cook_rot, 
+                          dffit_rotm=dffit_rotm, resid_rot=resid_rot, std_rotm=std_rotm, leverage_rotm=leverage_rotm,
+                          p=p, ref_linecolor=ref_linecolor, ref_linetype=ref_linetype, annot_reflines=annot_reflines, 
+                          plot_rot_reflines=plot_rot_reflines, flag_extreme=flag_extreme, max_flagged=max_flagged, 
+                          extreme_value_shape=extreme_value_shape, extreme_value_color=extreme_value_color, obs_txt_size=obs_txt_size, 
+                          obs_txt_vjust=obs_txt_vjust, obs_txt_hjust=obs_txt_hjust)
+  
+  return(p)
   
 }
 
 
-build_data_cleaning_report <- function(df_orig, df_missing, df_duplicate, df_final, df_filtering, filepath){
+plot_residual_vs_leverage <- function(fit, dataframe=NULL, residual_type="externally_studentized", remove_less_than=NULL, 
+                                      remove_greater_than=NULL, add_reference_lines=TRUE, 
+                                      leverage_line_multiplier=3, resid_line_threshold=2, reference_linetype="dashed",
+                                      reference_linecolor="red", annotate_thresholds=TRUE, flag_extreme_obs=TRUE,
+                                      max_points_flagged=4, show_all_obs_numbers=FALSE, extreme_value_color="red", 
+                                      show_extreme_obs_numbers=TRUE, obs_txt_size=3, obs_txt_vjust=-0.4, obs_txt_hjust=0) {
   
-  # BEFORE ANY CLEANING
-  # calculate total number of rows in the data set
-  df_total_rows <- nrow(df_orig)
-  # Calculate the total number of duplicates
-  df_complete_duplicates <- sum(duplicated(df_orig))
-  # Calculate the number of rows that are exactly the same, only different prices
-  df_dup_only_diff_prices <- sum((duplicated(df_orig[,names(df_orig) != "MSRP"]) & !duplicated(df_orig)))
+  case_df <- get_residual_plot_data(fit=fit, 
+                                    dataframe=dataframe,
+                                    residual_type=residual_type, 
+                                    remove_less_than=remove_less_than, 
+                                    remove_greater_than=remove_greater_than)
   
-  # AFTER THE MISSING VALUES FUNCTION RUNS
-  # calculate total number of rows in the data set
-  after_missings_total_rows <- nrow(df_missing)
-  # Calculate the total number of duplicates
-  after_missings_complete_duplicates <- sum(duplicated(df_missing))
-  # Calculate the number of rows that are exactly the same, only different prices
-  after_missings_dup_only_diff_prices <- sum((duplicated(df_missing[,names(df_missing) != "MSRP"]) & !duplicated(df_missing)))
+  plot_labels <- get_plot_labels(plot_kind="residual_vs_leverage", plot_type_info=residual_type)
   
-  # AFTER THE EXTRA FILTERING FUNCTION RUNS
-  # calculate total number of rows in the data set
-  after_filtering_total_rows <- nrow(df_filtering)
-  # Calculate the total number of duplicates
-  after_filtering_complete_duplicates <- sum(duplicated(df_filtering))
-  # Calculate the number of rows that are exactly the same, only different prices
-  after_filtering_dup_only_diff_prices <- sum((duplicated(df_filtering[,names(df_filtering) != "MSRP"]) & !duplicated(df_filtering)))
+  p <- ggplot(data=case_df, mapping=aes(x=h, y=Resid_Plot_Column)) +
+    geom_point() + 
+    xlab(plot_labels$xlabel) + 
+    ylab(plot_labels$ylabel) + 
+    ggtitle(plot_labels$title) 
   
+  p <- add_reference_lines(fit=fit, residual_type=residual_type, case_df=case_df, add_reference_lines=add_reference_lines,
+                           leverage_line_multiplier=leverage_line_multiplier, p=p, resid_line_threshold=resid_line_threshold,
+                           reference_linetype=reference_linetype, reference_linecolor=reference_linecolor, 
+                           annotate_thresholds=annotate_thresholds)
   
-  # AFTER THE HANDLE DUPLICATE FUNCTION RUNS
-  # calculate total number of rows in the data set
-  ad_total_rows <- nrow(df_duplicate)
-  # Calculate the total number of duplicates
-  ad_complete_duplicates <- sum(duplicated(df_duplicate))
-  # Calculate the number of rows that are exactly the same, only different prices
-  ad_dup_only_diff_prices <- sum((duplicated(df_duplicate[,names(df_duplicate) != "MSRP"]) & !duplicated(df_duplicate)))
+  p <- flag_extreme_observations(residual_type=residual_type, extreme_value_color=extreme_value_color, fit=fit, p=p, 
+                                 show_extreme_obs_numbers=show_extreme_obs_numbers, max_points_flagged=max_points_flagged, 
+                                 resid_line_threshold=resid_line_threshold, case_df=case_df, obs_txt_size=obs_txt_size,
+                                 obs_txt_vjust=obs_txt_vjust, obs_txt_hjust=obs_txt_hjust, flag_extreme_obs=flag_extreme_obs, 
+                                 leverage_line_multiplier=leverage_line_multiplier)
   
-  
-  # AFTER THE HANDLE DUPLICATE FUNCTION RUNS
-  # calculate total number of rows in the data set
-  final_total_rows <- nrow(df_final)
-  # Calculate the total number of duplicates
-  final_complete_duplicates <- sum(duplicated(df_final))
-  # Calculate the number of rows that are exactly the same, only different prices
-  final_dup_only_diff_prices <- sum((duplicated(df_final[,names(df_final) != "MSRP"]) & !duplicated(df_final)))
-  
-  
-  cat("=========================================\n", file=filepath)
-  cat("          DATA CLEANING REPORT           \n", file=filepath, append=TRUE)
-  cat("Report Generated: ", Sys.time(), " ", Sys.Date(), file=filepath, append=TRUE)
-  cat("\n=========================================\n\n", file=filepath, append=TRUE)
-  
-  
-  cat(">>>>> Prior To Any Cleaning <<<<<\n\n", file=filepath, append=TRUE)
-  cat("Total number of rows: ", df_total_rows, "\n", file=filepath, append=TRUE)
-  cat("Number of fully duplicate rows: ", df_complete_duplicates, "\n", file=filepath, append=TRUE)
-  cat("Number of rows duplicate other than different MSRP's: ",df_dup_only_diff_prices, "\n\n", file=filepath, append=TRUE)
-  cat("MISSING VALUES\n", file=filepath, append=TRUE)
-  add_missing_counts_to_file(df=df_orig, filepath=filepath)
-  cat("\n", "=======================================================", "\n\n\n", file=filepath, append=TRUE)
-  
-  
-  cat(">>>>> After Running the Clean Missing Values Function <<<<<\n\n", file=filepath, append=TRUE)
-  cat("Total number of rows: ", after_missings_total_rows, "\n", file=filepath, append=TRUE)
-  cat("Number of fully duplicate rows: ", after_missings_complete_duplicates, "\n", file=filepath, append=TRUE)
-  cat("Number of rows duplicate other than different MSRP's: ",after_missings_dup_only_diff_prices, "\n\n", file=filepath, append=TRUE)
-  cat("MISSING VALUES\n", file=filepath, append=TRUE)
-  add_missing_counts_to_file(df=df_missing, filepath=filepath)
-  cat("\n", "=======================================================", "\n\n\n", file=filepath, append=TRUE)
-  
-  
-  cat(">>>>> After Applying Additional Filters (e.g. Electric Cars, Expensive Cars) <<<<<\n\n", file=filepath, append=TRUE)
-  cat("Total number of rows: ", after_filtering_total_rows, "\n", file=filepath, append=TRUE)
-  cat("Number of fully duplicate rows: ", after_filtering_complete_duplicates, "\n", file=filepath, append=TRUE)
-  cat("Number of rows duplicate other than different MSRP's: ",after_filtering_dup_only_diff_prices, "\n\n", file=filepath, append=TRUE)
-  cat("MISSING VALUES\n", file=filepath, append=TRUE)
-  add_missing_counts_to_file(df=df_filtering, filepath=filepath)
-  cat("\n", "=======================================================", "\n\n\n", file=filepath, append=TRUE)
-  
-  
-  cat(">>>>> After duplicate handling  <<<<<\n\n", file=filepath, append=TRUE)
-  cat("Total number of rows: ", ad_total_rows, "\n", file=filepath, append=TRUE)
-  cat("Number of fully duplicate rows: ", ad_complete_duplicates, " <-- should be zero ", "\n", file=filepath, append=TRUE)
-  cat("Number of rows duplicate other than different MSRP's: ",ad_dup_only_diff_prices, "<-- should be zero", "\n\n", file=filepath, append=TRUE)
-  cat("MISSING VALUES\n", file=filepath, append=TRUE)
-  add_missing_counts_to_file(df=df_duplicate, filepath=filepath)
-  cat("\n", "=======================================================", "\n\n\n", file=filepath, append=TRUE)
-  
-  
-  cat(">>>>> At conclusion of data cleaning script  <<<<<\n\n", file=filepath, append=TRUE)
-  cat("Total number of rows: ", final_total_rows, "\n", file=filepath, append=TRUE)
-  cat("Number of fully duplicate rows: ", final_complete_duplicates, " <-- should be zero ", "\n", file=filepath, append=TRUE)
-  cat("Number of rows duplicate other than different MSRP's: ",final_dup_only_diff_prices, "<-- should be zero", "\n\n", file=filepath, append=TRUE)
-  cat("MISSING VALUES\n", file=filepath, append=TRUE)
-  add_missing_counts_to_file(df=df_final, filepath=filepath)
-  
-  cat(">>>>> FACTOR COLUMN LEVELS <<<<<\n\n", file=filepath, append=TRUE)
-  column_names <- colnames(df_final)
-  for(column_index in 1:length(column_names)){
-    
-    column_name <- column_names[column_index]
-    
-    if(class(df_final[,column_name]) == "factor"){
-      factor_levels <- stringr::str_flatten(as.character(levels(df_final[,column_name])), ", ")
-      
-      cat("~~~~~~~~~~~~~~~~~~~~\n\n", file=filepath, append=TRUE)
-      cat("Factor Column Name: ", column_name, "\nNumber of levels: ", length(levels(df_final[,column_name])), "\n\nFactor Levels: ", factor_levels, "\n",  file=filepath, append=TRUE)
-      cat("~~~~~~~~~~~~~~~~~~~~\n\n\n", file=filepath, append=TRUE)
-    }
-    
-  }
-  
-  cat("\n", "=======================================================", "\n\n\n", file=filepath, append=TRUE)
+  return(p)
   
 }
+
+# there are three valid qq_linetypes: 1) "robust" (quartiles), 
+#                                     2) "0-1" (intercept zero, slope 1), 3) "least squares"
+#
+#
+plot_residual_qq <- function(fit, dataframe=NULL, residual_type="externally_studentized", distribution="norm", param_list=list(mean=0, sd=1), 
+                             estimate_params=FALSE, plot_type="Q-Q", add_line=TRUE, qq_linetype="robust", 
+                             duplicate_points_method="standard", points_color="#003f5c", line_color="#ffa600", 
+                             linetype="solid", round_digits=5, flag_largest_resid=TRUE, flag_nlargest=3, remove_less_than=NULL, 
+                             remove_greater_than=NULL, flag_color_resid="red", flag_marker_shape=8, alpha=1, flag_txt_hjust=0, 
+                             flag_txt_vjust=-0.3, flag_txt_size=4){
+  
+  
+  case_df <- get_residual_plot_data(fit=fit, 
+                                    dataframe=dataframe,
+                                    residual_type=residual_type, 
+                                    remove_less_than=remove_less_than, 
+                                    remove_greater_than=remove_greater_than)
+  
+  
+  
+  plot_labels <- get_plot_labels(plot_kind="residual_qq", plot_type_info=residual_type)
+  
+  
+  resid_column <- setNames(case_df[,"Resid_Plot_Column"], case_df[,"obs_number"])
+  
+  # Get the QQPlot data
+  qq <- EnvStats::qqPlot(x=resid_column, plot.type=plot_type, qq.line.type=qq_linetype, 
+                         add.line=add_line, param.list=param_list, duplicate.points.method=duplicate_points_method, 
+                         estimate.params=estimate_params, distribution=distribution)
+  
+  
+  # Get intercept and slope of line through 1st and third quartiles.
+  line_params <- get_quartile_line_params(qq)
+  
+  # (theoretical, observed) pairs
+  plot_df = data.frame(x_values=qq$x, y_values=qq$y, obs_number=as.numeric(names(qq$y)))
+  
+  p <- ggplot(data=case_df) + 
+    geom_point(data=plot_df,mapping=aes(x=x_values, y=y_values), color=points_color, alpha=alpha) + 
+    geom_abline(slope=line_params$slope, intercept=line_params$intercept, color=line_color,linetype=linetype) + 
+    xlab(plot_labels$xlabel) + 
+    ylab(plot_labels$ylabel) + 
+    ggtitle(plot_labels$title)
+  
+  p <- flag_n_largest(qq_df=plot_df, case_df=case_df, p=p, flag_largest_resid=flag_largest_resid, flag_nlargest=flag_nlargest, 
+                      flag_color_resid=flag_color_resid, flag_marker_shape=flag_marker_shape, flag_txt_hjust=flag_txt_hjust,
+                      flag_txt_vjust=flag_txt_vjust,flag_txt_size=flag_txt_size)
+  
+  
+  return(p)
+  
+}
+
+############################################# END PLOTTING FUNCTIONS #################################################
+
+
+
 
 
 ############################################# DATA CLEANING #################################################
@@ -514,12 +630,12 @@ clean_data <- function(df, duplicate_handling=TRUE, build_cleaning_report=TRUE, 
   df <- market_categories_to_binary(df=df)
   names(df) <- gsub(" ", "_", names(df))   # Fix the names since there are new columns now
   
-  # ADD A LOG_MSRP COLUMN!
-  df[,"log_MSRP"] <- log(df[,"MSRP"])
-  
   
   ### Ensure datatypes match the assignments data dictionary
   df <- set_datatypes(df)
+  
+  # ADD A LOG_MSRP COLUMN!
+  df[,"log_MSRP"] <- log(df[,"MSRP"])
   
   if(build_cleaning_report){
     build_data_cleaning_report(df_orig=df_orig, 
@@ -539,409 +655,10 @@ clean_data <- function(df, duplicate_handling=TRUE, build_cleaning_report=TRUE, 
   return(df)
 }
 
-
-
-market_categories_to_binary <- function(df){
-  
-  split_categories <- str_split(string=df[,"Market_Category"],
-                                pattern=",")  
-  
-  
-  
-  # Get a character vector of the unique categories
-  unique_categories <- unique(unlist(split_categories))
-  
-  # Remove N/A from unique_categories vector
-  unique_categories <- unique_categories[unique_categories != "N/A"]
-  
-  # Remove High-Performance from unique_categories vector
-  unique_categories <- unique_categories[unique_categories != "High-Performance"] 
-  
-  # Add all the new columns, initialized to zero
-  for(category_index in 1:length(unique_categories)){
-    
-    category_name <- unique_categories[category_index]
-    
-    # Create a column of all zeros with this name
-    df[,category_name] <- rep(0, nrow(df))
-  }
-  
-  
-  for(row_index in 1:length(split_categories)){
-    
-    categories <- split_categories[[row_index]]
-    
-    if("Factory Tuner" %in% categories){
-      df[row_index, "Factory Tuner"] <- 1
-    }
-    
-    if(("High-Performance" %in% categories) | ("Performance" %in% categories)){
-      df[row_index, "Performance"] <- 1
-    }
-    
-    if("Luxury" %in% categories){
-      df[row_index, "Luxury"] <- 1
-    }
-    
-    if("Flex Fuel" %in% categories){
-      df[row_index, "Flex Fuel"] <- 1
-    }
-    
-    if("Hatchback" %in% categories){
-      df[row_index, "Hatchback"] <- 1
-    }
-    
-    if("Hybrid" %in% categories){
-      df[row_index, "Hybrid"] <- 1
-    }
-    
-    if("Diesel" %in% categories){
-      df[row_index, "Diesel"] <- 1
-    }
-    
-    if("Crossover" %in% categories){
-      df[row_index, "Crossover"] <- 1
-    }
-    
-    if("Exotic" %in% categories){
-      df[row_index, "Exotic"] <- 1
-    }
-  }
-  
-  return(df)
-}
-
-clean_vehicle_style_column <- function(df){
-  
-  
-  df[,"Vehicle_Style"] <- plyr::mapvalues(df[,"Vehicle_Style"],
-                                          from=c("2dr Hatchback", "4dr Hatchback", "Convertible", "Coupe", "Sedan", "Wagon", 
-                                                 "Crew Cab Pickup", "Extended Cab Pickup", "Regular Cab Pickup",
-                                                 "Cargo Minivan", "Cargo Van",
-                                                 "Passenger Minivan", "Passenger Van",
-                                                 "2dr SUV", "4dr SUV", "Convertible SUV"),
-                                          to=c("car", "car", "car", "car", "car", "car",
-                                               "truck", "truck", "truck",
-                                               "cargo_van", "cargo_van",
-                                               "passenger_van", "passenger_van",
-                                               "suv", "suv", "suv"))
-  
-  
-  
-  return(df)
-  
-}
-
-
-
-clean_fuel_type_column <- function(df){
-  
-  # STEP 1: Remove the natural gas car
-  df <- df[df[,"Engine_Fuel_Type"] != "natural gas",]
-  
-  
-  # STEP 2: Map to the new values
-  df[,"Engine_Fuel_Type"] <- plyr::mapvalues(df[,"Engine_Fuel_Type"],
-                                             from=c("premium unleaded (required)", 
-                                                    "regular unleaded", 
-                                                    "premium unleaded (recommended)", 
-                                                    "flex-fuel (unleaded/E85)", 
-                                                    "flex-fuel (premium unleaded recommended/E85)", 
-                                                    "flex-fuel (premium unleaded required/E85)",
-                                                    "flex-fuel (unleaded/natural gas)",
-                                                    "diesel"),
-                                             to=c("regular", 
-                                                  "regular", 
-                                                  "regular", 
-                                                  "flex", 
-                                                  "flex", 
-                                                  "flex",
-                                                  "flex",
-                                                  "diesel"))
-  
-  
-  
-  
-  
-  return(df)
-  
-}
-
-
-cleaning_filters <- function(df, remove_electric_cars, expensive_threshold){
-  
-  # If we decided not to do any additional filters, just leave this function
-  if(!expensive_threshold & !remove_electric_cars){
-    return(df)
-  }
-  
-  # If we decided to filter based on car price
-  if(expensive_threshold != FALSE){
-    
-    # Only keep the cars with price less than or equal to expensive_threshold
-    df <- df[df[,"MSRP"] <= expensive_threshold,]
-    
-  }
-  
-  # If we decided to remove electric cars
-  if(remove_electric_cars != FALSE){
-    
-    # Only keep the rows where the cars engine_fuel_type isn't electric
-    df <- df[df[,"Engine_Fuel_Type"] != "electric",]
-    
-  }
-  
-  
-  # UPDATE THE TWO DIRECT_DRIVE TRANSMISSIONS CHEVYS TO BE AUTOMATIC TRANSMISSIONS
-  chevy_direct_drive_filter <- (df[,"Transmission_Type"] == "DIRECT_DRIVE") & (df[,"Make"] == "Chevrolet") & (df[,"Model"] == "Malibu")
-  df[chevy_direct_drive_filter, "Transmission_Type"] <- "AUTOMATIC"
-  
-  # Remove UNKNOWN Transmission_Type values
-  df <- df[df[,"Transmission_Type"] != "UNKNOWN",]
-  
-  
-  # Cleaning the Engine_Fuel_Type column (binning values)
-  df <- clean_fuel_type_column(df=df)
-  
-  # Bin vehicle_style column 
-  df <- clean_vehicle_style_column(df)
-  
-  return(df)
-  
-}
-
-
-fill_in_missings <- function(df){
-  
-  df[,"obs_number"] <- seq(1, as.numeric(nrow(df)))
-  
-  # Read in the file that contains the filled-in missing information
-  fillin_file <- read.csv("./car_dataset_missing_fillins.csv", check.names=FALSE, na.strings=c(""))
-  
-  # Get the rows that are missing at least one item
-  missing_rows <- df[!complete.cases(df),]
-  
-  # Remove the rows missing at least one field
-  complete_df <- df[complete.cases(df),]
-  
-  # Grab the names of the dataframe columns
-  column_names <- names(df)
-  
-  # Go down the rows in the dataset containing the missings
-  for(row_num in 1:nrow(missing_rows)){
-    
-    # Grab the row
-    this_row <- missing_rows[row_num, ]
-    
-    # Grab the row_id which we can use to get the corresponding row from fillin_file
-    row_id <- missing_rows[row_num, "obs_number"]
-    
-    # Loop across the columns of this row to find the missings
-    for(column_index in 1:length(column_names)){
-      
-      # Grab the name of this column
-      column_name <- column_names[column_index]
-      
-      # Can be deleted, only for showing how the function is operating.
-      # print(paste("Processing Row: ", row_num, " Column: ", column_name))
-      
-      # Check if this column has missing info, if it does, grab the replacement from fillin_file
-      if(is.na(this_row[,column_name])){
-        
-        # Grab the replacement value
-        replacement_value <- fillin_file[fillin_file[,"obs_number"]==row_id, column_name]
-        
-        # These lines can be deleted, they are only here in case of troubleshooting, or to display how the function is operating.
-        # car_name <- fillin_file[fillin_file[,"obs_number"]==row_id, "Make"]
-        # model <- fillin_file[fillin_file[,"obs_number"]==row_id, "Model"]
-        # going_to <- missing_rows[row_num, "Make"]
-        # print(paste0("Row: ", row_num, " Column: ", column_name, " Replacing with: ", replacement_value, " <-- ", car_name, " ", model, "... (", going_to, ")"))
-        
-        
-        # If we had the right answer in our look-up file, fill it in! 
-        if(length(replacement_value) != 0){
-          
-          # Fill in the missing information
-          missing_rows[row_num, column_name] <- replacement_value          
-        }
-      }
-    }
-  }
-  
-  complete_df <- rbind(complete_df, missing_rows)
-  
-  # Lazily dropping any other rows NA's for now (should just be RX-7 and RX-8 left at this stage, so only these are dropped).
-  complete_df <- tidyr::drop_na(complete_df)
-  
-  # Remove the obs_number column for now. The data will get their final obs_numbers at the end of data cleaning
-  complete_df <- complete_df[,!(names(complete_df) %in% "obs_number")]
-  
-  return(complete_df)  
-}
-
-
-# SETTING DATA TYPES
-set_datatypes <- function(df){
-  
-  
-  ##### Columns with Factor Data Type #####
-  
-  factor_columns <- c("Make", "Model", "Engine_Fuel_Type", "Transmission_Type", "Market_Category",
-                      "Vehicle_Size", "Vehicle_Style", "Driven_Wheels", "Year", "Engine_Cylinders")
-  
-  
-  # For each column that needs to be a factor
-  for(column_index in 1:length(factor_columns)){
-    
-    # Grab the name of this column
-    column_name <- factor_columns[column_index]
-    
-    # If this column doesn't have a factor data type.
-    if(class(df[,column_name]) != "factor"){
-      
-      df[,column_name] <- factor(df[,column_name])
-    
-    }
-  }
-  
-  ##### Columns with Numeric Data Type #####
-  
-  numeric_columns <- c("MSRP", "Engine_HP", "Number_of_Doors",
-                       "highway_MPG", "city_mpg", "Popularity")
-  
-  # For each column that needs to be a factor
-  for(column_index in 1:length(numeric_columns)){
-    
-    # Grab the name of this column
-    column_name <- numeric_columns[column_index]
-    
-    # If this column doesn't have a factor data type.
-    if(class(df[,column_name]) != "numeric"){
-      
-      df[,column_name] <- as.numeric(df[,column_name])
-    }
-  }
-  
-  return(df)
-  
-}
-
-
-#### DUPLICATE VALUE HANDLING 
-
-clean_duplicates <- function(df){
-  
-  # Remove fully duplicate rows
-  df <- df[!duplicated(df),]
-  
-  clean_duplicates_df <- avg_multiple_priced_duplicates(df=df)
-  
-  return(clean_duplicates_df)
-}
-
-
-
-avg_multiple_priced_duplicates <- function(df){
-  
-  count <- 0
-  
-  # Create a copy of the dataframe to edit
-  new_df <- df
-  
-  for(index in 1:nrow(df)){
-    
-    # Grab a dataframe row, which we will use to search for rows that are
-    # exactly the same, other than having a different MSRP
-    df_row <- df[index,]
-    
-    # Get a set of rows that are the same as  this one (other than different MSRP)
-    filtered_data <- filter_by_example(df=df, row_example=df_row)
-    
-    # Check how many rows matched df_row
-    num_matching_rows <- nrow(filtered_data)
-    
-    # If more than one (itself) matched... there are duplicates
-    if(num_matching_rows > 1){
-      
-      # Get the rownames for the duplicates
-      row_names <- rownames(filtered_data)
-      
-      # Grab the first row name, we will keep this one (arbitrary) and drop the others
-      first_row_name <- row_names[1]
-      
-      # Calculate the average price for these duplicate rows
-      average_price <- mean(filtered_data[,"MSRP"])
-      
-      # Set the MSRP for the first instance of these duplicates to the average
-      new_df[rownames(new_df) == first_row_name, "MSRP"] <- average_price
-      
-      # Remove the rest of the duplicates
-      removal_row_names <- row_names[row_names != first_row_name]
-      new_df <- new_df[!(rownames(new_df) %in%removal_row_names),]
-      
-      # Just for keeping track of how many things we remove, in case of troubleshooting.
-      count <- count + 1
-      
-    }
-  }
-  
-  return(new_df)
-}
-
-
-filter_by_example <- function(df, row_example){
-  
-  filtered_df <- filter_all_columns(df=df,
-                                    make=row_example$Make, 
-                                    model=row_example$Model, 
-                                    yr=row_example$Year, 
-                                    Engine_fuel_type=row_example$Engine_Fuel_Type, 
-                                    Engine_HP=row_example$Engine_HP, 
-                                    Engine_Cylinders=row_example$Engine_Cylinders, 
-                                    Transmission_Type=row_example$Transmission_Type, 
-                                    Driven_wheels=row_example$Driven_Wheels, 
-                                    Number_of_Doors=row_example$Number_of_Doors,
-                                    Market_Category=row_example$Market_Category, 
-                                    vehicle_size=row_example$Vehicle_Size, 
-                                    vehicle_style=row_example$Vehicle_Style, 
-                                    highway_mpg=row_example$highway_MPG,
-                                    city_mpg=row_example$city_mpg,
-                                    popularity=row_example$Popularity)
-  
-  return(filtered_df)
-  
-}
-
-filter_all_columns <- function(df, make, model, yr, Engine_fuel_type, Engine_HP, Engine_Cylinders, 
-                               Transmission_Type, Driven_wheels, Number_of_Doors, Market_Category, vehicle_size, 
-                               vehicle_style, highway_mpg, city_mpg, popularity){
-  
-  
-  f1 <- df[,"Make"] == make
-  f2 <- df[,"Model"] == model
-  f3 <- df[,"Year"] == yr
-  f4 <- df[,"Engine_Fuel_Type"] == Engine_fuel_type
-  f5 <- df[,"Engine_HP"] == Engine_HP
-  f6 <- df[,"Engine_Cylinders"] == Engine_Cylinders
-  f7 <- df[,"Transmission_Type"] == Transmission_Type
-  f8 <- df[,"Driven_Wheels"] == Driven_wheels
-  f9 <- df[,"Number_of_Doors"] == Number_of_Doors
-  f10 <- df[,"Market_Category"] == Market_Category
-  f11 <- df[,"Vehicle_Size"] == vehicle_size
-  f12 <- df[,"Vehicle_Style"] == vehicle_style
-  f13 <- df[,"highway_MPG"] == highway_mpg
-  f14 <- df[,"city_mpg"] == city_mpg
-  f15 <- df[,"Popularity"] == popularity
-  
-  full_filter <- (f1 & f2 & f3 & f4 & f5 & f6 & f7 & f8 & f9 & f10 & f11 & f12 & f13 & f14 & f15)
-  
-  filtered_df <- df[full_filter,]
-  
-  return(filtered_df)
-  
-}
-
 ############################################# END DATA CLEANING #################################################
+
+
+
 
 
 ############################################# MODELING FUNCTIONS #################################################
@@ -994,53 +711,6 @@ create_train_val_test_sets <- function(df, train_pct=0.8, val_pct=0.1, random_se
   
 }
 
-get_predictor_combos_manual <- function(features){
-  
-  # CREATES A LIST OF LISTS, WHERE EACH SUBLIST CONTAINS A COMBINATION OF FEATURES
-  for(num_features in 1:length(features)){
-    
-    new_combos <- utils::combn(x=features,
-                               m=num_features,
-                               simplify=FALSE)
-    
-    if(num_features == 1){
-      combined_combos <- new_combos
-    }else{
-      #combined_combos <- c(combined_combos, new_combos)
-      combined_combos <- append(combined_combos, new_combos)
-    }
-  }
-  
-  return(combined_combos)
-}
-
-
-filter_predictor_squared_terms <- function(candidate_combinations){
-  
-  # Get the indicies of the candidate predictors that are squared terms
-  squared_pred_indicies <- grep("_Squared$", candidate_combinations)
-  
-  # Get the actual names of the squared candidate predictors
-  squared_preds <- test_predictors[squared_pred_indicies]
-  
-  for(squared_index in 1:length(squared_preds)){
-    
-    # Get the name of the squared predictor
-    squared_predictor <- squared_preds[squared_index]
-    
-    # Get the name of the standard (non-squared version) of the predictor
-    standard_predictor <- gsub(pattern="_Squared",
-                               x=squared_predictor,
-                               replacement="")
-    
-    # Remove all candidate predictor sets where the squared term is included, but the standard term is not
-    candidate_combinations <- Filter(function(x){!((squared_predictor %in% x) & !(standard_predictor %in% x))}, candidate_combinations)
-    
-  }
-  
-  return(candidate_combinations)
-  
-}
 
 
 run_best_subset_selection <- function(train_data, val_data, test_data, candidate_predictors, response_variable="MSRP",
@@ -1127,146 +797,6 @@ run_best_subset_selection <- function(train_data, val_data, test_data, candidate
 }
 
 
-generate_model_metrics <- function(model, val_data, test_data, train_data, predictor_set, response_variable){
-  
-  # Akaike Information Criterion
-  aic <- olsrr::ols_aic(model=model)
-  
-  # Amemiyas Prediction Criterion
-  apc <- olsrr::ols_apc(model=model)
-  
-  # Estimated Mean Squared Error of Prediction
-  fpe <- olsrr::ols_fpe(model=model)
-  
-  # Hockings Sp -- Average prediction mean squared error
-  hsp <- olsrr::ols_hsp(model)
-  
-  # Estimated error of prediction, assuming multivariate normality
-  msep <- olsrr::ols_msep(model)
-  
-  # Prediction R-squared --> used to determine how well the model predicts
-  # response s for new observations (larger is better)
-  pred_rsq <- olsrr::ols_pred_rsq(model)
-  
-  # Prediction sum of squares (PRESS)
-  press <- olsrr::ols_press(model)
-  
-  # Bayesian Information Criterion (SAS method uses residual sum of squares to compute SBC)
-  sbc_SAS <- olsrr::ols_sbc(model, method="SAS")
-  
-  # Bayesian Information Criterion (R method uses loglikelihood to compute SBC)
-  sbc_R <- olsrr::ols_sbc(model, method="R")
-  
-  # Root mean squared error
-  rmse <- summary(model)$sigma
-  
-  # R-squared
-  r_squared <- summary(model)$r.squared
-  
-  # Adjusted R-squared
-  adjusted_r_squared <- summary(model)$adj.r.squared
-  
-  # Overall F-statistic
-  f_statistic_value <- summary(model)$fstatistic[[1]]
-  
-  # Numerator Degrees of freedom for F-statistic
-  f_stat_num_df <- summary(model)$fstatistic[[2]]
-  
-  # Denominator Degrees of freedom for F-statistc
-  f_stat_denom_df <- summary(model)$fstatistic[[3]]
-  
-  #### VALIDATION SET ####
-  
-  # Use this model to make predictions on the validation set
-  val_set_predictions <- predict(model, val_data)
-  
-  # Get the metrics for the models predictions on the validation set
-  pred_metrics <- caret::postResample(pred=val_set_predictions, 
-                                      obs=val_data[,response_variable])
-  
-  
-  # RMSE for the predictions on the validation set
-  val_rmse <- pred_metrics[[1]]
-  
-  # R-squared for the preditions on the validation set
-  val_rsquared <- pred_metrics[[2]]
-  
-  # Mean absolute error for the predictions on the validation set
-  val_mae <- pred_metrics[[3]]
-  
-  #### TEST SET #### 
-  
-  # Predictions on test set
-  test_set_predictions <- predict(model, test_data)
-  
-  # Get the metrics for the models predictions on the test set
-  test_pred_metrics <- caret::postResample(pred=test_set_predictions, 
-                                      obs=test_data[,response_variable])
-  
-  
-  # RMSE for the predictions on the test set
-  test_rmse <- test_pred_metrics[[1]]
-  
-  # R-squared for the predictions on the test set
-  test_rsquared <- test_pred_metrics[[2]]
-  
-  # Mean absolute error for the predictions on the test set
-  test_mae <- test_pred_metrics[[3]]
-  
-  #### TRAIN SET ####
-  
-  # Predictions on test set
-  train_set_predictions <- predict(model, train_data)
-  
-  # Get the metrics for the models predictions on the test set
-  train_pred_metrics <- caret::postResample(pred=train_set_predictions, 
-                                           obs=train_data[,response_variable])
-  
-  
-  # RMSE for the predictions on the test set
-  train_rmse <- train_pred_metrics[[1]]
-  
-  # R-squared for the predictions on the test set
-  train_rsquared <- train_pred_metrics[[2]]
-  
-  # Mean absolute error for the predictions on the test set
-  train_mae <- train_pred_metrics[[3]]
-
-  
-  model_predictors <- stringr::str_c(predictor_set, collapse="  ")
-  
-  
-  model_eval_data <- data.frame(predictors=model_predictors,
-                                val_mae=val_mae,
-                                val_rmse=val_rmse,
-                                val_rsq=val_rsquared,
-                                aic=aic,
-                                apc=apc,
-                                fpe=fpe,
-                                hsp=hsp,
-                                msep=msep,
-                                rmse=rmse,
-                                press=press,
-                                sbc_SAS=sbc_SAS,
-                                sbc_R=sbc_R, 
-                                pred_rsq=pred_rsq,
-                                rsq=r_squared,
-                                adj_rsq=adjusted_r_squared,
-                                test_rmse=test_rmse,
-                                test_rsquared=test_rsquared,
-                                test_mae=test_mae,
-                                train_rmse=train_rmse,
-                                train_rsquared=train_rsquared,
-                                train_mae=train_mae,
-                                fstat=f_statistic_value,
-                                f_num_df=f_stat_num_df,
-                                f_denom_df=f_stat_denom_df)
-  
-  return(model_eval_data)
-  
-}
-
-
 add_squared_terms <- function(df, terms){
   
   for(term_index in 1:length(terms)){
@@ -1283,4 +813,250 @@ add_squared_terms <- function(df, terms){
   
   return(df)
 }
+
+############################################# END MODELING FUNCTIONS #################################################
+
+
+
+
+############################################# MODEL PERFORMANCE ANALYSIS FUNCTIONS #################################################
+
+consolidate_best_metric_names <- function(df){
+  
+  # if there is only a single row, nothing to consolidate, so head out of the function.
+  if(nrow(df) == 1){
+    return(df)
+  }
+  
+  # Get all the names of the metrics in the best_per_metric column (this is what
+  # we are going to consolidate, so for the models that were the best per multiple metrics
+  # we show all the metrics they ranked #1 in on a single line)
+  metric_names <- df[,"best_per_metric"]
+  
+  # Update the first row (arbitrary since all rows are the same other than the metric name), to
+  # contain all of the metric names
+  df[1, "best_per_metric"] <- stringr::str_c(metric_names, collapse="  ")
+  
+  # Discard all rows except the first
+  unique_row <- df[1,]
+  
+  return(unique_row)
+}
+
+
+filter_best_models_by_example <- function(df, row_example, filter_columns){
+  
+  
+  for(column_index in 1:length(filter_columns)){
+    
+    column_name <- filter_columns[column_index]
+    
+    this_filter <- (df[,column_name] == row_example[,column_name])
+    
+    if(column_index == 1){
+      full_filter <- this_filter
+    }else{
+      full_filter <- full_filter & this_filter
+    }
+  }
+  
+  filtered_df <- df[full_filter,]
+  
+  return(filtered_df)
+}
+
+consolidate_best_models_df <- function(best_df){
+  
+  # For "best models" that are the same across multiple metrics, grab one row of each
+  unique_df <- best_df[!duplicated(best_df[,!(names(best_df) %in% "best_per_metric")]),]
+  
+  # Grab duplicate versions of the "best models" (same best model, just per a different metric)
+  duplicated_df <- best_df[duplicated(best_df[,!(names(best_df) %in% "best_per_metric")]),]
+  
+  # If the same best model was never chosen for any of the metrics, nothing to do here. 
+  if(nrow(duplicated_df) == 0){
+    return(unique_df)
+  }
+  
+  # Create a vector of column names to filter on. It will contain all the column names, except best_per_metric
+  filter_column_names <- names(best_df)
+  filter_column_names <- filter_column_names[filter_column_names != "best_per_metric"]
+  
+  
+  for(row_index in 1:nrow(unique_df)){
+    
+    this_row <- unique_df[row_index,]
+    
+    matching_rows <- filter_best_models_by_example(df=best_df, 
+                                                   row_example=this_row, 
+                                                   filter_columns=filter_column_names)
+    
+    
+    consolidated_row <- consolidate_best_metric_names(df=matching_rows)
+    
+    # Update the final consolidated dataframe, or create it if this is the first row being consolidated
+    if(row_index == 1){
+      consolidated_df <- consolidated_row
+    }
+    else{
+      consolidated_df <- rbind(consolidated_df, consolidated_row)
+    }
+  }
+  
+  return(consolidated_df)
+}
+
+
+subset_dataframe_by_metric <- function(metric_df, metric_name){
+  
+  # Subset the dataframe to get the rows with the best models, per the metric specified in metric_name
+  #
+  # If the metric is a "the lower the better" metric
+  if(metric_name %in% c("val_mae", "val_rmse", "rmse","aic", "apc", "fpe", "hsp", "msep",
+                        "sbc_SAS", "sbc_R", "press", "train_rmse", "train_mae")){
+    best_df <- metric_df[metric_df[,metric_name] == min(metric_df[,metric_name]),]
+    
+    # Else if the metric is a "the larger the better" metric
+  }else if(metric_name %in% c("pred_rsq", "val_rsq", "rsq", "adj_rsq")){ 
+    
+    best_df <- metric_df[metric_df[,metric_name] == max(metric_df[,metric_name]),]
+    
+  }  
+  
+  return(best_df)
+  
+}
+
+
+#####
+get_best_models_df <- function(metric_df, consolidate=TRUE){
+  
+  all_metric_names <- c("val_mae", "val_rmse", "rmse","aic", "apc", "fpe", "hsp", "msep", "sbc_SAS", 
+                        "sbc_R", "press", "pred_rsq", "val_rsq", "rsq", "adj_rsq", "train_rmse", "train_mae")
+  
+  
+  for(metric_index in 1:length(all_metric_names)){
+    
+    metric_name <- all_metric_names[metric_index]
+    
+    best_models <- subset_dataframe_by_metric(metric_df=metric_df, metric_name=metric_name)
+    
+    best_models[,"best_per_metric"] <- metric_name
+    
+    if(metric_index == 1){
+      final_df <- best_models
+    }else{
+      final_df <- rbind(final_df, best_models)
+    }
+    
+  }
+  
+  # If we want to consolidate, so models that were deemed "best" on multiple criteria only get 
+  # a single row in the dataframe, with all the metrics they were best at listed within that row 
+  # under the "best_per_metric" column
+  if(consolidate){
+    final_df <- consolidate_best_models_df(best_df=final_df)  
+  }
+  
+  
+  return(final_df)
+}
+
+
+get_best_predictors_by_metric <- function(metric_df, metric_name){
+  
+  # Grab the rows that have the best models, per this metric
+  predictors_df <- subset_dataframe_by_metric(metric_df=metric_df, metric_name=metric_name)
+  
+  # Grab the first set of predictors (will be the only unless ties)
+  predictors <- predictors_df[,"predictors"][1]
+  
+  # Split the string at the double spaces to create a vector of predictors, we will use this
+  # to build the formula that recreates the model
+  predictor_vector <- stringr::str_split(string=predictors, pattern="  ")[[1]]
+  
+  return(predictor_vector)
+}
+
+
+get_best_model_by_metric <- function(metric_df, training_df, metric_name, response_variable="log_MSRP"){
+  
+  
+  # Get a vector containing the best predictors, per this metric
+  predictor_vector <- get_best_predictors_by_metric(metric_df=metric_df, 
+                                                    metric_name=metric_name)
+  
+  # Create the formula to fit a model using these predictors
+  lm_formula <- as.formula(paste0(response_variable, "~", stringr::str_c(predictor_vector, 
+                                                                         collapse=" + ")))
+  
+  # Fit the model
+  fit <- lm(formula=lm_formula, 
+            data=training_df)
+  
+  
+  return(fit)
+}
+
+############################################# END MODEL PERFORMANCE ANALYSIS FUNCTIONS #################################################
+
+
+
+
+
+########################################### GENERAL UTILITY ######################################################
+
+partial_f_test <- function(full_model, reduced_model){
+  
+  partial_f_test_result <- anova(reduced_model, full_model)
+  return(partial_f_test_result)
+  
+}
+
+# Function to filter a dataframe by either:
+# 1) col_names --> a list of column names to include
+# 2) remove_columns --> a list of column names to remove
+#
+filter_columns <- function(df, col_names=NULL, remove_columns=NULL){
+  
+  # If we are filtering by a list of column names to include
+  if(!is.null(col_names)){
+    df <- df[, names(df) %in% col_names]
+  } else if(!is.null(remove_columns)){
+    df <- df[, !(names(df) %in% remove_columns)]
+  }
+  return(df)
+}
+
+
+# Removes all columns from a dataframe that DO NOT contain missing values...
+# could modify to allow a threshold for number of missings
+get_columns_with_missings <- function(df){
+  
+  # get the names of the columns with at least one missing value
+  columns_with_missings <- colnames(df)[colSums(is.na(df))>0]  
+  
+  # Filter the dataframe to only contain the columns with at least one missing value
+  df <- df[,columns_with_missings]
+  
+  return(df)
+  
+}
+
+
+# Remove rows that do not contain any missings and are duplicates
+remove_duplicates_without_missings <- function(df){
+  
+  # If a row is a complete case (no missings in that row) AND its a duplicate.
+  complete_and_duplicate_filter <- duplicated(df) & complete.cases(df)
+  
+  df <- df[!complete_and_duplicate_filter,]
+  
+  return(df)
+}
+
+########################################### END GENERAL UTILITY #######################################################
+
+
+
 

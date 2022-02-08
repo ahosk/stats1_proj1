@@ -23,12 +23,6 @@ clean_df <- clean_data(df=df)
 ```
 
 
-```{r}
-head(clean_df)
-```
-
-
-
 
 ```{r}
 
@@ -655,6 +649,7 @@ plot_means_by_category(df=clean_df,
 # Splitting data into training, testing and validation sets
 
 ```{r}
+
 source("Applied_Stats_Project_Functions.R")
 
 df <- read.csv("./data1.csv", check.names=FALSE, na.strings=c("", "NA"))
@@ -662,12 +657,6 @@ names(df) <- gsub(" ", "_", names(df))
 
 clean_df <- clean_data(df=df)
 ```
-
-
-```{r}
-
-```
-
 
 
 ```{r}
@@ -686,9 +675,9 @@ test_df <- split_datasets$test
 
 
 # Save the datasets to .csv for easy repeatability and sharing
-write.csv(train_df, "./training_dataset_0204.csv", row.names=FALSE)
-write.csv(val_df, "./validation_dataset_0204.csv", row.names=FALSE)
-write.csv(test_df, "./testing_dataset_0204.csv", row.names=FALSE)
+write.csv(train_df, "./training_dataset_0206_2.csv", row.names=FALSE)
+write.csv(val_df, "./validation_dataset_0206_2.csv", row.names=FALSE)
+write.csv(test_df, "./testing_dataset_0206_2.csv", row.names=FALSE)
 
 ```
 
