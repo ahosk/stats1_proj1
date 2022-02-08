@@ -1,0 +1,552 @@
+---
+title: "Model_Evaluation"
+author: "Braden Anderson"
+date: "2/5/2022"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+
+```{r}
+
+source("Applied_Stats_Project_Functions.R")
+
+# results_df <- read.csv("./model_checkpoints/all_models_0207.csv")
+
+```
+
+```{r}
+# READ IN THE TRAIN, VALIDATION AND TEST SETS
+train_df <- read.csv("./training_dataset_0206.csv")
+val_df <- read.csv("./validation_dataset_0206.csv")
+test_df <- read.csv("./testing_dataset_0206.csv")
+
+# Ensure all datatypes are correct
+train_df <- set_datatypes(train_df)
+val_df <- set_datatypes(val_df)
+test_df <- set_datatypes(test_df)
+```
+
+
+```{r}
+summary(results_df)
+```
+
+
+```{r}
+
+# Uncomment this and the file that reads in results_df if the consolidated best models file needs to be created
+# best_unique_df <- get_best_models_df(metric_df=results_df)
+
+# Read in the consolidated best models file
+best_unique_df <- read.csv("./best_by_metric_consolidated.csv")
+
+best_unique_df
+```
+
+
+# Best Model According to Validation MAE
+```{r, fig.height=5, fig.width=15}
+
+# Fit the model with the best metric_name value
+fit_best_vmae <- get_best_model_by_metric(metric_df=best_unique_df, 
+                                          training_df=train_df,
+                                          metric_name="val_mae")
+
+
+# Plot of extenernally studentized residuals
+resid_plot_vmae <- plot_residuals(fit=fit_best_vmae, 
+                                  dataframe=train_df, 
+                                  id_extreme_values=TRUE)
+
+
+
+# Plot of externally studentized residuals vs leverage
+resid_lev_vmae <- plot_residual_vs_leverage(fit=fit_best_vmae, 
+                                            dataframe=train_df)
+
+
+gridExtra::grid.arrange(resid_plot_vmae, resid_lev_vmae, ncol=2)
+```
+
+# Normality Plots for Best Model According to Validation MAE
+```{r, fig.height=5, fig.width=15}
+
+# Normality Plots
+resid_hist_vmae <- plot_residual_histogram(fit=fit_best_vmae,
+                                           dataframe=train_df,
+                                           binwidth=0.5, 
+                                           overlay_normal=TRUE)
+
+# QQ Plot of residuals
+resid_qq_vmae <- plot_residual_qq(fit=fit_best_vmae, 
+                                  dataframe=train_df, 
+                                  flag_nlargest=6)
+
+# Normality plots for model with best val_mae
+gridExtra::grid.arrange(resid_hist_vmae, resid_qq_vmae, ncol=2)
+```
+
+# Case statistics plots for best model according to val_mae
+```{r, fig.height=8, fig.width=15}
+
+# Case statistics plots
+cook_vmae <- plot_case_stat_vs_obs(fit=fit_best_vmae, dataframe=train_df, case_stat="cook", cook_rot=0.03)
+leverage_vmae <- plot_case_stat_vs_obs(fit=fit_best_vmae, dataframe=train_df, case_stat="leverage", max_flagged=5)
+resid_vmae <- plot_case_stat_vs_obs(fit=fit_best_vmae, dataframe=train_df, case_stat="externally_studentized_residuals", max_flagged=6)
+del_std_vmae <- plot_case_stat_vs_obs(fit=fit_best_vmae, dataframe=train_df, case_stat="deleted_standard_deviation", std_rotm=0.01, max_flagged=6)
+dffits_vmae <- plot_case_stat_vs_obs(fit=fit_best_vmae, dataframe=train_df, dffit_rotm=0.25, case_stat="dffit", max_flagged=6)
+
+gridExtra::grid.arrange(cook_vmae, leverage_vmae, resid_vmae, dffits_vmae, ncol=2, nrow=2)
+```
+
+
+# Best Model per val_rmse and val_rsq
+```{r, fig.height=5, fig.width=15}
+
+# Fit the model with the best metric_name value
+fit_best_vrmse <- get_best_model_by_metric(metric_df=best_unique_df, 
+                                          training_df=train_df,
+                                          metric_name="val_rmse")
+
+
+# Plot of extenernally studentized residuals
+resid_plot_vrmse <- plot_residuals(fit=fit_best_vrmse, 
+                                  dataframe=train_df, 
+                                  id_extreme_values=TRUE)
+
+
+
+# Plot of externally studentized residuals vs leverage
+resid_lev_vrmse <- plot_residual_vs_leverage(fit=fit_best_vrmse, 
+                                            dataframe=train_df)
+
+
+
+
+gridExtra::grid.arrange(resid_plot_vrmse, resid_lev_vrmse, ncol=2)
+```
+
+
+# Normality plots for best model per val_rmse and val_rsq
+```{r, fig.height=5, fig.width=15}
+
+# Normality Plots
+resid_his_vrmse <- plot_residual_histogram(fit=fit_best_vrmse,
+                                           dataframe=train_df,
+                                           binwidth=0.5, 
+                                           overlay_normal=TRUE)
+
+# QQ Plot of residuals
+resid_qq_vrmse <- plot_residual_qq(fit=fit_best_vrmse, 
+                                  dataframe=train_df, 
+                                  flag_nlargest=4)
+
+# Normality plots for model with best val_mae
+gridExtra::grid.arrange(resid_his_vrmse, resid_qq_vrmse, ncol=2)
+
+```
+
+
+# Case statistic plots for best model per val_rmse and val_rsq
+```{r, fig.height=8, fig.width=15}
+
+# Case statistics plots
+cook_vrmse <- plot_case_stat_vs_obs(fit=fit_best_vrmse, dataframe=train_df, case_stat="cook", cook_rot=0.03)
+leverage_vrmse <- plot_case_stat_vs_obs(fit=fit_best_vrmse, dataframe=train_df, case_stat="leverage", max_flagged=5)
+resid_vrmse <- plot_case_stat_vs_obs(fit=fit_best_vrmse, dataframe=train_df, case_stat="externally_studentized_residuals", max_flagged=6)
+del_std_vrmse <- plot_case_stat_vs_obs(fit=fit_best_vrmse, dataframe=train_df, case_stat="deleted_standard_deviation", std_rotm=0.01, max_flagged=6)
+dffits_vrmse <- plot_case_stat_vs_obs(fit=fit_best_vrmse, dataframe=train_df, dffit_rotm=0.25, case_stat="dffit", max_flagged=6)
+
+
+gridExtra::grid.arrange(cook_vrmse, leverage_vrmse, resid_vrmse, dffits_vrmse, ncol=2, nrow=2)
+```
+
+
+
+# Best Model per rmse, msep, rsq, adj_rsq
+```{r, fig.height=5, fig.width=15}
+
+# PREDICTORS USED:
+# Year city_mpg Engine_Cylinders Engine_HP Transmission_Type Number_of_Doors 
+# Vehicle_Style Vehicle_Size Driven_Wheels Factory_Tuner Performance Luxury Flex_
+# Fuel Hatchback Hybrid Diesel Exotic Crossover Popularity
+
+# Fit the model with the best metric_name value
+fit_best_rmse <- get_best_model_by_metric(metric_df=best_unique_df, 
+                                          training_df=train_df,
+                                          metric_name="rmse")
+
+
+# Plot of extenernally studentized residuals
+resid_plot_rmse <- plot_residuals(fit=fit_best_rmse, 
+                                  dataframe=train_df, 
+                                  id_extreme_values=TRUE)
+
+
+
+# Plot of externally studentized residuals vs leverage
+resid_lev_rmse <- plot_residual_vs_leverage(fit=fit_best_rmse, 
+                                            dataframe=train_df)
+
+
+
+gridExtra::grid.arrange(resid_plot_rmse, resid_lev_rmse, ncol=2)
+```
+
+
+# Normality plots for best model per rmse, msep, rsq, adj_rsq
+```{r, fig.height=5, fig.width=15}
+
+# Normality Plots
+resid_his_rmse <- plot_residual_histogram(fit=fit_best_rmse,
+                                           dataframe=train_df,
+                                           binwidth=0.5, 
+                                           overlay_normal=TRUE)
+
+# QQ Plot of residuals
+resid_qq_rmse <- plot_residual_qq(fit=fit_best_rmse, 
+                                  dataframe=train_df, 
+                                  flag_nlargest=4)
+
+# Normality plots for model with best val_mae
+gridExtra::grid.arrange(resid_his_rmse, resid_qq_rmse, ncol=2)
+
+```
+
+
+# Case statistic plots for best model per rmse, msep, rsq, adj_rsq
+```{r, fig.height=8, fig.width=15}
+
+# Case statistics plots
+cook_rmse <- plot_case_stat_vs_obs(fit=fit_best_rmse, dataframe=train_df, case_stat="cook", cook_rot=0.03)
+leverage_rmse <- plot_case_stat_vs_obs(fit=fit_best_rmse, dataframe=train_df, case_stat="leverage", max_flagged=5)
+resid_rmse <- plot_case_stat_vs_obs(fit=fit_best_rmse, dataframe=train_df, case_stat="externally_studentized_residuals", max_flagged=6)
+del_std_rmse <- plot_case_stat_vs_obs(fit=fit_best_rmse, dataframe=train_df, case_stat="deleted_standard_deviation", std_rotm=0.01, max_flagged=6)
+dffits_rmse <- plot_case_stat_vs_obs(fit=fit_best_rmse, dataframe=train_df, dffit_rotm=0.25, case_stat="dffit", max_flagged=6)
+
+
+gridExtra::grid.arrange(cook_rmse, leverage_rmse, resid_rmse, dffits_rmse, ncol=2, nrow=2)
+```
+
+
+
+# Best Model per aic, apc, fpe, hsp, press, pred_rsq, train_mae
+```{r, fig.height=5, fig.width=15}
+
+# PREDICTORS USED:
+# Year city_mpg Engine_Cylinders Engine_HP Transmission_Type Number_of_Doors 
+# Vehicle_Style Vehicle_Size Driven_Wheels Factory_Tuner Performance Luxury 
+# Flex_Fuel Hatchback Hybrid Diesel Exotic Popularity
+
+# Fit the model with the best metric_name value
+fit_best_aic <- get_best_model_by_metric(metric_df=best_unique_df, 
+                                          training_df=train_df,
+                                          metric_name="aic")
+
+
+# Plot of extenernally studentized residuals
+resid_plot_aic <- plot_residuals(fit=fit_best_aic, 
+                                  dataframe=train_df, 
+                                  id_extreme_values=TRUE)
+
+
+
+# Plot of externally studentized residuals vs leverage
+resid_lev_aic <- plot_residual_vs_leverage(fit=fit_best_aic, 
+                                            dataframe=train_df)
+
+
+
+gridExtra::grid.arrange(resid_plot_aic, resid_lev_aic, ncol=2)
+```
+
+
+# Normality plots for best model per aic, apc, fpe, hsp, press, pred_rsq, train_mae
+```{r, fig.height=5, fig.width=15}
+
+# Normality Plots
+resid_his_aic <- plot_residual_histogram(fit=fit_best_aic,
+                                           dataframe=train_df,
+                                           binwidth=0.5, 
+                                           overlay_normal=TRUE)
+
+# QQ Plot of residuals
+resid_qq_aic <- plot_residual_qq(fit=fit_best_aic, 
+                                  dataframe=train_df, 
+                                  flag_nlargest=4)
+
+# Normality plots for model with best val_mae
+gridExtra::grid.arrange(resid_his_aic, resid_qq_aic, ncol=2)
+
+```
+
+
+# Case statistic plots for best model per aic, apc, fpe, hsp, press, pred_rsq, train_mae
+```{r, fig.height=8, fig.width=15}
+
+# Case statistics plots
+cook_aic <- plot_case_stat_vs_obs(fit=fit_best_aic, dataframe=train_df, case_stat="cook", cook_rot=0.03)
+leverage_aic <- plot_case_stat_vs_obs(fit=fit_best_aic, dataframe=train_df, case_stat="leverage", max_flagged=5)
+resid_aic <- plot_case_stat_vs_obs(fit=fit_best_aic, dataframe=train_df, case_stat="externally_studentized_residuals", max_flagged=6)
+del_std_aic <- plot_case_stat_vs_obs(fit=fit_best_aic, dataframe=train_df, case_stat="deleted_standard_deviation", std_rotm=0.01, max_flagged=6)
+dffits_aic <- plot_case_stat_vs_obs(fit=fit_best_aic, dataframe=train_df, dffit_rotm=0.25, case_stat="dffit", max_flagged=6)
+
+
+gridExtra::grid.arrange(cook_aic, leverage_aic, resid_aic, dffits_aic, ncol=2, nrow=2)
+```
+
+
+
+
+# Best Model per sbc_SAS, sbc_R
+```{r, fig.height=5, fig.width=15}
+
+# PREDICTORS USED:
+# Year Engine_Cylinders Engine_HP Transmission_Type Number_of_Doors 
+# Vehicle_Style Vehicle_Size Driven_Wheels Factory_Tuner Performance Luxury 
+# Flex_Fuel Hatchback Hybrid Diesel Exotic Popularity
+
+
+# Fit the model with the best metric_name value
+fit_best_sbc <- get_best_model_by_metric(metric_df=best_unique_df, 
+                                          training_df=train_df,
+                                          metric_name="sbc_SAS")
+
+
+# Plot of extenernally studentized residuals
+resid_plot_sbc <- plot_residuals(fit=fit_best_sbc, 
+                                  dataframe=train_df, 
+                                  id_extreme_values=TRUE)
+
+
+
+# Plot of externally studentized residuals vs leverage
+resid_lev_sbc <- plot_residual_vs_leverage(fit=fit_best_sbc, 
+                                            dataframe=train_df)
+
+
+
+gridExtra::grid.arrange(resid_plot_sbc, resid_lev_sbc, ncol=2)
+```
+
+
+# Normality plots for best model per sbc_SAS, sbc_R
+```{r, fig.height=5, fig.width=15}
+
+# Normality Plots
+resid_his_sbc <- plot_residual_histogram(fit=fit_best_sbc,
+                                           dataframe=train_df,
+                                           binwidth=0.5, 
+                                           overlay_normal=TRUE)
+
+# QQ Plot of residuals
+resid_qq_sbc <- plot_residual_qq(fit=fit_best_sbc, 
+                                  dataframe=train_df, 
+                                  flag_nlargest=4)
+
+# Normality plots for model with best val_mae
+gridExtra::grid.arrange(resid_his_sbc, resid_qq_sbc, ncol=2)
+
+```
+
+
+# Case statistic plots for best model per sbc_SAS, sbc_R
+```{r, fig.height=8, fig.width=15}
+
+# Case statistics plots
+cook_sbc <- plot_case_stat_vs_obs(fit=fit_best_sbc, dataframe=train_df, case_stat="cook", cook_rot=0.03)
+leverage_sbc <- plot_case_stat_vs_obs(fit=fit_best_sbc, dataframe=train_df, case_stat="leverage", max_flagged=5)
+resid_sbc <- plot_case_stat_vs_obs(fit=fit_best_sbc, dataframe=train_df, case_stat="externally_studentized_residuals", max_flagged=6)
+del_std_sbc <- plot_case_stat_vs_obs(fit=fit_best_sbc, dataframe=train_df, case_stat="deleted_standard_deviation", std_rotm=0.01, max_flagged=6)
+dffits_sbc <- plot_case_stat_vs_obs(fit=fit_best_sbc, dataframe=train_df, dffit_rotm=0.25, case_stat="dffit", max_flagged=6)
+
+
+gridExtra::grid.arrange(cook_sbc, leverage_sbc, resid_sbc, dffits_sbc, ncol=2, nrow=2)
+```
+
+
+# Best Model per rsq, train_rmse
+```{r, fig.height=5, fig.width=15}
+
+# PREDICTORS USED:
+# Year highway_MPG city_mpg Engine_Cylinders Engine_HP Transmission_Type Number_of_Doors Vehicle_Style 
+# Vehicle_Size Driven_Wheels Factory_Tuner Performance Luxury Flex_Fuel Hatchback Hybrid Diesel Exotic Crossover Popularity
+
+
+# Fit the model with the best metric_name value
+fit_best_trmse <- get_best_model_by_metric(metric_df=best_unique_df, 
+                                          training_df=train_df,
+                                          metric_name="train_rmse")
+
+
+# Plot of extenernally studentized residuals
+resid_plot_trmse <- plot_residuals(fit=fit_best_trmse, 
+                                  dataframe=train_df, 
+                                  id_extreme_values=TRUE)
+
+
+
+# Plot of externally studentized residuals vs leverage
+resid_lev_trmse <- plot_residual_vs_leverage(fit=fit_best_trmse, 
+                                            dataframe=train_df)
+
+
+
+gridExtra::grid.arrange(resid_plot_trmse, resid_lev_trmse, ncol=2)
+```
+
+
+# Normality plots for best model per rsq, train_rmse
+```{r, fig.height=5, fig.width=15}
+
+# Normality Plots
+resid_his_trmse <- plot_residual_histogram(fit=fit_best_trmse,
+                                           dataframe=train_df,
+                                           binwidth=0.5, 
+                                           overlay_normal=TRUE)
+
+# QQ Plot of residuals
+resid_qq_trmse <- plot_residual_qq(fit=fit_best_trmse, 
+                                  dataframe=train_df, 
+                                  flag_nlargest=4)
+
+# Normality plots for model with best val_mae
+gridExtra::grid.arrange(resid_his_trmse, resid_qq_trmse, ncol=2)
+
+```
+
+
+# Case statistic plots for best model per rsq, train_rmse
+```{r, fig.height=8, fig.width=15}
+
+# Case statistics plots
+cook_trmse <- plot_case_stat_vs_obs(fit=fit_best_trmse, dataframe=train_df, case_stat="cook", cook_rot=0.03)
+leverage_trmse <- plot_case_stat_vs_obs(fit=fit_best_trmse, dataframe=train_df, case_stat="leverage", max_flagged=5)
+resid_trmse <- plot_case_stat_vs_obs(fit=fit_best_trmse, dataframe=train_df, case_stat="externally_studentized_residuals", max_flagged=6)
+del_std_trmse <- plot_case_stat_vs_obs(fit=fit_best_trmse, dataframe=train_df, case_stat="deleted_standard_deviation", std_rotm=0.01, max_flagged=6)
+dffits_trmse <- plot_case_stat_vs_obs(fit=fit_best_trmse, dataframe=train_df, dffit_rotm=0.25, case_stat="dffit", max_flagged=6)
+
+
+gridExtra::grid.arrange(cook_trmse, leverage_trmse, resid_trmse, dffits_trmse, ncol=2, nrow=2)
+```
+
+
+# Investigate the Influential Points found in the above plots
+```{r}
+
+# High residual and low predicted price
+train_df[(train_df[,"obs_number"] %in% c(1932, 1933, 1934, 5337, 5338, 5339, 5340, 5341, 5342)),]
+
+```
+```{r}
+
+# High residual and high predicted price (not high leverage)
+train_df[(train_df[,"obs_number"] %in% c(1369, 3464, 3934)),]
+
+```
+
+
+```{r}
+
+# High residual and high predicted price (these also have high leverage)
+train_df[(train_df[,"obs_number"] %in% c(1307, 5246, 5885)),]
+
+```
+
+
+
+```{r}
+
+cat("first_line_test", file="./test_file.md")
+cat("\n\n(./qqplot_test.png)", file="./test_file.md", append=TRUE)
+
+ggsave(filename="qqplot_test.png",
+       plot=p)
+
+```
+
+```{r}
+
+#calculate_original_scale_metrics <- function(train_data, val_data, test_data, predictors_dataframe, filename){
+#}
+
+# Model Selection
+# 1. Train models using training set
+# 2. Estimate those models performance on new data / compare them, by predicting on the validation set
+# 3. Pick a model
+# 4. Test on test set final unbiased estimate of generalization error
+
+
+# ------------------------------------------------------------
+
+# Assess the Assumptions  (Normality, equal variance, independence, Linearity, Multicollinearity)
+# 1. Residuals vs fitted values
+# 2. Residual histograms
+# 3. Residuals QQ Plots
+# 4. Residuals vs Leverages 
+
+# plot(fit)
+
+# plot(x=predict(fit), y=train_df$log_MSRP,
+#     xlab='Predicted Values',
+#     ylab='Actual Values',
+#     main='Predicted vs. Actual Values')
+# summary(fit)
+```
+
+
+```{r}
+
+
+
+```
+
+```{r}
+
+
+```
+
+
+```{r}
+
+
+```
+
+
+```{r}
+
+
+```
+
+
+```{r}
+
+
+```
+
+```{r}
+
+
+```
+
+
+```{r}
+
+
+```
+
+
+```{r}
+
+
+```
+
+
+```{r}
+
+
+```
