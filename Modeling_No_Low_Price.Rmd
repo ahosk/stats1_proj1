@@ -1,0 +1,114 @@
+---
+title: "modeling"
+author: "Braden Anderson"
+date: "2/3/2022"
+output: html_document
+---
+
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+
+
+source("Applied_Stats_Project_Functions.R")
+
+# READ IN THE TRAIN, VALIDATION AND TEST SETS
+train_df <- read.csv("./training_dataset_0208.csv")
+val_df <- read.csv("./validation_dataset_0208.csv")
+test_df <- read.csv("./testing_dataset_0208.csv")
+
+# Ensure all datatypes are correct
+train_df <- set_datatypes(train_df)
+val_df <- set_datatypes(val_df)
+test_df <- set_datatypes(test_df)
+
+
+nrow(train_df)
+nrow(val_df)
+nrow(test_df)
+```
+
+
+
+
+```{r}
+
+
+# Any squared terms you wish to explore (see more detail notes by add_squared_term function below)
+# desired_squared_terms <- c("Engine_HP", "city_mpg", "highway_MPG")
+
+
+# ADD THE NAMES OF ANY SQUARED TERMS YOU WANT TO MAKE HERE
+#train_df <- add_squared_terms(df=train_df,
+#                              terms=desired_squared_terms)  # <-- In this example we create squared terms for these three variables
+                                                                                # Since you made squared terms for them, ensure the _Squared versions go in the predictor list
+                                                                                # e.g. need to add --> Engine_HP_Squared, city_mpg_Squared, highway_MPG_Squared
+
+
+# Create squared terms for the validation data set. MAKE SURE YOU CREATE THE SAME SQUARED TERMS YOU DID FOR THE TRAINING SET! 
+#val_df <- add_squared_terms(df=val_df,
+#                            terms=desired_squared_terms)
+
+
+# Create squared terms for the test data set. MAKE SURE YOU CREATE THE SAME SQUARED TERMS YOU DID FOR THE TRAINING SET! 
+#test_df <- add_squared_terms(df=test_df,
+#                             terms=desired_squared_terms)
+
+
+# CREATE THE FULL LIST OF TERMS YOU WANT TO INCLUDE IN THE SEARCH
+# Remember, squared versions (created above), have the same name, just with the suffix "_Squared" tacked on the end.
+# 
+# To create an interaction term, put a colon between the variable names like --> Engine_HP:Engine_Cylinders 
+# Another example... "Engine_HP:Year  <-- This is an interaction term for engine horsepower with year
+#
+#
+test_predictors <- c("Age", 
+                     "highway_MPG", 
+                     "city_mpg", 
+                     "Engine_Cylinders", 
+                     "Engine_HP", 
+                     "Transmission_Type",
+                     "Number_of_Doors", 
+                     "Vehicle_Style", 
+                     "Vehicle_Size", 
+                     "Driven_Wheels", 
+                     "Factory_Tuner",                # Below are the 9 binary columns we created from Market_Category       
+                     "Performance", 
+                     "Luxury", 
+                     "Flex_Fuel",
+                     "Hatchback",
+                     "Hybrid", 
+                     "Diesel", 
+                     "Exotic", 
+                     "Crossover",
+                     "Popularity"
+                     )
+
+
+# Run the search
+best_subsets <- run_best_subset_selection(train_data=train_df, 
+                                          val_data=val_df, 
+                                          test_data=test_df,
+                                          response_variable="log_MSRP",             # <-- Can be "MSRP" or "log_MSRP", whichever you want to explore
+                                          candidate_predictors = test_predictors,
+                                          save_every=50000,
+                                          base_save_name="full_search_0208",
+                                          filter_combinations=FALSE,
+                                          reverse_order=TRUE,
+                                          search_half_only=FALSE
+                                          )
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
