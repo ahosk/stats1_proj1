@@ -257,6 +257,10 @@ plot_factor_level_counts <- function(df, factor_variable, xtick_rotation=0, outl
   
 }
 
+
+
+
+
 # FUNCTION TO PLOT RESIDUALS VS FITTED VALUES
 # valid residual_types: "externally_studentized", "internally_studentized", "regular", "deleted" (PRESS)
 #                 
@@ -264,7 +268,8 @@ plot_residuals <- function(fit, dataframe=NULL, residual_type="externally_studen
                            zero_hline_linetype="solid", zero_hline_color="red", remove_less_than=NULL,
                            remove_greater_than=NULL, flag_extreme_values=TRUE, extreme_thresh_std=3.5,
                            extreme_thresh_regular=3, id_extreme_values=FALSE, extreme_value_color="red",
-                           obs_txt_size=3, obs_txt_hjust=0, obs_txt_vjust=-0.4){
+                           obs_txt_size=3, obs_txt_hjust=0, obs_txt_vjust=-0.4, identify_obs=FALSE, 
+                           id_txt_color="#ffa600", id_with_text=TRUE, id_with_marker=TRUE){
   
   
   
@@ -282,6 +287,7 @@ plot_residuals <- function(fit, dataframe=NULL, residual_type="externally_studen
     xlab(plot_labels$xlabel) + 
     ylab(plot_labels$ylabel) + 
     ggtitle(plot_labels$title)
+  
   
   if(plot_zero_hline){
     p <- p + geom_hline(yintercept=0, linetype=zero_hline_linetype, color=zero_hline_color)
@@ -309,6 +315,19 @@ plot_residuals <- function(fit, dataframe=NULL, residual_type="externally_studen
     
   }
   
+  
+  p <- add_obs_numbers(p=p, 
+                       df=case_df, 
+                       x_var="fitted_values", 
+                       y_var="Resid_Plot_Column", 
+                       obs_txt_vjust=obs_txt_vjust, 
+                       obs_txt_hjust=obs_txt_hjust, 
+                       obs_txt_color=id_txt_color,
+                       obs_txt_size=obs_txt_size,
+                       identify_obs=identify_obs, 
+                       show_text=id_with_text,
+                       show_points=id_with_marker,
+                       called_from="plot_residuals")
   
   return(p)
 }
@@ -485,7 +504,8 @@ plot_residual_vs_leverage <- function(fit, dataframe=NULL, residual_type="extern
                                       leverage_line_multiplier=3, resid_line_threshold=2, reference_linetype="dashed",
                                       reference_linecolor="red", annotate_thresholds=TRUE, flag_extreme_obs=TRUE,
                                       max_points_flagged=4, show_all_obs_numbers=FALSE, extreme_value_color="red", 
-                                      show_extreme_obs_numbers=TRUE, obs_txt_size=3, obs_txt_vjust=-0.4, obs_txt_hjust=0) {
+                                      show_extreme_obs_numbers=TRUE, obs_txt_size=3, obs_txt_vjust=-0.4, obs_txt_hjust=0,
+                                      id_txt_color="#ffa600", id_with_text=TRUE, id_with_marker=TRUE, identify_obs=FALSE) {
   
   case_df <- get_residual_plot_data(fit=fit, 
                                     dataframe=dataframe,
@@ -511,6 +531,23 @@ plot_residual_vs_leverage <- function(fit, dataframe=NULL, residual_type="extern
                                  resid_line_threshold=resid_line_threshold, case_df=case_df, obs_txt_size=obs_txt_size,
                                  obs_txt_vjust=obs_txt_vjust, obs_txt_hjust=obs_txt_hjust, flag_extreme_obs=flag_extreme_obs, 
                                  leverage_line_multiplier=leverage_line_multiplier)
+  
+  
+
+  
+  p <- add_obs_numbers(p=p, 
+                       df=case_df, 
+                       x_var="fitted_values", 
+                       y_var="Resid_Plot_Column", 
+                       obs_txt_vjust=obs_txt_vjust, 
+                       obs_txt_hjust=obs_txt_hjust, 
+                       obs_txt_color=id_txt_color,
+                       obs_txt_size=obs_txt_size,
+                       identify_obs=identify_obs, 
+                       show_text=id_with_text,
+                       show_points=id_with_marker,
+                       called_from="plot_residuals")
+  
   
   return(p)
   
@@ -579,7 +616,8 @@ plot_residual_qq <- function(fit, dataframe=NULL, residual_type="externally_stud
 
 
 clean_data <- function(df, duplicate_handling=TRUE, build_cleaning_report=TRUE, remove_electric_cars=TRUE,
-                       expensive_threshold=500000, report_filepath="Data_Cleaning_Report.txt"){
+                       expensive_threshold=500000, low_price_threshold=10000, remove_low_price=TRUE,
+                       report_filepath="Data_Cleaning_Report.txt"){
   
   # replace spaces in column names with underscores
   names(df) <- gsub(" ", "_", names(df))
@@ -629,6 +667,14 @@ clean_data <- function(df, duplicate_handling=TRUE, build_cleaning_report=TRUE, 
   # CATEGORIES GET THERE ONLY COLUMN, RATHER THAN EACH UNIQUE COMBINATION THAT SHOWS UP
   df <- market_categories_to_binary(df=df)
   names(df) <- gsub(" ", "_", names(df))   # Fix the names since there are new columns now
+  
+  
+  df[,"Age"] <- 2018 - df[,"Year"]
+  
+  # If we want to remove cars with price lower than some threshold, do that here.
+  if(remove_low_price){
+    df <- df[df[,"MSRP"] >=  low_price_threshold,]
+  }
   
   
   ### Ensure datatypes match the assignments data dictionary
@@ -715,7 +761,7 @@ create_train_val_test_sets <- function(df, train_pct=0.8, val_pct=0.1, random_se
 
 run_best_subset_selection <- function(train_data, val_data, test_data, candidate_predictors, response_variable="MSRP",
                                       save_every=1000, save_path="./model_checkpoints/", base_save_name="project1_models",
-                                      order_column="val_rmse", filter_combinations=TRUE, reverse_order=FALSE){
+                                      order_column="val_rmse", filter_combinations=TRUE, reverse_order=FALSE, search_half_only=TRUE){
   
   # Generate all possible predictor combinations
   predictor_combinations <- get_predictor_combos_manual(features=candidate_predictors)
@@ -731,8 +777,15 @@ run_best_subset_selection <- function(train_data, val_data, test_data, candidate
     predictor_combinations <- rev(predictor_combinations)
   }
   
+  
+  if(search_half_only){
+    divisor <- 2
+  }else{
+    divisor <- 1
+  }
+  
     
-  for(combo_index in 1:(length(predictor_combinations) %/% 2)){
+  for(combo_index in 1:(length(predictor_combinations) %/% divisor)){
     
     # Get the set of predictors for this model
     predictor_set <- predictor_combinations[[combo_index]]

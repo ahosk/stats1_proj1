@@ -244,11 +244,13 @@ get_plotting_data <- function(df, x_var, y_var, shade_var, shape_var, size_var, 
 
 add_obs_numbers <- function(p, df, obs_txt_size, obs_txt_color,
                             obs_txt_vjust, obs_txt_hjust, identify_obs, 
-                            x_var=NULL, y_var=NULL, called_from=NULL) {
+                            x_var=NULL, y_var=NULL, called_from=NULL, show_text=TRUE, show_points=FALSE) {
   
+  # If we passed in FALSE, nothing to do here, head out of the function.
   if(typeof(identify_obs) == "logical" && !identify_obs){
     return(p)
   }
+  
   
   # If we didn't call this function from the plot_partial_residuals function 
   if(!is.null(called_from)){
@@ -268,8 +270,15 @@ add_obs_numbers <- function(p, df, obs_txt_size, obs_txt_color,
     
   }
   
-  p <- p + geom_text(data=df, mapping=aes(x=analysis_variable, y=partial_resid, label=obs_number), 
-                     hjust=obs_txt_hjust, vjust=obs_txt_vjust, color=obs_txt_color, size=obs_txt_size)
+  if(show_text){
+    p <- p + geom_text(data=df, mapping=aes(x=analysis_variable, y=partial_resid, label=obs_number), 
+                       hjust=obs_txt_hjust, vjust=obs_txt_vjust, color=obs_txt_color, size=obs_txt_size)  
+  }
+   
+  if(show_points){
+    p <- p + geom_point(data=df, mapping=aes(x=analysis_variable, y=partial_resid), color=obs_txt_color)
+  }
+    
   
   return(p)
 }
@@ -1744,7 +1753,7 @@ set_datatypes <- function(df){
   ##### Columns with Numeric Data Type #####
   
   numeric_columns <- c("MSRP", "Engine_HP", "Number_of_Doors",
-                       "highway_MPG", "city_mpg", "Popularity")
+                       "highway_MPG", "city_mpg", "Popularity", "Age")
   
   # For each column that needs to be a factor
   for(column_index in 1:length(numeric_columns)){
@@ -2040,6 +2049,68 @@ generate_model_metrics <- function(model, val_data, test_data, train_data, predi
   train_mae <- train_pred_metrics[[3]]
   
   
+  # If the target is log transformed, tested by its name starting with the word log
+  if(gdata::startsWith(str=response_variable, pattern="log")){
+    
+    # Calculate predictions metrics using back-transformed predictions and regular (not logged) response
+    test_pred_metrics_orig <- caret::postResample(pred=exp(test_set_predictions), 
+                                                  obs=exp(test_data[,response_variable]))
+    
+    
+    # BACK TRANSFORMED TEST SET METRICS
+    # RMSE for the predictions on the test set
+    test_rmse_orig <- test_pred_metrics_orig[[1]]
+    
+    # R-squared for the predictions on the test set
+    test_rsquared_orig <- test_pred_metrics_orig[[2]]
+    
+    # Mean absolute error for the predictions on the test set
+    test_mae_orig <- test_pred_metrics_orig[[3]]
+    
+
+    # BACK TRANSFORMED VAL SET METRICS
+    # Get the metrics for the models predictions on the validation set
+    val_pred_metrics_orig <- caret::postResample(pred=exp(val_set_predictions), 
+                                                 obs=exp(val_data[,response_variable]))
+    
+    
+    # RMSE for the predictions on the validation set
+    val_rmse_orig <- val_pred_metrics_orig[[1]]
+    
+    # R-squared for the predictions on the validation set
+    val_rsquared_orig <- val_pred_metrics_orig[[2]]
+    
+    # Mean absolute error for the predictions on the validation set
+    val_mae_orig <- val_pred_metrics_orig[[3]]
+    
+    
+    # Get the metrics for the models predictions on the test set (comparing back transformed preds to untransformed target)
+    train_pred_metrics_orig <- caret::postResample(pred=exp(train_set_predictions), 
+                                                   obs=exp(train_data[,response_variable]))
+    
+    
+    # BACK TRANSFORMED TRAIN SET METRICS
+    # RMSE for the predictions on the test set
+    train_rmse_orig <- train_pred_metrics_orig[[1]]
+    
+    # R-squared for the predictions on the test set
+    train_rsquared_orig <- train_pred_metrics_orig[[2]]
+    
+    # Mean absolute error for the predictions on the test set
+    train_mae_orig <- train_pred_metrics_orig[[3]]
+    
+  }else{
+    test_rmse_orig <- "Target_Not_Log_Transformed"
+    test_rsquared_orig <- "Target_Not_Log_Transformed"
+    test_mae_orig <- "Target_Not_Log_Transformed"
+    val_rmse_orig <- "Target_Not_Log_Transformed"
+    val_rsquared_orig <- "Target_Not_Log_Transformed"
+    val_mae_orig <- "Target_Not_Log_Transformed"
+    train_rmse_orig <- "Target_Not_Log_Transformed"
+    train_rsquared_orig <- "Target_Not_Log_Transformed"
+    train_mae_orig <- "Target_Not_Log_Transformed"
+  }
+  
   model_predictors <- stringr::str_c(predictor_set, collapse="  ")
   
   
@@ -2047,6 +2118,15 @@ generate_model_metrics <- function(model, val_data, test_data, train_data, predi
                                 val_mae=val_mae,
                                 val_rmse=val_rmse,
                                 val_rsq=val_rsquared,
+                                train_rmse=train_rmse,
+                                train_rsquared=train_rsquared,
+                                train_mae=train_mae,
+                                val_rmse_orig=val_rmse_orig,
+                                val_rsq_orig=val_rsquared_orig,
+                                val_mae_orig=val_mae_orig,
+                                train_rmse_orig=train_rmse_orig,
+                                train_rsq_orig=train_rsquared_orig,
+                                train_mae_orig=train_mae_orig,
                                 aic=aic,
                                 apc=apc,
                                 fpe=fpe,
@@ -2062,9 +2142,6 @@ generate_model_metrics <- function(model, val_data, test_data, train_data, predi
                                 test_rmse=test_rmse,
                                 test_rsquared=test_rsquared,
                                 test_mae=test_mae,
-                                train_rmse=train_rmse,
-                                train_rsquared=train_rsquared,
-                                train_mae=train_mae,
                                 fstat=f_statistic_value,
                                 f_num_df=f_stat_num_df,
                                 f_denom_df=f_stat_denom_df)
