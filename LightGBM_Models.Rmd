@@ -1,0 +1,127 @@
+---
+title: "LightGBM"
+author: "Braden Anderson"
+date: "2/9/2022"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+
+
+
+```{r}
+
+library(lightgbm)
+library(Metrics)
+
+```
+
+
+```{r}
+
+train_full <- read.csv("./combined_train_val_set_0208.csv")
+test_df <- read.csv("./testing_dataset_0208.csv")
+
+```
+
+
+
+```{r}
+build_lgbm_dataset <- function(df, feature_columns, target_column="MSRP", test_data=FALSE){
+  
+  # Subset so only the columns we want to use are in the dataset
+  all_columns <- c(feature_columns, target_column)
+  df <- df[,(names(df) %in% all_columns)]
+  
+  # Grab the feature columns
+  features <- as.matrix(df[,(names(df) != target_column)])
+  
+  # Grab the associated targets
+  targets <- df[,target_column]
+
+  if(test_data){
+    return(list(X_test=features, y_test=targets))
+  }
+  
+    
+  lgbm_dataset <- lightgbm::lgb.Dataset(data=features,
+                                        label=targets,
+                                        colnames=feature_columns)
+  
+  return(lgbm_dataset)
+}
+```
+
+
+
+```{r}
+
+# Vector of column names, all features plus the target column that we will feed to lgbm
+all_columns <- c("Age", "highway_MPG", "city_mpg", "Engine_Cylinders", "Engine_HP", "Transmission_Type", 
+                  "Number_of_Doors", "Vehicle_Style", "Vehicle_Size", "Driven_Wheels", "Factory_Tuner",                
+                  "Performance", "Luxury", "Flex_Fuel", "Hatchback", "Hybrid", "Diesel", "Exotic", "Crossover",
+                  "Popularity", "MSRP")
+
+
+# For setting up training and test set
+target_column_name <- "MSRP"
+feature_column_names <- all_columns[all_columns != target_column_name]
+
+# Train set for lgbm cross validation
+train_dataset <- build_lgbm_dataset(df=train_full,
+                                    feature_columns=feature_column_names,
+                                    target_column=target_column_name)
+
+
+# Set up the final test set
+test_data <- build_lgbm_dataset(df=test_df, 
+                                feature_columns=feature_column_names, 
+                                target_column=target_column_name, 
+                                test_data=TRUE)
+
+```
+
+```{r}
+
+# Set up the training parameters
+train_params = list(objective="regression",
+                    metric="rmse",
+                    force_row_wise=TRUE)
+
+# Perform 5-fold cross validation
+cv <- lightgbm::lgb.cv(params=train_params,
+                       data=train_dataset,
+                       nrounds=100L,
+                       nfold=5L)
+
+# Retrain on the entire train+val set (no CV here)... this would 
+# make more sense if we had explored different hyper parameter options during cv, because then we
+# would retrain with the best options here
+booster <- lightgbm::lightgbm(data=train_dataset,
+                              params=train_params,
+                              nrounds=100L)
+```
+
+
+```{r}
+
+# Make MSRP predictions on the test set
+predictions <- predict(object=booster, data=test_data$X_test)
+
+# Calculate the MSRP on the test set
+pred_rmse <- Metrics::rmse(actual=test_data$y_test,
+                           predicted=predictions)
+
+
+pred_rmse
+```
+
+
+
+
+
+
+
