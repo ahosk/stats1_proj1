@@ -1,0 +1,68 @@
+---
+title: "Model_Evaluation"
+author: "Braden Anderson"
+date: "2/5/2022"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+
+```{r}
+
+source("Applied_Stats_Project_Functions.R")
+
+```
+
+```{r}
+
+# STEP 1: Read in the raw search result files. Concatenate them together row-wise if multiple files were used to complete the search
+# first <- read.csv("./model_checkpoints/full_search_fwd_0208_iteration_700000.csv")
+# second <- read.csv("./model_checkpoints/full_search_0208_iteration_350000.csv")
+# combined <- rbind(first, second)
+
+# STEP 2: Run this function to add a predictor_count column to the search results file. Write this file to .csv for future use/storage.
+#combined <- add_search_result_pred_count_column(df=combined)
+#write.csv(combined, "./model_checkpoints/FULL_SEARCH_FINAL_0210.csv", row.names=FALSE)
+
+
+# STEP 3: Using the search results file that now as a predictor_count column added, call the create_best_models_size_analysis_df
+#         function to create an analysis dataframe. The analysis dataframe contains the top scoring models per every metric considered,
+#         and per every possible restriction on the number of predictors allowed. Save the analysis dataframe to .csv for future use.
+#analysis_df <- create_best_model_size_analysis_df(metric_df=combined)
+#write.csv(analysis_df, "./SEARCH_ANALYSIS_DATA_0210.csv", row.names=FALSE)
+
+```
+
+
+```{r}
+
+analysis_df <- read.csv("./SEARCH_ANALYSIS_DATA_0210.csv")
+
+create_model_analysis_report(analysis_df=analysis_df,
+                             output_file_path="./SEARCH_ANALYSIS_shade_metric.md")
+
+```
+
+
+```{r}
+
+# Same report as above, just shades the charts differently (based on predictor_count rather than metric value). Try it out to see which
+# one you find more helpful.
+create_model_analysis_report(analysis_df=analysis_df,
+                             p_fill_bars_by = "predictor_count",
+                             output_file_path="./SEARCH_ANALYSIS_shade_preds.md", 
+                             p_annot_txt_color = "black")
+
+```
+
+
+```{r}
+
+```
+
+
+
+
