@@ -11,6 +11,7 @@ library(olsrr)
 library(caret)
 library(HH)
 library(EnvStats)
+library(htmlTable)
 
 ########################################### PLOTTING HELPERS #######################################################
 
@@ -148,6 +149,13 @@ get_plot_labels <- function(plot_kind, plot_type_info, extra_info=NULL){
   }
   else if(plot_kind == "correlation"){
     return_list <- paste0("Heatmap of ", str_to_title(plot_type_info), " Correlation Coefficients")
+  }
+  else if(plot_kind == "best_models_by_predictors_bar"){
+    metric_name <- full_name_to_title(plot_type_info)
+    plot_title <- paste0("Models with best ", metric_name, "\nby number of predictors allowed in model")
+    plot_xlabel <- "Maximum Predictors Allowed In Model"
+    plot_ylabel <- metric_name
+    return_list <- list(title=plot_title, xlabel=plot_xlabel, ylabel=plot_ylabel)
   }
   return(return_list)
   

@@ -962,15 +962,18 @@ consolidate_best_models_df <- function(best_df){
 
 subset_dataframe_by_metric <- function(metric_df, metric_name){
   
+
   # Subset the dataframe to get the rows with the best models, per the metric specified in metric_name
   #
   # If the metric is a "the lower the better" metric
   if(metric_name %in% c("val_mae", "val_rmse", "rmse","aic", "apc", "fpe", "hsp", "msep",
-                        "sbc_SAS", "sbc_R", "press", "train_rmse", "train_mae")){
+                        "sbc_SAS", "sbc_R", "press", "train_rmse", "train_mae", "val_rmse_orig", 
+                        "train_mae_orig", "val_mae_orig", "train_rmse_orig")){
+
     best_df <- metric_df[metric_df[,metric_name] == min(metric_df[,metric_name]),]
     
     # Else if the metric is a "the larger the better" metric
-  }else if(metric_name %in% c("pred_rsq", "val_rsq", "rsq", "adj_rsq")){ 
+  }else if(metric_name %in% c("pred_rsq", "val_rsq", "rsq", "adj_rsq", "train_rsq_orig", "val_rsq_orig")){ 
     
     best_df <- metric_df[metric_df[,metric_name] == max(metric_df[,metric_name]),]
     
@@ -985,7 +988,9 @@ subset_dataframe_by_metric <- function(metric_df, metric_name){
 get_best_models_df <- function(metric_df, consolidate=TRUE){
   
   all_metric_names <- c("val_mae", "val_rmse", "rmse","aic", "apc", "fpe", "hsp", "msep", "sbc_SAS", 
-                        "sbc_R", "press", "pred_rsq", "val_rsq", "rsq", "adj_rsq", "train_rmse", "train_mae")
+                        "sbc_R", "press", "pred_rsq", "val_rsq", "rsq", "adj_rsq", "train_rmse", "train_mae",
+                         "val_rmse_orig", "val_rsq_orig", "val_mae_orig", "train_rmse_orig", "train_rsq_orig", 
+                         "train_mae_orig")
   
   
   for(metric_index in 1:length(all_metric_names)){
@@ -996,6 +1001,9 @@ get_best_models_df <- function(metric_df, consolidate=TRUE){
     
     best_models[,"best_per_metric"] <- metric_name
     
+    #print(paste0("Metric index ---> ", metric_index))
+    #print(paste0("Metric name ---> ", metric_name))
+
     if(metric_index == 1){
       final_df <- best_models
     }else{
@@ -1049,6 +1057,455 @@ get_best_model_by_metric <- function(metric_df, training_df, metric_name, respon
   
   
   return(fit)
+}
+
+
+# Function that can be applied row wise to the dataframe created by run_best_subset_selection 
+# counts the number of predictors in the model reprsented by each row.
+count_preds <- function(row){
+  
+  
+  
+  preds <- row[,"predictors"]
+  
+  split_preds <- stringr::str_split(string=preds, pattern="  ")[[1]]
+  
+  num_preds <- length(split_preds)
+  
+  return(num_preds)
+}
+
+
+# Function to take the dataframe created by run_best_subset_selection and add a column that indicates
+# the number of predictors that are in the model
+add_search_result_pred_count_column <- function(df){
+  
+  #predictor_counts <- apply(X=df, MARGIN=1, FUN=count_preds)
+  
+  predictor_counts <- sapply(1:nrow(df), function(x) {count_preds(df[x,])} )
+  
+  df[,"predictor_count"] <- predictor_counts
+  
+  return(df)
+  
+}
+
+create_best_model_size_analysis_df <- function(metric_df, min_num_predictors=1, max_num_predictors=19){
+  
+  if(!("predictor_count" %in% names(metric_df))){
+    df[,"predictor_count"] <- add_search_result_pred_count_column(metric_df)
+  }
+  
+  # These will be used to filter the metric_df prior to finding the best models for each metric. 
+  # Effectively, these allow us to ask... "What were the best models, per metric ___, if the model was only allowed to have ___ number of predictors max"
+  model_sizes <- seq(min_num_predictors, max_num_predictors)
+  
+  for(predictor_count_index in (min_num_predictors-1):max_num_predictors){
+    
+    # print(paste0("predictor_count_index--->", predictor_count_index))
+    
+    # First iteration we will be less than min_num_predictors and so this will be FALSE. All iterations after that
+    # this will be TRUE, and so size_index will be used to subset the dataframe to only contain rows with the predictor counts we want to look at.
+    if(predictor_count_index >= min_num_predictors){
+      
+      # print(paste0("In the case to subset the datafase (not the first iteration)"))
+      
+      # Subset the dataframe to only include models that contain less than or equal to predictor_count_index predictors
+      subset_metric_df <- metric_df[metric_df[,"predictor_count"] <= predictor_count_index,]
+      
+    }else{ # Else this is the first iteration of the loop, and we want to find the best models with out and predictor count restrictions
+      
+      # print(paste0("No subsetting!! FIRST ITER STARTING"))
+      
+      subset_metric_df <- metric_df
+      
+    }
+    
+    # Get the consolidated dataframe that shows the "best models" per each of our metrics
+    best_models_df <- get_best_models_df(metric_df=subset_metric_df)
+    
+    
+    # If this is the first pass through the loop, create the final dataframe
+    if(predictor_count_index < min_num_predictors){
+      
+      # Columns indicating that these were the best models with no restrictions on the number of predictors included
+      best_models_df[,"predictor_count_limited"] <- "No"
+      best_models_df[,"max_allowed_predictors"] <- 0
+      
+      # print(paste0("Ending first iter, creating result_df"))
+      
+      # Create the final dataframe
+      result_df <- best_models_df
+      
+    }else{ # Else this is not the first pass through the loop, then update the final dataframe and continue
+      
+      
+      # Columns indicating that these were the best models based on being limited to a maximum of predictor_count_index predictors
+      best_models_df[,"predictor_count_limited"] <- "Yes"
+      best_models_df[,"max_allowed_predictors"] <- predictor_count_index
+      
+      # print(paste0("Updating result_df with ", nrow(best_models_df), " rows at end of iter ", predictor_count_index))
+      
+      # Update the final dataframe with the results from this iteration
+      result_df <- rbind(result_df, best_models_df)
+      
+    }
+  }
+  
+  return(result_df)
+}
+
+
+### Model Analysis Report Functions
+
+filter_models_by_best_per_metric <- function(df, best_metric_name, convert_to_display_table=FALSE){
+  
+  # Regular expression to find if the metric best_metric_name is in a given row for the 
+  # column "best_per_metric" in the model search dataframe
+  regular_expression <- paste("(^|\\s)", best_metric_name, "(\\s|$)", sep="")
+  
+  # Filter the models dataframe based on the metric we are currently interested in
+  filtered_df <- df[str_detect(string=df[,"best_per_metric"], pattern=regex(regular_expression)),]
+
+  if(convert_to_display_table){
+    filtered_df <- set_table_display_order(filtered_df, best_metric_name=best_metric_name)
+
+    filtered_df <- add_comparison_columns(filtered_df)
+
+  }
+  
+  return(filtered_df)
+  
+}
+
+set_model_plotting_order <- function(df){
+  
+  df[df[,"max_allowed_predictors"]==0, "max_allowed_predictors"] <- "No Limit"
+  df[,"max_allowed_predictors"] <- factor(df[,"max_allowed_predictors"])
+  factor_levels <- sort(as.integer(levels(df[,"max_allowed_predictors"])[levels(df[,"max_allowed_predictors"]) != "No Limit"]), decreasing = TRUE)
+  
+  df[,"max_allowed_predictors"] <- factor(df[,"max_allowed_predictors"],
+                                          levels=c("No Limit", factor_levels))
+  
+  return(df)
+}
+
+
+# df is a dataframe of metrics from the best subsets search function
+#
+#
+plot_best_models_by_metric <- function(df, metric_name, outline_color="black", annotate_metric=TRUE, txt_y_shift_pct=0.02,
+                                       round_digits=4, annot_txt_vjust=NULL, annot_txt_hjust=NULL, annot_txt_rot=30, annot_txt_size=3,
+                                       annot_txt_color="#FF10F0", remove_legend=FALSE, axis_tick_txt_size=16, axis_label_txt_size=22, 
+                                       title_txt_size=24, fill_bars_by="metric_to_plot"){
+  
+  # Set the column for which we want to plot the models metric value
+  df[,"metric_to_plot"] <- df[,metric_name]
+  
+  if(fill_bars_by == "metric_to_plot"){
+    df[,"fill_variable"] <- df[,metric_name]
+    legend_label <- metric_name
+  }else if(fill_bars_by=="predictor_count"){
+    df[,"fill_variable"] <- factor(df[,"predictor_count"])
+    legend_label <- "predictor_count"
+  }
+
+
+  df <- set_model_plotting_order(df)
+
+  plot_labels <- get_plot_labels(plot_kind="best_models_by_predictors_bar", 
+                                 plot_type_info=metric_name, 
+                                 extra_info=NULL)
+  
+  
+  p <- ggplot(data=df, mapping=aes(x=max_allowed_predictors, y=metric_to_plot, fill=fill_variable)) +
+    geom_col(colour=outline_color) + 
+    ggtitle(plot_labels$title) +
+    xlab(plot_labels$xlabel) +
+    ylab(plot_labels$ylabel) + 
+    theme(axis.text.x = element_text(size=axis_tick_txt_size),
+          axis.text.y = element_text(size=axis_tick_txt_size),
+          axis.title=element_text(size=axis_label_txt_size, face="bold"),
+          plot.title=element_text(face="bold", size=title_txt_size))
+  
+  
+  if(annotate_metric){
+    
+    df[,"y_txt_loc"] <- (df[,"metric_to_plot"] + (df[,"metric_to_plot"] * txt_y_shift_pct))
+    df[,"metric_label"] <- round(df[,"metric_to_plot"], round_digits)
+    
+    p <- p + geom_text(data=df, mapping=aes(x=max_allowed_predictors, y=y_txt_loc, label=metric_label, 
+                                            group=max_allowed_predictors, vjust=annot_txt_vjust, hjust=annot_txt_hjust,
+                                            angle=annot_txt_rot, size=annot_txt_size), color=annot_txt_color, show.legend=FALSE)
+    
+  }
+  
+  
+  if(remove_legend){
+    p <- p + theme(legend.position="none")
+  }else{
+    p <- p + labs(fill=legend_label)
+  }
+  
+  
+  return(p)
+  
+}
+
+get_table_columns <- function(best_metric_name){
+  
+   return(c("max_allowed_predictors",
+            "predictor_count", 
+            "predictors", 
+            best_metric_name, 
+            "best_per_metric"))
+  
+}
+
+
+set_table_display_order <- function(df, best_metric_name){
+
+  table_columns <- get_table_columns(best_metric_name=best_metric_name)
+
+  # Order by max_allowed_predictors
+  df <- df[order(df[,"max_allowed_predictors"], decreasing=TRUE), table_columns]
+  
+  # Models that were the best per this metric, and didn't have the number of predictors included restricted
+  no_pred_limit_models <- df[df[,"max_allowed_predictors"] == 0,]
+  
+  # Remove the no limit models
+  df <- df[df[,"max_allowed_predictors"] != 0,]
+  
+  # Change the 0 in max_allowed_predictors for the no limit models to be more specific and say "No Limit"
+  no_pred_limit_models[,"max_allowed_predictors"] <- "No Limit"
+  
+  df <- rbind(no_pred_limit_models, df)
+  
+  return(df)
+  
+}
+
+
+output_html_table <- function(df, best_metric_name, output_file_path="./testing_output_file.md"){
+  
+  # "No Limit" best model at top of table, and the predictor limit becomes more restrictive as you go down the table.
+  #df <- set_table_display_order(df)
+  
+  heading <- paste0("<h1> Best Models Per ", best_metric_name, " </h1>")
+  cat(heading, "\n\n", file=output_file_path, append=TRUE)
+  
+  html_table <- htmlTable::htmlTable(df, rnames=FALSE)
+  cat("\n", html_table, "\n\n\n", file=output_file_path, append=TRUE)
+  
+}
+
+
+create_and_output_bar_plot <- function(df, best_metric_name, images_dir="./images/", output_file_path="./testing_output_file.md",
+                                       img_height=5, img_width=5, img_size_units="in", width_in_pixels=750, annot_txt_rot = 30, round_digits=4,
+                                       annotate_metric=TRUE, txt_y_shift_pct=0.02, annot_txt_vjust=NULL, annot_txt_hjust=NULL, annot_txt_size=3,
+                                       annot_txt_color="#FF10F0", remove_legend=FALSE, axis_tick_txt_size=16, axis_label_txt_size=22, title_txt_size=24,
+                                       fill_bars_by="metric_to_plot"){
+  
+  # Create file path where we want to save the plot
+  if(fill_bars_by=="metric_to_plot"){
+    plot_file_path <- paste0(images_dir, best_metric_name, "_model_compare_bar_chart_shade_METRIC.png")
+  }else{
+    plot_file_path <- paste0(images_dir, best_metric_name, "_model_compare_bar_chart_shade_PREDCOUNT.png")
+  }
+  
+  
+  # Create the plot
+  p <- plot_best_models_by_metric(df=df, 
+                                  metric_name=best_metric_name, 
+                                  annot_txt_rot = annot_txt_rot, 
+                                  round_digits=round_digits,
+                                  annotate_metric=annotate_metric,
+                                  txt_y_shift_pct=txt_y_shift_pct, 
+                                  annot_txt_vjust=annot_txt_vjust,
+                                  annot_txt_hjust=annot_txt_hjust, 
+                                  annot_txt_size=annot_txt_size, 
+                                  annot_txt_color=annot_txt_color,
+                                  remove_legend=remove_legend,
+                                  axis_tick_txt_size=axis_tick_txt_size,
+                                  title_txt_size=title_txt_size,
+                                  fill_bars_by=fill_bars_by)
+  
+  # Save the plot
+  ggsave(filename=plot_file_path,
+         plot=p, 
+         width=img_width, 
+         height=img_height, 
+         units=img_size_units)
+  
+  
+  # Add the plot to the output file
+  # plot_embedding <- paste0("![", best_metric_name, "plot](",plot_file_path, ")")
+  
+  # Create the html embedding for the plot
+  plot_embedding <- paste0("<center>",
+                           "<img src=", 
+                           plot_file_path, 
+                           " alt=", 
+                           best_metric_name, 
+                           " style='width:",
+                           width_in_pixels,
+                           "px;'/></center>")
+  
+  # Add the plot to the output file
+  cat("\n\n", plot_embedding, file=output_file_path, append=TRUE)
+  
+}
+
+add_table_and_chart_to_output <- function(df, best_metric_name, images_dir="./images/", output_file_path="./testing_output_file.md",
+                                          img_height=10, img_width=10, img_size_units="in", img_embed_width_pxls=750, p_annot_txt_rot = 30, 
+                                          p_round_digits=4, p_annotate_metric=TRUE, p_txt_y_shift_pct=0.02, p_annot_txt_vjust=NULL, p_annot_txt_hjust=NULL, 
+                                          p_annot_txt_size=3, p_annot_txt_color="#FF10F0", p_remove_legend=FALSE, p_axis_tick_txt_size=16, p_axis_label_txt_size=22, 
+                                          p_title_txt_size=24, fill_bars_by="metric_to_plot"){
+  
+  # Add the dataframe as an html table output
+  output_html_table(df=df, 
+                    best_metric_name=best_metric_name,
+                    output_file_path=output_file_path)
+  
+  
+  cat("\n\n", file=output_file_path, append=TRUE)
+  
+  create_and_output_bar_plot(df=df,
+                             best_metric_name=best_metric_name, 
+                             images_dir=images_dir,
+                             output_file_path=output_file_path, 
+                             img_height=img_height, 
+                             img_width=img_width, 
+                             img_size_units=img_size_units,
+                             width_in_pixels=img_embed_width_pxls,
+                             annot_txt_rot=p_annot_txt_rot, 
+                             round_digits=p_round_digits, 
+                             annotate_metric=p_annotate_metric, 
+                             txt_y_shift_pct=p_txt_y_shift_pct, 
+                             annot_txt_vjust=p_annot_txt_vjust,
+                             annot_txt_hjust=p_annot_txt_hjust, 
+                             annot_txt_size=p_annot_txt_size, 
+                             annot_txt_color=p_annot_txt_color,
+                             remove_legend=p_remove_legend, 
+                             axis_tick_txt_size=p_axis_tick_txt_size,
+                             axis_label_txt_size=p_axis_label_txt_size,
+                             title_txt_size=p_title_txt_size,
+                             fill_bars_by=fill_bars_by)
+  
+}
+
+
+get_all_analysis_metrics <- function(){
+  
+  return(c("val_rmse", "val_rsq", "val_mae", 
+           "press", "rmse", "msep", 
+           "adj_rsq", "pred_rsq", "rsq",
+           "aic", "sbc_SAS", "sbc_R", 
+           "apc", "fpe", "hsp",
+           "val_rmse_orig", "val_rsq_orig", "val_mae_orig",
+           "train_rmse", "train_mae",
+           "train_rmse_orig", "train_rsq_orig", "train_mae_orig"))
+}
+
+
+
+# This function takes in an "analysis dataframe" which is created 
+# by running the create_best_model_size_analysis_df function.
+create_model_analysis_report <- function(analysis_df, output_file_path, metrics_to_report=NULL, images_dir="./images/",
+                                         img_height=9, img_width=15, img_size_units="in", img_embed_width_pxls=1100, p_annot_txt_rot = 30, 
+                                         p_round_digits=5, p_annotate_metric=TRUE, p_txt_y_shift_pct=0.02, p_annot_txt_vjust=NULL, p_annot_txt_hjust=NULL, 
+                                         p_annot_txt_size=50, p_annot_txt_color="#FF10F0", p_remove_legend=FALSE, p_axis_tick_txt_size=18, 
+                                         p_axis_label_txt_size=24, p_title_txt_size=26, p_fill_bars_by="metric_to_plot"){
+  
+  # Get the vector of metric names to loop over
+  if(is.null(metrics_to_report)){
+    metrics_to_report <- get_all_analysis_metrics()
+  }
+  
+  # Loop across the metric names, adding information on the metric to the report one metric at a time
+  for(metric_index in 1:length(metrics_to_report)){
+    
+    # Grab the metric for this iteration of the loop
+    this_metric <- metrics_to_report[metric_index]
+    
+    # Grab all models in the analysis dataframe that were found to be "best" per this metric
+    filtered_df <- filter_models_by_best_per_metric(df=analysis_df, 
+                                                    best_metric_name=this_metric,
+                                                    convert_to_display_table=TRUE)
+    
+    
+    # Update the output report with an html table of models that were best at this metric,
+    # and a chart showing the change in the value of the best metric as the number of predictors allowed changes.
+    add_table_and_chart_to_output(df=filtered_df, 
+                                  best_metric_name=this_metric,
+                                  output_file_path=output_file_path,
+                                  images_dir=images_dir,
+                                  img_height=img_height,
+                                  img_width=img_width,
+                                  img_size_units=img_size_units,
+                                  img_embed_width_pxls=img_embed_width_pxls,
+                                  p_annot_txt_rot=p_annot_txt_rot,
+                                  p_round_digits=p_round_digits,
+                                  p_annotate_metric=p_annotate_metric,
+                                  p_txt_y_shift_pct=p_txt_y_shift_pct,
+                                  p_annot_txt_vjust=p_annot_txt_vjust,
+                                  p_annot_txt_hjust=p_annot_txt_hjust,
+                                  p_annot_txt_size=p_annot_txt_size,
+                                  p_annot_txt_color=p_annot_txt_color,
+                                  p_remove_legend=p_remove_legend,
+                                  p_axis_tick_txt_size=p_axis_tick_txt_size,
+                                  p_axis_label_txt_size=p_axis_label_txt_size,
+                                  p_title_txt_size=p_title_txt_size,
+                                  fill_bars_by=p_fill_bars_by)
+    
+  }
+}
+
+add_comparison_columns <- function(display_df){
+  
+  # First row has no rows above it to compare to, so start with N/A for added and removed
+  preds_added <- c("N/A")
+  preds_removed <- c("N/A")
+  
+  for(index in 1:(nrow(display_df)-1)){
+  
+    # Predictors in the row above
+    above_predictors <- unlist(stringr::str_split(string=display_df[index, "predictors"],
+                                                  pattern="  ")[1])
+    
+    # Predictors in the row below
+    below_predictors <- unlist(stringr::str_split(string=display_df[index + 1, "predictors"],
+                                                  pattern="  ")[1])
+    
+    
+    # Predictors in the more restrictive (below model) that were not in the above model
+    added_preds <- below_predictors[!(below_predictors %in% above_predictors)]
+    
+    # Predictors in the less restrictive (above model) that are not in the below mode.
+    removed_preds <- above_predictors[!(above_predictors %in% below_predictors)]
+    
+    # If nothing was added or removed between these two models, indicate that here
+    if(length(added_preds) == 0){
+      added_preds <- "---"
+    }else{
+      added_preds <- stringr::str_c(added_preds, collapse="  ")
+    }
+    if(length(removed_preds) == 0){
+      removed_preds <- "---"
+    }else{
+      removed_preds <- stringr::str_c(removed_preds, collapse="  ")
+    }
+    
+    # Update lists of what was added and removed between these two models
+    preds_added <- append(x=preds_added, values=added_preds)
+    preds_removed <- append(x=preds_removed, values=removed_preds)
+  
+  }
+  
+  display_df[,"Predictors_Removed"] <- preds_removed
+  display_df[,"Predictors_Added"] <- preds_added
+  
+  return(display_df)
 }
 
 ############################################# END MODEL PERFORMANCE ANALYSIS FUNCTIONS #################################################
