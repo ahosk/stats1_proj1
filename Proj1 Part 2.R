@@ -15,7 +15,6 @@ a = read.csv(file.choose())
 a <- a %>%
   select(MSRP, everything())
 
-
 fitControl<-trainControl(method="repeatedcv",number=10,repeats=10) #number is the k in k-fold
 
 
@@ -33,7 +32,7 @@ validate<-a[-trainIndex,]
 #Tree Model while choosing complexity parameter via 10 fold CV
 #
 set.seed(1234)
-tree.fit<-train(MSRP ~ .,
+tree.fit<-train(MSRP~age:Make+city_mpg+Luxury+Performance+Flex_Fuel+Hybrid+Diesel+Exotic,
                     data=training,
                     method="rpart",minsplit=5,
                     trControl=fitControl,
@@ -44,7 +43,6 @@ tree.fit<-train(MSRP ~ .,
 tree.fit
 
 #If we want the final model tree
-plot(tree.fit$finalModel)
 text(tree.fit$finalModel)
 
 #prettier tree
@@ -54,7 +52,7 @@ fancyRpartPlot(tree.fit$finalModel)
 #Making predictions on the validation set
 tree.pred<-predict(tree.fit,validate)
 
-#Computing Errror Metrics
+#Computing Error Metrics
 tree.validate<-postResample(pred=tree.pred,obs=validate$Salary)
 tree.validate
 
@@ -111,5 +109,3 @@ lines(0:2000,0:2000)
 #Ranking predictors
 varImp(knn.fit)
 plot(varImp(knn.fit))
-
-

@@ -1,24 +1,24 @@
 =========================================
           DATA CLEANING REPORT           
-Report Generated:  1644361061   19031
+Report Generated:  1644638133   19034
 =========================================
 
 >>>>> Prior To Any Cleaning <<<<<
 
-Total number of rows:  11914 
-Number of fully duplicate rows:  715 
-Number of rows duplicate other than different MSRP's:  4563 
+Total number of rows:  513 
+Number of fully duplicate rows:  0 
+Number of rows duplicate other than different MSRP's:  0 
 
 MISSING VALUES
 Make : 0 
 Model : 0 
 Year : 0 
-Engine_Fuel_Type : 3 
-Engine_HP : 69 
-Engine_Cylinders : 30 
+Engine_Fuel_Type : 1 
+Engine_HP : 0 
+Engine_Cylinders : 0 
 Transmission_Type : 0 
 Driven_Wheels : 0 
-Number_of_Doors : 6 
+Number_of_Doors : 0 
 Market_Category : 0 
 Vehicle_Size : 0 
 Vehicle_Style : 0 
@@ -26,15 +26,27 @@ highway_MPG : 0
 city_mpg : 0 
 Popularity : 0 
 MSRP : 0 
+Factory_Tuner : 0 
+Luxury : 0 
+Performance : 0 
+Flex_Fuel : 0 
+Hatchback : 0 
+Hybrid : 0 
+Diesel : 0 
+Exotic : 0 
+Crossover : 0 
+Age : 0 
+log_MSRP : 0 
+obs_number : 0 
 
  ======================================================= 
 
 
 >>>>> After Running the Clean Missing Values Function <<<<<
 
-Total number of rows:  11894 
-Number of fully duplicate rows:  715 
-Number of rows duplicate other than different MSRP's:  4552 
+Total number of rows:  512 
+Number of fully duplicate rows:  0 
+Number of rows duplicate other than different MSRP's:  0 
 
 MISSING VALUES
 Make : 0 
@@ -53,15 +65,26 @@ highway_MPG : 0
 city_mpg : 0 
 Popularity : 0 
 MSRP : 0 
+Factory_Tuner : 0 
+Luxury : 0 
+Performance : 0 
+Flex_Fuel : 0 
+Hatchback : 0 
+Hybrid : 0 
+Diesel : 0 
+Exotic : 0 
+Crossover : 0 
+Age : 0 
+log_MSRP : 0 
 
  ======================================================= 
 
 
 >>>>> After Applying Additional Filters (e.g. Electric Cars, Expensive Cars) <<<<<
 
-Total number of rows:  11796 
-Number of fully duplicate rows:  765 
-Number of rows duplicate other than different MSRP's:  4848 
+Total number of rows:  512 
+Number of fully duplicate rows:  0 
+Number of rows duplicate other than different MSRP's:  0 
 
 MISSING VALUES
 Make : 0 
@@ -80,40 +103,24 @@ highway_MPG : 0
 city_mpg : 0 
 Popularity : 0 
 MSRP : 0 
+Factory_Tuner : 0 
+Luxury : 0 
+Performance : 0 
+Flex_Fuel : 0 
+Hatchback : 0 
+Hybrid : 0 
+Diesel : 0 
+Exotic : 0 
+Crossover : 0 
+Age : 0 
+log_MSRP : 0 
 
  ======================================================= 
 
 
 >>>>> After duplicate handling  <<<<<
 
-Total number of rows:  6183 
-Number of fully duplicate rows:  0  <-- should be zero  
-Number of rows duplicate other than different MSRP's:  0 <-- should be zero 
-
-MISSING VALUES
-Make : 0 
-Model : 0 
-Year : 0 
-Engine_Fuel_Type : 0 
-Engine_HP : 0 
-Engine_Cylinders : 0 
-Transmission_Type : 0 
-Driven_Wheels : 0 
-Number_of_Doors : 0 
-Market_Category : 0 
-Vehicle_Size : 0 
-Vehicle_Style : 0 
-highway_MPG : 0 
-city_mpg : 0 
-Popularity : 0 
-MSRP : 0 
-
- ======================================================= 
-
-
->>>>> At conclusion of data cleaning script  <<<<<
-
-Total number of rows:  5122 
+Total number of rows:  512 
 Number of fully duplicate rows:  0  <-- should be zero  
 Number of rows duplicate other than different MSRP's:  0 <-- should be zero 
 
@@ -145,41 +152,81 @@ Exotic : 0
 Crossover : 0 
 Age : 0 
 log_MSRP : 0 
+
+ ======================================================= 
+
+
+>>>>> At conclusion of data cleaning script  <<<<<
+
+Total number of rows:  512 
+Number of fully duplicate rows:  0  <-- should be zero  
+Number of rows duplicate other than different MSRP's:  0 <-- should be zero 
+
+MISSING VALUES
+Make : 0 
+Model : 0 
+Year : 0 
+Engine_Fuel_Type : 0 
+Engine_HP : 0 
+Engine_Cylinders : 0 
+Transmission_Type : 0 
+Driven_Wheels : 0 
+Number_of_Doors : 0 
+Market_Category : 0 
+Vehicle_Size : 0 
+Vehicle_Style : 0 
+highway_MPG : 0 
+city_mpg : 0 
+Popularity : 0 
+MSRP : 0 
+Factory_Tuner : 0 
+Luxury : 0 
+Performance : 0 
+Flex_Fuel : 0 
+Hatchback : 0 
+Hybrid : 0 
+Diesel : 0 
+Exotic : 0 
+Crossover : 0 
+Age : 0 
+log_MSRP : 0 
+Flex_Fuel : 0 
+Factory_Tuner : 0 
 >>>>> FACTOR COLUMN LEVELS <<<<<
 
 ~~~~~~~~~~~~~~~~~~~~
 
 Factor Column Name:  Make 
-Number of levels:  46 
+Number of levels:  42 
 
-Factor Levels:  Acura, Alfa Romeo, Aston Martin, Audi, Bentley, BMW, Buick, Cadillac, Chevrolet, Chrysler, Dodge, Ferrari, FIAT, Ford, Genesis, GMC, Honda, HUMMER, Hyundai, Infiniti, Kia, Lamborghini, Land Rover, Lexus, Lincoln, Lotus, Maserati, Maybach, Mazda, McLaren, Mercedes-Benz, Mitsubishi, Nissan, Oldsmobile, Plymouth, Pontiac, Porsche, Rolls-Royce, Saab, Scion, Spyker, Subaru, Suzuki, Toyota, Volkswagen, Volvo 
+Factor Levels:  Acura, Aston Martin, Audi, Bentley, BMW, Buick, Cadillac, Chevrolet, Chrysler, Dodge, Ferrari, FIAT, Ford, GMC, Honda, HUMMER, Hyundai, Infiniti, Kia, Lamborghini, Land Rover, Lexus, Lincoln, Lotus, Maserati, Maybach, Mazda, McLaren, Mercedes-Benz, Mitsubishi, Nissan, Oldsmobile, Pontiac, Porsche, Rolls-Royce, Saab, Scion, Subaru, Suzuki, Toyota, Volkswagen, Volvo 
 ~~~~~~~~~~~~~~~~~~~~
 
 
 ~~~~~~~~~~~~~~~~~~~~
 
 Factor Column Name:  Model 
-Number of levels:  726 
+Number of levels:  331 
 
-Factor Levels:  1 Series, 1 Series M, 124 Spider, 2, 2 Series, 200, 3, 3 Series, 3 Series Gran Turismo, 300, 300M, 350Z, 360, 370Z, 4 Series, 4 Series Gran Coupe, 456M, 458 Italia, 4C, 4Runner, 5, 5 Series, 5 Series Gran Turismo, 500, 500L, 500X, 550, 57, 570S, 575M, 599, 6, 6 Series, 6 Series Gran Coupe, 612 Scaglietti, 62, 626, 650S Coupe, 650S Spider, 7 Series, 718 Cayman, 86, 9-2X, 9-3, 9-3 Griffin, 9-4X, 9-5, 9-7X, 911, A3, A4, A4 allroad, A5, A6, A7, A8, Acadia, Acadia Limited, Accent, Accord, Accord Crosstour, Accord Hybrid, Accord Plug-In Hybrid, ActiveHybrid 5, ActiveHybrid 7, ActiveHybrid X6, Aerio, Alero, allroad, allroad quattro, Alpina, ALPINA B6 Gran Coupe, ALPINA B7, Altima, Altima Hybrid, Amanti, AMG GT, Armada, Arnage, Aspen, Astro, Astro Cargo, ATS, ATS-V, ATS Coupe, Aurora, Avalanche, Avalon, Avalon Hybrid, Avenger, Aventador, Aveo, Aviator, Azera, Aztek, Azure, Azure T, B-Series, B-Series Truck, B9 Tribeca, Baja, Beetle, Beetle Convertible, Black Diamond Avalanche, Blackwood, Blazer, Bonneville, Borrego, Boxster, Bravada, Brooklands, BRZ, C-Class, C-Max Hybrid, C30, C70, C8, Cabrio, Cadenza, Caliber, California, California T, Camaro, Camry, Camry Hybrid, Camry Solara, Canyon, Captiva Sport, Caravan, Carrera GT, Cascada, Catera, Cavalier, Cayenne, Cayman, Cayman S, CC, Celica, Century, Challenger, Charger, City Express, Civic, CL, CL-Class, CLA-Class, Classic, CLK-Class, CLS-Class, Cobalt, Colorado, Concorde, Continental, Continental Flying Spur, Continental Flying Spur Speed, Continental GT, Continental GT Speed, Continental GT Speed Convertible, Continental GT3-R, Continental GTC, Continental GTC Speed, Continental Supersports, Continental Supersports Convertible, Corniche, Corolla, Corolla iM, Corvette, Corvette Stingray, Coupe, CR-V, CR-Z, Crossfire, Crosstour, Crosstrek, Crown Victoria, Cruze, Cruze Limited, CT 200h, CT6, CTS, CTS-V, CTS-V Coupe, CTS-V Wagon, CTS Coupe, CTS Wagon, Cube, CX-3, CX-5, CX-7, CX-9, Dakota, Dart, Dawn, DB7, DB9, DB9 GT, DBS, Defender, DeVille, Diablo, Diamante, Discovery, Discovery Series II, Discovery Sport, DTS, Durango, E-Class, E-Series Van, E-Series Wagon, ECHO, Eclipse, Eclipse Spyder, Edge, Elantra, Elantra Coupe, Elantra GT, Elantra Touring, Eldorado, Element, Elise, Enclave, Encore, Endeavor, Entourage, Envision, Envoy, Envoy XL, Envoy XUV, Eos, Equator, Equinox, Equus, ES 300, ES 300h, ES 330, ES 350, Escalade, Escalade ESV, Escalade EXT, Escalade Hybrid, Escape, Escape Hybrid, Escort, Esprit, Esteem, EuroVan, Evora, Evora 400, EX, EX35, Exige, Expedition, Explorer, Explorer Sport, Explorer Sport Trac, Express, Express Cargo, F-150, F-150 Heritage, F12 Berlinetta, F430, FF, Fiesta, Firebird, Fit, Five Hundred, FJ Cruiser, Flex, Flying Spur, Focus, Focus RS, Focus ST, Forenza, Forester, Forte, FR-S, Freelander, Freestar, Freestyle, Frontier, Fusion, Fusion Hybrid, FX, FX35, FX45, FX50, G-Class, G Convertible, G Coupe, G Sedan, G20, G3, G35, G37, G37 Convertible, G37 Coupe, G37 Sedan, G5, G6, G8, G80, Galant, Gallardo, Genesis, Genesis Coupe, Ghibli, Ghost, Ghost Series II, GL-Class, GLA-Class, GLC-Class, GLE-Class, GLE-Class Coupe, GLI, GLK-Class, GLS-Class, Golf, Golf Alltrack, Golf GTI, Golf R, Golf SportWagen, Grand Am, Grand Caravan, Grand Prix, Grand Vitara, GranSport, GranTurismo, GranTurismo Convertible, GS 200t, GS 300, GS 350, GS 430, GS 450h, GS 460, GS F, GT, GT-R, GTI, GTO, GX 460, GX 470, H3, H3T, HHR, Highlander, Highlander Hybrid, HR-V, HS 250h, Huracan, I30, I35, iA, ILX, ILX Hybrid, iM, Impala, Impala Limited, Impreza, Impreza WRX, Insight, Integra, Intrepid, Intrigue, iQ, IS 200t, IS 250, IS 250 C, IS 300, IS 350, IS 350 C, IS F, Jetta, Jetta GLI, Jetta Hybrid, Jetta SportWagen, Jimmy, Journey, Juke, JX, K900, Kizashi, LaCrosse, Lancer, Lancer Evolution, Lancer Sportback, Land Cruiser, Legacy, LeSabre, Levante, LFA, LHS, LR2, LR3, LR4, LS, LS 430, LS 460, LS 600h L, Lucerne, Lumina, LX 470, LX 570, M, M-Class, M2, M3, M35, M37, M4, M4 GTS, M45, M5, M56, M6, M6 Gran Coupe, Macan, Magnum, Malibu, Malibu Classic, Malibu Hybrid, Malibu Limited, Malibu Maxx, Mark LT, Matrix, Maxima, Maybach, Mazdaspeed 3, Mazdaspeed 6, Mazdaspeed MX-5 Miata, Mazdaspeed Protege, MDX, Metris, Metro, Millenia, Mirage, Mirage G4, MKC, MKS, MKT, MKX, MKZ, MKZ Hybrid, Montana, Montana SV6, Monte Carlo, Montero, Montero Sport, MP4-12C, MPV, MR2 Spyder, Mulsanne, Murano, Murano CrossCabriolet, Murcielago, Mustang, MX-5 Miata, Navigator, Neon, New Beetle, Nitro, NSX, NV200, NX 200t, NX 300h, Odyssey, Optima, Optima Hybrid, Outback, Outlander, Outlander Sport, Pacifica, Panamera, Park Avenue, Park Ward, Passat, Passport, Pathfinder, Phaeton, Phantom, Phantom Coupe, Phantom Drophead Coupe, Pilot, Prelude, Prius, Prius c, Prius Prime, Prius v, Prizm, Protege, Protege5, Prowler, PT Cruiser, Q3, Q40, Q45, Q5, Q50, Q60 Convertible, Q60 Coupe, Q7, Q70, Quattroporte, Quest, QX, QX4, QX50, QX56, QX60, QX70, QX80, R-Class, R32, R8, Rabbit, Raider, Rainier, Ram Cargo, Ram Pickup 1500, Ram Wagon, Range Rover, Range Rover Evoque, Range Rover Sport, Ranger, Rapide, Rapide S, RAV4, RAV4 Hybrid, RC 200t, RC 300, RC 350, RC F, RDX, Regal, Rendezvous, Reno, Ridgeline, Rio, RL, RLX, Rogue, Rogue Select, Rondo, Routan, RS 4, RS 5, RS 6, RS 7, RSX, RX 300, RX 330, RX 350, RX 400h, RX 450h, S-10, S-Class, S2000, S3, S4, S40, S5, S6, S60, S60 Cross Country, S7, S8, S80, S90, Safari, Safari Cargo, Santa Fe, Santa Fe Sport, Savana, Savana Cargo, SC 430, Sebring, Sedona, Sentra, Sephia, Sequoia, Seville, Shelby GT350, Shelby GT500, Sienna, Sierra 1500, Sierra 1500 Classic, Sierra 1500 Hybrid, Sierra 1500HD, Sierra C3, Silhouette, Silver Seraph, Silverado 1500, Silverado 1500 Classic, Silverado 1500 Hybrid, SL-Class, SLC-Class, SLK-Class, SLR McLaren, SLS AMG, SLS AMG GT, SLS AMG GT Final Edition, Solstice, Sonata, Sonata Hybrid, Sonic, Sonoma, Sorento, Soul, Spark, Spectra, Sportage, Spyder, SQ5, SRT Viper, SRX, SS, SSR, Stratus, STS, STS-V, Suburban, Sunfire, Superamerica, Supersports Convertible ISR, Supra, Swift, SX4, Tacoma, Tahoe, Tahoe Hybrid, Taurus, Taurus X, tC, Terrain, Terraza, Thunderbird, Tiburon, Tiguan, Titan, TL, TLX, Torrent, Touareg, Touareg 2, Town and Country, Town Car, Tracker, TrailBlazer, TrailBlazer EXT, Transit Connect, Transit Wagon, Traverse, Trax, Tribeca, Tribute, Tribute Hybrid, Truck, TSX, TSX Sport Wagon, TT, TT RS, TTS, Tucson, Tundra, Uplander, V12 Vanquish, V12 Vantage, V12 Vantage S, V40, V50, V60, V60 Cross Country, V70, V8 Vantage, Vanquish, Veloster, Venture, Venza, Veracruz, Verano, Verona, Versa, Versa Note, Vibe, Viper, Virage, Vitara, Voyager, Windstar, Windstar Cargo, Wraith, WRX, X1, X3, X4, X5, X5 M, X6, X6 M, xA, xB, XC, XC60, XC70, XC90, xD, XG300, XG350, XL-7, XL7, XLR, XLR-V, XT5, Xterra, XTS, XV Crosstrek, Yaris, Yaris iA, Yukon, Yukon Hybrid, Yukon XL, Z3, Z4, Z4 M, Z8, ZDX, Zephyr 
+Factor Levels:  1 Series, 2 Series, 200, 3, 3 Series Gran Turismo, 300, 300M, 350Z, 370Z, 4 Series, 4 Series Gran Coupe, 456M, 5 Series, 500, 500L, 57, 575M, 6 Series Gran Coupe, 62, 650S Spider, 7 Series, 9-3, 911, A3, A4, A5, A6, A8, Acadia, Accord, Accord Plug-In Hybrid, Aerio, Alero, allroad quattro, ALPINA B7, Altima, Amanti, AMG GT, Astro, Astro Cargo, ATS-V, Aurora, Avalanche, Avalon Hybrid, Avenger, Aveo, Aviator, Azera, B-Series Truck, Beetle, Blazer, Bravada, BRZ, C-Class, C-Max Hybrid, Cabrio, Caliber, California T, Camaro, Camry Hybrid, Camry Solara, Canyon, Caravan, Cavalier, Cayenne, Cayman, Celica, Charger, Civic, CL-Class, CLA-Class, Classic, CLK-Class, CLS-Class, Cobalt, Colorado, Concorde, Continental, Continental Flying Spur Speed, Continental GT, Continental GT Speed, Continental GTC, Corniche, Corolla, Corvette, Coupe, Crosstour, Crosstrek, Cruze, CT6, CTS, CTS Wagon, CTS-V, CTS-V Wagon, CX-3, CX-5, CX-7, Dakota, Dart, DBS, Diablo, Durango, E-Class, E-Series Van, ECHO, Eclipse, Eclipse Spyder, Edge, Elantra, Elantra GT, Elantra Touring, Eldorado, Elise, Encore, Envision, Envoy, Envoy XL, Equator, ES 300, Escalade, Escalade Hybrid, Escape, Escape Hybrid, Esteem, EuroVan, Evora, EX, Expedition, Explorer, Explorer Sport, Explorer Sport Trac, Express Cargo, F-150, F-150 Heritage, F12 Berlinetta, Fit, Five Hundred, FJ Cruiser, Flex, Forenza, Forester, Forte, FR-S, Freelander, Freestyle, Frontier, Fusion, Fusion Hybrid, G Sedan, G-Class, G20, G35, G37, G37 Sedan, G5, G6, Galant, Gallardo, Genesis, Genesis Coupe, Ghibli, GL-Class, GLA-Class, Golf Alltrack, Golf GTI, Golf SportWagen, Grand Am, Grand Prix, GS 450h, GT-R, GTI, GX 460, H3, Highlander, HR-V, I35, Impreza, Integra, Intrepid, IS 300, IS F, Jetta SportWagen, Jimmy, Juke, K900, LaCrosse, Lancer, Lancer Evolution, Lancer Sportback, LR3, LS 460, LS 600h L, M, M-Class, M2, M35, M37, Magnum, Malibu, Mark LT, Matrix, Mazdaspeed 3, MDX, Metris, Metro, Millenia, Mirage, MKS, MKT, MKZ, Montana, Monte Carlo, Montero Sport, Mulsanne, Murano, Murcielago, Mustang, MX-5 Miata, Navigator, Neon, Nitro, NX 200t, Optima, Optima Hybrid, Outlander, Outlander Sport, Panamera, Park Avenue, Park Ward, Passport, Pathfinder, Pilot, Prius c, Q3, Q50, Q70, QX4, QX56, QX70, R8, Ram Cargo, Ram Pickup 1500, Range Rover Evoque, Range Rover Sport, Ranger, Rapide, RC F, Regal, Rendezvous, RLX, Rogue, Rondo, RSX, RX 330, S-10, S-Class, S5, S60, S80, S90, Safari, Safari Cargo, Santa Fe Sport, Savana Cargo, SC 430, Sebring, Sentra, Sephia, Shelby GT350, Sienna, Sierra 1500, Sierra 1500 Classic, Silverado 1500, Silverado 1500 Classic, SLC-Class, SLK-Class, Solstice, Sonata Hybrid, Sonic, Sonoma, Sorento, Soul, Spectra, Sportage, SQ5, Suburban, Sunfire, Supersports Convertible ISR, Supra, SX4, Tacoma, Tahoe, Tahoe Hybrid, Taurus, Thunderbird, Titan, Torrent, Touareg, Tracker, TrailBlazer, TrailBlazer EXT, Transit Connect, Trax, Tribeca, Tribute, Tribute Hybrid, TT, Tucson, Tundra, Uplander, V12 Vanquish, V12 Vantage S, V50, V60 Cross Country, Veloster, Verano, Versa, Versa Note, Vitara, Voyager, Windstar, X1, X3, X5, X6 M, XG350, XLR, Xterra, Yukon XL, Z3, ZDX 
 ~~~~~~~~~~~~~~~~~~~~
 
 
 ~~~~~~~~~~~~~~~~~~~~
 
 Factor Column Name:  Year 
-Number of levels:  24 
+Number of levels:  18 
 
-Factor Levels:  1994, 1995, 1996, 1997, 1998, 1999, 2000, 2001, 2002, 2003, 2004, 2005, 2006, 2007, 2008, 2009, 2010, 2011, 2012, 2013, 2014, 2015, 2016, 2017 
+Factor Levels:  1998, 2001, 2002, 2003, 2004, 2005, 2006, 2007, 2008, 2009, 2010, 2011, 2012, 2013, 2014, 2015, 2016, 2017 
 ~~~~~~~~~~~~~~~~~~~~
 
 
 ~~~~~~~~~~~~~~~~~~~~
 
 Factor Column Name:  Engine_Fuel_Type 
-Number of levels:  4 
+Number of levels:  3 
 
-Factor Levels:  diesel, flex, NA, regular 
+Factor Levels:  diesel, flex, regular 
 ~~~~~~~~~~~~~~~~~~~~
 
 
@@ -213,9 +260,9 @@ Factor Levels:  all wheel drive, four wheel drive, front wheel drive, rear wheel
 ~~~~~~~~~~~~~~~~~~~~
 
 Factor Column Name:  Market_Category 
-Number of levels:  71 
+Number of levels:  45 
 
-Factor Levels:  Crossover, Crossover,Diesel, Crossover,Exotic,Luxury,High-Performance, Crossover,Exotic,Luxury,Performance, Crossover,Factory Tuner,Luxury,High-Performance, Crossover,Factory Tuner,Luxury,Performance, Crossover,Factory Tuner,Performance, Crossover,Flex Fuel, Crossover,Flex Fuel,Luxury, Crossover,Flex Fuel,Luxury,Performance, Crossover,Flex Fuel,Performance, Crossover,Hatchback, Crossover,Hatchback,Factory Tuner,Performance, Crossover,Hatchback,Luxury, Crossover,Hatchback,Performance, Crossover,Hybrid, Crossover,Luxury, Crossover,Luxury,Diesel, Crossover,Luxury,High-Performance, Crossover,Luxury,Hybrid, Crossover,Luxury,Performance, Crossover,Luxury,Performance,Hybrid, Crossover,Performance, Diesel, Diesel,Luxury, Exotic,Factory Tuner,High-Performance, Exotic,Factory Tuner,Luxury,High-Performance, Exotic,Factory Tuner,Luxury,Performance, Exotic,Flex Fuel,Factory Tuner,Luxury,High-Performance, Exotic,Flex Fuel,Luxury,High-Performance, Exotic,High-Performance, Exotic,Luxury, Exotic,Luxury,High-Performance, Exotic,Luxury,High-Performance,Hybrid, Exotic,Luxury,Performance, Factory Tuner,High-Performance, Factory Tuner,Luxury, Factory Tuner,Luxury,High-Performance, Factory Tuner,Luxury,Performance, Factory Tuner,Performance, Flex Fuel, Flex Fuel,Diesel, Flex Fuel,Factory Tuner,Luxury,High-Performance, Flex Fuel,Hybrid, Flex Fuel,Luxury, Flex Fuel,Luxury,High-Performance, Flex Fuel,Luxury,Performance, Flex Fuel,Performance, Flex Fuel,Performance,Hybrid, Hatchback, Hatchback,Diesel, Hatchback,Factory Tuner,High-Performance, Hatchback,Factory Tuner,Luxury,Performance, Hatchback,Factory Tuner,Performance, Hatchback,Flex Fuel, Hatchback,Hybrid, Hatchback,Luxury, Hatchback,Luxury,Hybrid, Hatchback,Luxury,Performance, Hatchback,Performance, High-Performance, Hybrid, Luxury, Luxury,High-Performance, Luxury,High-Performance,Hybrid, Luxury,Hybrid, Luxury,Performance, Luxury,Performance,Hybrid, N/A, Performance, Performance,Hybrid 
+Factor Levels:  Crossover, Crossover,Factory Tuner,Luxury,High-Performance, Crossover,Factory Tuner,Luxury,Performance, Crossover,Flex Fuel, Crossover,Hatchback, Crossover,Hatchback,Factory Tuner,Performance, Crossover,Hatchback,Luxury, Crossover,Hybrid, Crossover,Luxury, Crossover,Luxury,Diesel, Crossover,Luxury,Performance, Crossover,Performance, Diesel, Diesel,Luxury, Exotic,Factory Tuner,High-Performance, Exotic,Factory Tuner,Luxury,High-Performance, Exotic,Flex Fuel,Factory Tuner,Luxury,High-Performance, Exotic,Flex Fuel,Luxury,High-Performance, Exotic,High-Performance, Exotic,Luxury, Exotic,Luxury,High-Performance, Exotic,Luxury,Performance, Factory Tuner,High-Performance, Factory Tuner,Luxury,High-Performance, Factory Tuner,Luxury,Performance, Factory Tuner,Performance, Flex Fuel, Flex Fuel,Luxury, Flex Fuel,Performance, Hatchback, Hatchback,Factory Tuner,Performance, Hatchback,Hybrid, Hatchback,Luxury,Performance, Hatchback,Performance, High-Performance, Hybrid, Luxury, Luxury,High-Performance, Luxury,High-Performance,Hybrid, Luxury,Hybrid, Luxury,Performance, Luxury,Performance,Hybrid, N/A, Performance, Performance,Hybrid 
 ~~~~~~~~~~~~~~~~~~~~
 
 
