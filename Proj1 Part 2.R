@@ -32,7 +32,8 @@ validate<-a[-trainIndex,]
 #Tree Model while choosing complexity parameter via 10 fold CV
 #
 set.seed(1234)
-tree.fit<-train(MSRP~age:Make+city_mpg+Luxury+Performance+Flex_Fuel+Hybrid+Diesel+Exotic,
+tree.fit<-train(MSRP~Age+ sqrt(Engine_Cylinders)+ Engine_HP +Transmission_Type +Vehicle_Style +Driven_Wheels+ Luxury+ Hybrid +Diesel +Exotic
+,
                     data=training,
                     method="rpart",minsplit=5,
                     trControl=fitControl,
@@ -109,3 +110,15 @@ lines(0:2000,0:2000)
 #Ranking predictors
 varImp(knn.fit)
 plot(varImp(knn.fit))
+
+
+
+################LASSO####################
+fitControl<-trainControl(method="repeatedcv",number=10,repeats=10)
+glmnet.fit<-train(log_MSRP~ Engine_HP+Number_of_Doors+highway_MPG+city_mpg+Popularity+Factory_Tuner+Luxury+Performance+Flex_Fuel+Hatchback+Hybrid+Diesel+Exotic+Crossover+Age,
+                  data=train_df,
+                  method="glmnet",
+                  trControl=fitControl
+)
+glmnet.fit
+coef(glmnet.fit$finalModel,glmnet.fit$finalModel$lambdaOpt)

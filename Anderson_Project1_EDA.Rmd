@@ -16,7 +16,7 @@ knitr::opts_chunk$set(echo = TRUE)
 
 source("Applied_Stats_Project_Functions.R")
 
-df <- read.csv("./data1.csv", check.names=FALSE, na.strings=c("", "NA"))
+df <- read.csv(file.choose(), check.names=FALSE, na.strings=c("", "NA"))
 names(df) <- gsub(" ", "_", names(df))
 
 clean_df <- clean_data(df=df)
@@ -98,6 +98,18 @@ spearman_orig <- plot_correlation(df=df,
 
 
 gridExtra::grid.arrange(pearson_orig, spearman_orig, ncol=2, newpage = TRUE)
+
+#removed HWY_MGP and ENGINE CYLINDERS
+
+test = lm(MSRP ~ Year+Number_of_Doors+city_mpg+Popularity+Factory_Tuner+Luxury+Performance+Flex_Fuel+Hatchback+Hybrid+Diesel+Exotic+Crossover,df)
+summary(test)
+plot(test)
+
+test2 = lm(log(MSRP) ~ Year:Make+(city_mpg)^2+Luxury+Performance+Flex_Fuel+Hybrid+Diesel+Exotic,df)
+
+
+summary(test2)
+plot(test2)
 ```
 
 
